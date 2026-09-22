@@ -332,7 +332,9 @@ function saveLead(name, area, phone, rating) {
 
   localStorage.setItem("savedLeads", JSON.stringify(savedLeads));
 
-  alert("⭐ Lead Saved!\n\n" + name);
+displaySavedLeads();
+
+alert("⭐ Lead Saved!\n\n" + name);
 }
 function updateStatus(name, status) {
   alert(
