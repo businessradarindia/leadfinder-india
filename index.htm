@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
   <title>LeadFinder India</title>
 
   <style>
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -21,12 +19,10 @@
       color: #172033;
     }
 
-    /* ================= NAVBAR ================= */
-
     .navbar {
       background: #172033;
       color: white;
-      padding: 18px 7%;
+      padding: 18px 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -34,7 +30,7 @@
     }
 
     .logo {
-      font-size: 23px;
+      font-size: 22px;
       font-weight: bold;
     }
 
@@ -43,8 +39,6 @@
       opacity: 0.8;
     }
 
-    /* ================= HERO ================= */
-
     .hero {
       text-align: center;
       padding: 55px 20px 35px;
@@ -52,111 +46,63 @@
 
     .hero h1 {
       font-size: 42px;
-      margin-bottom: 14px;
+      margin-bottom: 15px;
     }
 
     .hero p {
       font-size: 18px;
-      color: #667085;
+      color: #657085;
       margin-bottom: 30px;
     }
 
-    /* ================= SEARCH ================= */
-
     .search-box {
       background: white;
-      max-width: 1050px;
+      max-width: 950px;
       margin: auto;
-      padding: 22px;
+      padding: 25px;
       border-radius: 16px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.08);
 
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
     }
 
-    select,
     input,
+    select,
     textarea {
       font-family: inherit;
     }
 
-    .search-box select,
-    .search-box input {
-
+    .search-box input,
+    .search-box select {
+      width: 100%;
       padding: 14px;
-
       border: 1px solid #d8dce5;
-
       border-radius: 10px;
-
-      font-size: 15px;
-
+      font-size: 16px;
       background: white;
     }
 
-    .search-box select {
-      min-width: 200px;
+    .business-name {
+      grid-column: 1 / -1;
     }
 
-    .search-box input {
-      flex: 1;
-      min-width: 220px;
-    }
-
-    button,
-    .map-btn,
-    .direction-btn {
-
-      padding: 12px 17px;
-
+    .search-button {
+      grid-column: 1 / -1;
+      padding: 14px 20px;
       border: none;
-
-      border-radius: 9px;
-
-      font-size: 14px;
-
-      font-weight: bold;
-
-      cursor: pointer;
-
-      text-decoration: none;
-
-      display: inline-block;
-
-      transition: 0.2s;
-    }
-
-    button {
+      border-radius: 10px;
       background: #4f46e5;
       color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    button:hover {
+    .search-button:hover {
       background: #3730a3;
     }
-
-    .map-btn {
-      background: #e0f2fe;
-      color: #0369a1;
-    }
-
-    .map-btn:hover {
-      background: #bae6fd;
-    }
-
-    .direction-btn {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .direction-btn:hover {
-      background: #bbf7d0;
-    }
-
-    /* ================= MAIN SECTIONS ================= */
 
     .results,
     .dashboard {
@@ -174,26 +120,26 @@
       margin-bottom: 20px;
     }
 
-    /* ================= LEADS ================= */
+    .status-message {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      color: #667085;
+      margin-bottom: 20px;
+    }
 
     .lead {
-
       background: white;
-
       padding: 20px;
-
       margin-bottom: 15px;
-
       border-radius: 14px;
-
       box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-
-      border: 1px solid #edf0f5;
     }
 
     .lead h3 {
-      font-size: 20px;
       margin-bottom: 10px;
+      font-size: 20px;
     }
 
     .lead p {
@@ -201,21 +147,45 @@
       margin: 6px 0;
     }
 
-    .source {
+    .rating {
+      font-weight: bold;
+    }
+
+    .category-label {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 5px 9px;
+      background: #eef0ff;
+      color: #3730a3;
+      border-radius: 6px;
       font-size: 12px;
-      color: #98a2b3 !important;
-      margin-top: 12px !important;
+      font-weight: bold;
     }
 
     .lead-actions {
-
       display: flex;
-
       flex-wrap: wrap;
-
       gap: 8px;
+      margin-top: 15px;
+    }
 
-      margin-top: 16px;
+    button,
+    .map-btn {
+      padding: 11px 15px;
+      border: none;
+      border-radius: 9px;
+      background: #4f46e5;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    button:hover,
+    .map-btn:hover {
+      background: #3730a3;
     }
 
     .secondary-btn {
@@ -227,6 +197,14 @@
       background: #dfe2ff;
     }
 
+    .direction-btn {
+      background: #059669;
+    }
+
+    .direction-btn:hover {
+      background: #047857;
+    }
+
     .danger-btn {
       background: #fee2e2;
       color: #b91c1c;
@@ -236,262 +214,181 @@
       background: #fecaca;
     }
 
-    /* ================= LOADING ================= */
-
-    .loading {
-
-      background: white;
-
-      padding: 25px;
-
-      border-radius: 12px;
-
+    .demo {
       text-align: center;
-
-      color: #667085;
-
-      margin-bottom: 15px;
+      color: #8a93a3;
+      font-size: 13px;
+      margin-top: 25px;
+      line-height: 1.6;
     }
 
-    /* ================= EMPTY ================= */
-
-    .empty-message {
-
-      background: white;
-
-      padding: 30px;
-
-      text-align: center;
-
-      border-radius: 12px;
-
-      color: #667085;
-    }
-
-    /* ================= DASHBOARD ================= */
+    /* DASHBOARD */
 
     .dashboard-grid {
-
       display: grid;
-
-      grid-template-columns:
-        repeat(5, 1fr);
-
+      grid-template-columns: repeat(5, 1fr);
       gap: 12px;
     }
 
     .dashboard-card {
-
       background: white;
-
       padding: 18px 10px;
-
       border-radius: 12px;
-
       text-align: center;
-
       box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-
       cursor: pointer;
-
       transition: 0.2s;
     }
 
     .dashboard-card:hover {
-
       transform: translateY(-2px);
-
-      box-shadow:
-        0 6px 16px rgba(0,0,0,0.10);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.10);
     }
 
     .dashboard-card h3 {
-
       font-size: 13px;
-
       margin-bottom: 8px;
-
       color: #667085;
     }
 
     .dashboard-card p {
-
       font-size: 25px;
-
       font-weight: bold;
     }
 
-    /* ================= SAVED ================= */
+    /* SAVED LEADS */
 
     .saved-controls {
-
       display: flex;
-
       gap: 10px;
-
       margin-bottom: 20px;
-
       flex-wrap: wrap;
     }
 
     #savedSearch {
-
       flex: 1;
-
       min-width: 220px;
-
       padding: 12px;
-
-      border:
-        1px solid #d8dce5;
-
+      border: 1px solid #d8dce5;
       border-radius: 9px;
     }
 
     #savedStatus {
-
       padding: 12px;
-
-      border:
-        1px solid #d8dce5;
-
+      border: 1px solid #d8dce5;
       border-radius: 9px;
-
       background: white;
     }
 
     #savedList {
-
       display: grid;
-
       gap: 15px;
     }
 
     #savedList .lead {
-
       margin-bottom: 0;
+      border: 1px solid #e5e7eb;
     }
 
     #savedList select {
-
       margin-top: 12px;
-
       padding: 9px;
-
-      border:
-        1px solid #d8dce5;
-
+      border: 1px solid #d8dce5;
       border-radius: 8px;
-
       background: white;
     }
 
     .note-box {
-
       width: 100%;
-
       min-height: 70px;
-
       margin-top: 12px;
-
       padding: 10px;
-
-      border:
-        1px solid #d8dce5;
-
+      border: 1px solid #d8dce5;
       border-radius: 9px;
-
       resize: vertical;
     }
 
     .saved-note {
-
       margin-top: 12px;
-
       padding: 10px;
-
       background: #f8f9fc;
-
       border-radius: 8px;
-
       color: #4b5563;
     }
 
     .updated {
-
       font-size: 12px;
-
       color: #98a2b3 !important;
-
       margin-top: 10px !important;
     }
 
-    /* ================= MOBILE ================= */
+    .empty-message {
+      background: white;
+      padding: 25px;
+      text-align: center;
+      border-radius: 12px;
+      color: #667085;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 30px;
+      background: white;
+      border-radius: 12px;
+      color: #4f46e5;
+      font-weight: bold;
+    }
+
+    /* MOBILE */
 
     @media (max-width: 750px) {
 
       .navbar {
-
         flex-direction: column;
-
         text-align: center;
       }
 
       .hero h1 {
-
         font-size: 32px;
       }
 
-      .dashboard-grid {
-
-        grid-template-columns:
-          repeat(2, 1fr);
-      }
-
       .search-box {
-
-        flex-direction: column;
+        grid-template-columns: 1fr;
       }
 
-      .search-box select,
-      .search-box input,
-      .search-box button {
+      .business-name,
+      .search-button {
+        grid-column: auto;
+      }
 
-        width: 100%;
+      .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
     @media (max-width: 450px) {
 
       .dashboard-grid {
-
         grid-template-columns: 1fr;
       }
 
       .results,
       .dashboard {
-
         padding: 15px;
       }
 
       .lead-actions button,
       .lead-actions a {
-
         width: 100%;
-
         text-align: center;
       }
     }
-
   </style>
-
 </head>
-
 
 <body>
 
-
-  <!-- ================= NAVBAR ================= -->
+  <!-- NAVBAR -->
 
   <nav class="navbar">
 
@@ -500,13 +397,13 @@
     </div>
 
     <div class="tag">
-      Real Business Lead Discovery
+      B2B Lead Discovery
     </div>
 
   </nav>
 
 
-  <!-- ================= HERO ================= -->
+  <!-- SEARCH -->
 
   <section class="hero">
 
@@ -518,54 +415,16 @@
       Discover real businesses using OpenStreetMap data.
     </p>
 
-
     <div class="search-box">
 
       <!-- CITY -->
 
-      <select id="city">
-
-        <option value="Pune">
-          Pune
-        </option>
-
-        <option value="Mumbai">
-          Mumbai
-        </option>
-
-        <option value="Bangalore">
-          Bangalore
-        </option>
-
-        <option value="Delhi">
-          Delhi
-        </option>
-
-        <option value="Hyderabad">
-          Hyderabad
-        </option>
-
-        <option value="Chennai">
-          Chennai
-        </option>
-
-        <option value="Ahmedabad">
-          Ahmedabad
-        </option>
-
-        <option value="Kolkata">
-          Kolkata
-        </option>
-
-        <option value="Nagpur">
-          Nagpur
-        </option>
-
-        <option value="Nashik">
-          Nashik
-        </option>
-
-      </select>
+      <input
+        id="city"
+        type="text"
+        value="Pune"
+        placeholder="🏙️ Enter city e.g. Pune, Mumbai, Delhi"
+      >
 
 
       <!-- CATEGORY -->
@@ -584,16 +443,12 @@
           🍔 Fast Food
         </option>
 
-        <option value="bakery">
-          🥐 Bakeries
-        </option>
-
         <option value="salon">
           💇 Salons
         </option>
 
-        <option value="beauty">
-          💅 Beauty & Spa
+        <option value="medical">
+          💊 Medical Stores / Pharmacies
         </option>
 
         <option value="hospital">
@@ -604,16 +459,16 @@
           🩺 Clinics
         </option>
 
+        <option value="veterinary">
+          🐾 Vet Clinics
+        </option>
+
         <option value="dentist">
           🦷 Dentists
         </option>
 
-        <option value="veterinary">
-          🐶 Vet Clinics
-        </option>
-
-        <option value="pharmacy">
-          💊 Medicals / Pharmacies
+        <option value="garage">
+          🚗 Garages / Car Repair
         </option>
 
         <option value="school">
@@ -621,43 +476,19 @@
         </option>
 
         <option value="college">
-          🎓 Colleges
-        </option>
-
-        <option value="kindergarten">
-          🧒 Kindergartens
+          🎓 Colleges / Universities
         </option>
 
         <option value="gym">
-          🏋️ Gyms
+          🏋️ Gyms / Fitness
         </option>
 
         <option value="hotel">
           🏨 Hotels
         </option>
 
-        <option value="bank">
-          🏦 Banks
-        </option>
-
-        <option value="atm">
-          💳 ATMs
-        </option>
-
-        <option value="fuel">
-          ⛽ Petrol Pumps
-        </option>
-
-        <option value="car_repair">
-          🔧 Garages / Car Repair
-        </option>
-
-        <option value="car_dealer">
-          🚗 Car Dealers
-        </option>
-
-        <option value="motorcycle">
-          🏍️ Bike Dealers
+        <option value="bakery">
+          🥐 Bakeries
         </option>
 
         <option value="supermarket">
@@ -669,57 +500,43 @@
         </option>
 
         <option value="electronics">
-          📱 Electronics
+          💻 Electronics Stores
         </option>
 
-        <option value="hardware">
-          🔨 Hardware Stores
+        <option value="bank">
+          🏦 Banks
         </option>
 
-        <option value="furniture">
-          🛋️ Furniture Stores
+        <option value="car_dealer">
+          🚘 Car Dealers
         </option>
 
-        <option value="jewellery">
-          💎 Jewellery
+        <option value="beauty">
+          💄 Beauty Stores
         </option>
 
-        <option value="real_estate">
-          🏠 Real Estate
-        </option>
-
-        <option value="lawyer">
-          ⚖️ Lawyers
-        </option>
-
-        <option value="accountant">
-          📊 Accountants
-        </option>
-
-        <option value="travel">
-          ✈️ Travel Agencies
-        </option>
-
-        <option value="hotel">
-          🏨 Hotels
+        <option value="all">
+          🔎 All Businesses
         </option>
 
       </select>
 
 
-      <!-- KEYWORD -->
+      <!-- OPTIONAL BUSINESS NAME -->
 
       <input
-        id="keyword"
+        class="business-name"
+        id="businessName"
         type="text"
-        placeholder="🔎 Optional business name / area"
+        placeholder="🔎 Optional business name or idea — e.g. McDonald's, Apollo, cafe"
       >
 
 
-      <button onclick="findLeads()">
-
-        FIND REAL LEADS
-
+      <button
+        class="search-button"
+        onclick="findLeads()"
+      >
+        🔎 FIND REAL LEADS
       </button>
 
     </div>
@@ -727,21 +544,35 @@
   </section>
 
 
-  <!-- ================= RESULTS ================= -->
+  <!-- SEARCH RESULTS -->
 
-  <section
-    class="results"
-    id="results"
-  >
+  <section class="results" id="results">
 
     <h2 id="resultTitle"></h2>
 
     <div id="leadList"></div>
 
+    <p class="demo">
+
+      Data source:
+      <strong>OpenStreetMap</strong> /
+      Overpass API.
+
+      <br>
+
+      Contact numbers and websites are shown only when publicly mapped
+      in the source.
+
+      <br>
+
+      © OpenStreetMap contributors
+
+    </p>
+
   </section>
 
 
-  <!-- ================= DASHBOARD ================= -->
+  <!-- DASHBOARD -->
 
   <section class="dashboard">
 
@@ -749,9 +580,7 @@
       📊 Lead Dashboard
     </h2>
 
-
     <div class="dashboard-grid">
-
 
       <div
         class="dashboard-card"
@@ -832,13 +661,12 @@
 
       </div>
 
-
     </div>
 
   </section>
 
 
-  <!-- ================= SAVED LEADS ================= -->
+  <!-- SAVED LEADS -->
 
   <section
     class="results"
@@ -897,446 +725,152 @@
 
   <script>
 
+    /*
+      ==========================================
+      LEADFINDER INDIA
+      REAL OPENSTREETMAP DATA
+      ==========================================
+    */
 
-    /* =====================================================
-       OVERPASS API
-       ===================================================== */
+
+    /*
+      API ENDPOINTS
+    */
+
+    const NOMINATIM_URL =
+      "https://nominatim.openstreetmap.org/search";
 
     const OVERPASS_URL =
       "https://overpass-api.de/api/interpreter";
 
 
-    /* =====================================================
-       CATEGORY → OPENSTREETMAP TAGS
-       ===================================================== */
+    /*
+      CATEGORY -> OPENSTREETMAP TAGS
+    */
 
     const categoryQueries = {
 
+      restaurant:
+        '["amenity"="restaurant"]',
 
-      restaurant: `
-        nwr["amenity"="restaurant"](area.searchArea);
-      `,
+      cafe:
+        '["amenity"="cafe"]',
 
+      fast_food:
+        '["amenity"="fast_food"]',
 
-      cafe: `
-        nwr["amenity"="cafe"](area.searchArea);
-      `,
+      salon:
+        '["shop"~"hairdresser|beauty"]',
 
+      medical:
+        '["amenity"="pharmacy"]',
 
-      fast_food: `
-        nwr["amenity"="fast_food"](area.searchArea);
-      `,
+      hospital:
+        '["amenity"="hospital"]',
 
+      clinic:
+        '["amenity"~"clinic|doctors"]',
 
-      bakery: `
-        nwr["shop"="bakery"](area.searchArea);
-      `,
+      veterinary:
+        '["amenity"="veterinary"]',
 
+      dentist:
+        '["amenity"="dentist"]',
 
-      salon: `
-        nwr["shop"="hairdresser"](area.searchArea);
-      `,
+      garage:
+        '["shop"="car_repair"]',
 
+      school:
+        '["amenity"="school"]',
 
-      beauty: `
-        nwr["shop"="beauty"](area.searchArea);
-      `,
+      college:
+        '["amenity"~"college|university"]',
 
+      gym:
+        '["leisure"="fitness_centre"]',
 
-      hospital: `
-        nwr["amenity"="hospital"](area.searchArea);
-      `,
+      hotel:
+        '["tourism"="hotel"]',
 
+      bakery:
+        '["shop"="bakery"]',
 
-      clinic: `
-        nwr["amenity"="clinic"](area.searchArea);
-      `,
+      supermarket:
+        '["shop"="supermarket"]',
 
+      clothing:
+        '["shop"="clothes"]',
 
-      dentist: `
-        nwr["amenity"="dentist"](area.searchArea);
-      `,
+      electronics:
+        '["shop"="electronics"]',
 
+      bank:
+        '["amenity"="bank"]',
 
-      veterinary: `
-        nwr["amenity"="veterinary"](area.searchArea);
-      `,
+      car_dealer:
+        '["shop"="car"]',
 
-
-      pharmacy: `
-        nwr["amenity"="pharmacy"](area.searchArea);
-      `,
-
-
-      school: `
-        nwr["amenity"="school"](area.searchArea);
-      `,
-
-
-      college: `
-        nwr["amenity"="college"](area.searchArea);
-      `,
-
-
-      kindergarten: `
-        nwr["amenity"="kindergarten"](area.searchArea);
-      `,
-
-
-      gym: `
-        nwr["leisure"="fitness_centre"](area.searchArea);
-      `,
-
-
-      hotel: `
-        nwr["tourism"="hotel"](area.searchArea);
-      `,
-
-
-      bank: `
-        nwr["amenity"="bank"](area.searchArea);
-      `,
-
-
-      atm: `
-        nwr["amenity"="atm"](area.searchArea);
-      `,
-
-
-      fuel: `
-        nwr["amenity"="fuel"](area.searchArea);
-      `,
-
-
-      car_repair: `
-        nwr["shop"="car_repair"](area.searchArea);
-      `,
-
-
-      car_dealer: `
-        nwr["shop"="car"](area.searchArea);
-      `,
-
-
-      motorcycle: `
-        nwr["shop"="motorcycle"](area.searchArea);
-      `,
-
-
-      supermarket: `
-        nwr["shop"="supermarket"](area.searchArea);
-      `,
-
-
-      clothing: `
-        nwr["shop"="clothes"](area.searchArea);
-      `,
-
-
-      electronics: `
-        nwr["shop"="electronics"](area.searchArea);
-      `,
-
-
-      hardware: `
-        nwr["shop"="hardware"](area.searchArea);
-      `,
-
-
-      furniture: `
-        nwr["shop"="furniture"](area.searchArea);
-      `,
-
-
-      jewellery: `
-        nwr["shop"="jewelry"](area.searchArea);
-      `,
-
-
-      real_estate: `
-        nwr["office"="estate_agent"](area.searchArea);
-      `,
-
-
-      lawyer: `
-        nwr["office"="lawyer"](area.searchArea);
-      `,
-
-
-      accountant: `
-        nwr["office"="accountant"](area.searchArea);
-      `,
-
-
-      travel: `
-        nwr["shop"="travel_agency"](area.searchArea);
-      `
+      beauty:
+        '["shop"="beauty"]'
 
     };
 
 
-    /* =====================================================
-       CATEGORY NAMES
-       ===================================================== */
+    /*
+      ESCAPE REGEX SPECIAL CHARACTERS
+    */
 
-    const categoryNames = {
+    function escapeRegex(text) {
 
-      restaurant: "Restaurants",
+      return text.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+      );
 
-      cafe: "Cafes",
+    }
 
-      fast_food: "Fast Food",
 
-      bakery: "Bakeries",
+    /*
+      GET CITY FROM NOMINATIM
+    */
 
-      salon: "Salons",
+    async function getCityLocation(city) {
 
-      beauty: "Beauty & Spa",
+      const params =
+        new URLSearchParams({
 
-      hospital: "Hospitals",
+          q:
+            city + ", India",
 
-      clinic: "Clinics",
+          format:
+            "json",
 
-      dentist: "Dentists",
+          limit:
+            "1",
 
-      veterinary: "Vet Clinics",
+          countrycodes:
+            "in",
 
-      pharmacy: "Medicals / Pharmacies",
+          addressdetails:
+            "1"
 
-      school: "Schools",
+        });
 
-      college: "Colleges",
 
-      kindergarten: "Kindergartens",
+      const response =
+        await fetch(
+          NOMINATIM_URL +
+          "?" +
+          params.toString(),
+          {
 
-      gym: "Gyms",
+            headers: {
 
-      hotel: "Hotels",
+              "Accept":
+                "application/json",
 
-      bank: "Banks",
-
-      atm: "ATMs",
-
-      fuel: "Petrol Pumps",
-
-      car_repair: "Garages / Car Repair",
-
-      car_dealer: "Car Dealers",
-
-      motorcycle: "Bike Dealers",
-
-      supermarket: "Supermarkets",
-
-      clothing: "Clothing Stores",
-
-      electronics: "Electronics",
-
-      hardware: "Hardware Stores",
-
-      furniture: "Furniture Stores",
-
-      jewellery: "Jewellery",
-
-      real_estate: "Real Estate",
-
-      lawyer: "Lawyers",
-
-      accountant: "Accountants",
-
-      travel: "Travel Agencies"
-
-    };
-
-
-    /* =====================================================
-       FIND REAL LEADS
-       ===================================================== */
-
-    async function findLeads() {
-
-
-      const city =
-        document.getElementById("city").value;
-
-
-      const category =
-        document.getElementById("category").value;
-
-
-      const keyword =
-        document.getElementById("keyword").value
-          .trim()
-          .toLowerCase();
-
-
-      const results =
-        document.getElementById("results");
-
-
-      const title =
-        document.getElementById("resultTitle");
-
-
-      const list =
-        document.getElementById("leadList");
-
-
-      title.innerText =
-        `${city} → ${categoryNames[category]}`;
-
-
-      results.style.display = "block";
-
-
-      list.innerHTML = `
-
-        <div class="loading">
-
-          🔎 Searching OpenStreetMap for real businesses...
-
-          <br><br>
-
-          Please wait...
-
-        </div>
-
-      `;
-
-
-      results.scrollIntoView({
-        behavior: "smooth"
-      });
-
-
-      const query = `
-
-        [out:json][timeout:60];
-
-        area["name"="${city}"]["boundary"="administrative"]->.searchArea;
-
-        (
-          ${categoryQueries[category]}
-        );
-
-        out center tags;
-
-      `;
-
-
-      try {
-
-
-        const response =
-          await fetch(
-            OVERPASS_URL,
-            {
-
-              method: "POST",
-
-              body:
-                "data=" +
-                encodeURIComponent(query)
-
-            }
-          );
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            "Overpass server error"
-          );
-
-        }
-
-
-        const data =
-          await response.json();
-
-
-        let businesses =
-          data.elements || [];
-
-
-        /* =================================================
-           REMOVE ITEMS WITHOUT NAMES
-           ================================================= */
-
-        businesses =
-          businesses.filter(
-            business =>
-              business.tags &&
-              business.tags.name
-          );
-
-
-        /* =================================================
-           SEARCH KEYWORD
-           ================================================= */
-
-        if (keyword) {
-
-          businesses =
-            businesses.filter(
-              business => {
-
-                const name =
-                  (
-                    business.tags.name ||
-                    ""
-                  ).toLowerCase();
-
-
-                const area =
-                  (
-                    business.tags["addr:suburb"] ||
-                    business.tags["addr:city"] ||
-                    ""
-                  ).toLowerCase();
-
-
-                return (
-
-                  name.includes(keyword)
-
-                  ||
-
-                  area.includes(keyword)
-
-                );
-
-              }
-            );
-
-        }
-
-
-        /* =================================================
-           REMOVE DUPLICATES
-           ================================================= */
-
-        const unique =
-          [];
-
-        const seen =
-          new Set();
-
-
-        businesses.forEach(
-          business => {
-
-            const name =
-              business.tags.name
-                .toLowerCase();
-
-
-            if (!seen.has(name)) {
-
-              seen.add(name);
-
-              unique.push(
-                business
-              );
+              "Accept-Language":
+                "en"
 
             }
 
@@ -1344,26 +878,780 @@
         );
 
 
-        /* =================================================
-           LIMIT RESULTS
-           ================================================= */
+      if (!response.ok) {
 
-        businesses =
-          unique.slice(0, 100);
+        throw new Error(
+          "City search failed."
+        );
+
+      }
 
 
-        if (businesses.length === 0) {
+      const data =
+        await response.json();
+
+
+      if (
+        !data ||
+        data.length === 0
+      ) {
+
+        throw new Error(
+          "City not found."
+        );
+
+      }
+
+
+      return data[0];
+
+    }
+
+
+    /*
+      BUILD OVERPASS QUERY
+    */
+
+    function buildOverpassQuery(
+      bbox,
+      category,
+      businessName
+    ) {
+
+      /*
+        Nominatim bbox order:
+        south, north, west, east
+      */
+
+      const south =
+        parseFloat(bbox[0]);
+
+      const north =
+        parseFloat(bbox[1]);
+
+      const west =
+        parseFloat(bbox[2]);
+
+      const east =
+        parseFloat(bbox[3]);
+
+
+      let categoryFilter = "";
+
+
+      /*
+        ALL BUSINESSES
+      */
+
+      if (category === "all") {
+
+        categoryFilter = `
+
+          (
+            nwr["shop"]["name"];
+            nwr["amenity"]["name"];
+            nwr["tourism"]["name"];
+            nwr["leisure"]["name"];
+            nwr["office"]["name"];
+          );
+
+        `;
+
+      }
+
+      else {
+
+        const tag =
+          categoryQueries[category];
+
+
+        categoryFilter = `
+
+          nwr${tag};
+
+        `;
+
+      }
+
+
+      /*
+        OPTIONAL BUSINESS NAME / IDEA
+      */
+
+      let nameFilter = "";
+
+
+      if (
+        businessName &&
+        businessName.trim() !== ""
+      ) {
+
+        const safeName =
+          escapeRegex(
+            businessName.trim()
+          );
+
+
+        nameFilter =
+          `[name~"${safeName}",i]`;
+
+      }
+
+
+      /*
+        FINAL QUERY
+      */
+
+      return `
+
+        [out:json][timeout:60];
+
+        (
+
+          ${
+
+            category === "all"
+
+            ? `
+              nwr["shop"]["name"]
+                (${south},${west},${north},${east});
+
+              nwr["amenity"]["name"]
+                (${south},${west},${north},${east});
+
+              nwr["tourism"]["name"]
+                (${south},${west},${north},${east});
+
+              nwr["leisure"]["name"]
+                (${south},${west},${north},${east});
+
+              nwr["office"]["name"]
+                (${south},${west},${north},${east});
+            `
+
+            : `
+              nwr${categoryQueries[category]}${nameFilter}
+                (${south},${west},${north},${east});
+            `
+
+          }
+
+        );
+
+        out center tags;
+
+      `;
+
+    }
+
+
+    /*
+      SEARCH OVERPASS
+    */
+
+    async function searchOverpass(
+      query
+    ) {
+
+      const response =
+        await fetch(
+          OVERPASS_URL,
+          {
+
+            method:
+              "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/x-www-form-urlencoded"
+
+            },
+
+            body:
+              "data=" +
+              encodeURIComponent(query)
+
+          }
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          "Business data server is busy. Please try again."
+        );
+
+      }
+
+
+      return await response.json();
+
+    }
+
+
+    /*
+      GET LATITUDE / LONGITUDE
+    */
+
+    function getCoordinates(element) {
+
+      if (
+        element.type === "node" &&
+        element.lat &&
+        element.lon
+      ) {
+
+        return {
+
+          lat:
+            element.lat,
+
+          lon:
+            element.lon
+
+        };
+
+      }
+
+
+      if (
+        element.center &&
+        element.center.lat &&
+        element.center.lon
+      ) {
+
+        return {
+
+          lat:
+            element.center.lat,
+
+          lon:
+            element.center.lon
+
+        };
+
+      }
+
+
+      return null;
+
+    }
+
+
+    /*
+      GET CATEGORY LABEL
+    */
+
+    function getCategoryLabel(tags) {
+
+      if (!tags) {
+        return "Business";
+      }
+
+
+      if (tags.amenity) {
+
+        const map = {
+
+          restaurant:
+            "Restaurant",
+
+          cafe:
+            "Cafe",
+
+          fast_food:
+            "Fast Food",
+
+          pharmacy:
+            "Medical / Pharmacy",
+
+          hospital:
+            "Hospital",
+
+          clinic:
+            "Clinic",
+
+          doctors:
+            "Doctors",
+
+          veterinary:
+            "Veterinary Clinic",
+
+          dentist:
+            "Dentist",
+
+          school:
+            "School",
+
+          college:
+            "College / University",
+
+          bank:
+            "Bank"
+
+        };
+
+
+        if (map[tags.amenity]) {
+
+          return map[
+            tags.amenity
+          ];
+
+        }
+
+      }
+
+
+      if (tags.shop) {
+
+        const map = {
+
+          hairdresser:
+            "Hair Salon",
+
+          beauty:
+            "Beauty",
+
+          car_repair:
+            "Garage / Car Repair",
+
+          bakery:
+            "Bakery",
+
+          supermarket:
+            "Supermarket",
+
+          clothes:
+            "Clothing Store",
+
+          electronics:
+            "Electronics",
+
+          car:
+            "Car Dealer"
+
+        };
+
+
+        if (map[tags.shop]) {
+
+          return map[
+            tags.shop
+          ];
+
+        }
+
+      }
+
+
+      if (tags.tourism === "hotel") {
+
+        return "Hotel";
+
+      }
+
+
+      if (
+        tags.leisure ===
+        "fitness_centre"
+      ) {
+
+        return "Gym / Fitness";
+
+      }
+
+
+      return "Business";
+
+    }
+
+
+    /*
+      GET PHONE
+    */
+
+    function getPhone(tags) {
+
+      if (!tags) {
+
+        return null;
+
+      }
+
+
+      return (
+
+        tags.phone ||
+
+        tags["contact:phone"] ||
+
+        tags["contact:mobile"] ||
+
+        null
+
+      );
+
+    }
+
+
+    /*
+      GET WEBSITE
+    */
+
+    function getWebsite(tags) {
+
+      if (!tags) {
+
+        return null;
+
+      }
+
+
+      return (
+
+        tags.website ||
+
+        tags["contact:website"] ||
+
+        null
+
+      );
+
+    }
+
+
+    /*
+      GET ADDRESS
+    */
+
+    function getAddress(tags) {
+
+      if (!tags) {
+
+        return "Location available on map";
+
+      }
+
+
+      const parts = [];
+
+
+      if (
+        tags["addr:housenumber"]
+      ) {
+
+        parts.push(
+          tags["addr:housenumber"]
+        );
+
+      }
+
+
+      if (
+        tags["addr:street"]
+      ) {
+
+        parts.push(
+          tags["addr:street"]
+        );
+
+      }
+
+
+      if (
+        tags["addr:suburb"]
+      ) {
+
+        parts.push(
+          tags["addr:suburb"]
+        );
+
+      }
+
+
+      if (
+        tags["addr:city"]
+      ) {
+
+        parts.push(
+          tags["addr:city"]
+        );
+
+      }
+
+
+      if (
+        tags["addr:postcode"]
+      ) {
+
+        parts.push(
+          tags["addr:postcode"]
+        );
+
+      }
+
+
+      if (
+        parts.length === 0
+      ) {
+
+        return "Location available on map";
+
+      }
+
+
+      return parts.join(", ");
+
+    }
+
+
+    /*
+      CREATE OSM MAP URL
+    */
+
+    function getMapURL(
+      lat,
+      lon
+    ) {
+
+      return (
+
+        "https://www.openstreetmap.org/" +
+
+        "?mlat=" +
+        encodeURIComponent(lat) +
+
+        "&mlon=" +
+        encodeURIComponent(lon) +
+
+        "#map=19/" +
+        encodeURIComponent(lat) +
+
+        "/" +
+        encodeURIComponent(lon)
+
+      );
+
+    }
+
+
+    /*
+      CREATE DIRECTIONS URL
+    */
+
+    function getDirectionsURL(
+      lat,
+      lon
+    ) {
+
+      return (
+
+        "https://www.google.com/maps/dir/?api=1" +
+
+        "&destination=" +
+
+        encodeURIComponent(
+          lat + "," + lon
+        )
+
+      );
+
+    }
+
+
+    /*
+      MAIN SEARCH
+    */
+
+    async function findLeads() {
+
+      const city =
+        document.getElementById(
+          "city"
+        ).value.trim();
+
+
+      const category =
+        document.getElementById(
+          "category"
+        ).value;
+
+
+      const businessName =
+        document.getElementById(
+          "businessName"
+        ).value.trim();
+
+
+      const results =
+        document.getElementById(
+          "results"
+        );
+
+
+      const title =
+        document.getElementById(
+          "resultTitle"
+        );
+
+
+      const list =
+        document.getElementById(
+          "leadList"
+        );
+
+
+      if (!city) {
+
+        alert(
+          "Please enter a city first."
+        );
+
+        return;
+
+      }
+
+
+      results.style.display =
+        "block";
+
+
+      results.scrollIntoView({
+        behavior:
+          "smooth"
+      });
+
+
+      title.innerText =
+        "🔎 Searching...";
+
+
+      list.innerHTML = `
+
+        <div class="loading">
+
+          🌍 Finding ${category === "all"
+            ? "businesses"
+            : document
+                .getElementById("category")
+                .selectedOptions[0]
+                .text}
+
+          in ${city}...
+
+        </div>
+
+      `;
+
+
+      try {
+
+        /*
+          STEP 1:
+          FIND CITY
+        */
+
+        const location =
+          await getCityLocation(
+            city
+          );
+
+
+        /*
+          STEP 2:
+          GET BOUNDING BOX
+        */
+
+        const bbox =
+          location.boundingbox;
+
+
+        if (
+          !bbox ||
+          bbox.length !== 4
+        ) {
+
+          throw new Error(
+            "Could not determine the city area."
+          );
+
+        }
+
+
+        /*
+          STEP 3:
+          BUILD QUERY
+        */
+
+        const query =
+          buildOverpassQuery(
+            bbox,
+            category,
+            businessName
+          );
+
+
+        /*
+          STEP 4:
+          GET REAL BUSINESSES
+        */
+
+        const data =
+          await searchOverpass(
+            query
+          );
+
+
+        /*
+          STEP 5:
+          SHOW RESULTS
+        */
+
+        title.innerText =
+
+          `${city} → ` +
+
+          `${
+            document
+              .getElementById(
+                "category"
+              )
+              .selectedOptions[0]
+              .text
+          }` +
+
+          (
+
+            businessName
+
+            ? ` → "${businessName}"`
+
+            : ""
+
+          );
+
+
+        list.innerHTML = "";
+
+
+        if (
+          !data.elements ||
+          data.elements.length === 0
+        ) {
 
           list.innerHTML = `
 
             <div class="empty-message">
 
-              😕 No businesses found.
+              😕 No matching businesses found.
 
               <br><br>
 
               Try another category,
-              city or keyword.
+              another city,
+              or remove the business-name search.
 
             </div>
 
@@ -1374,18 +1662,110 @@
         }
 
 
-        /* =================================================
-           DISPLAY RESULTS
-           ================================================= */
+        /*
+          REMOVE DUPLICATES
+        */
 
-        list.innerHTML = "";
+        const unique = [];
 
 
-        businesses.forEach(
-          business => {
+        const seen = new Set();
+
+
+        data.elements.forEach(
+          element => {
 
             const tags =
-              business.tags || {};
+              element.tags || {};
+
+
+            const name =
+              tags.name;
+
+
+            if (!name) {
+
+              return;
+
+            }
+
+
+            const coordinates =
+              getCoordinates(
+                element
+              );
+
+
+            if (!coordinates) {
+
+              return;
+
+            }
+
+
+            const key =
+
+              name.toLowerCase() +
+
+              "|" +
+
+              coordinates.lat +
+
+              "|" +
+
+              coordinates.lon;
+
+
+            if (
+              seen.has(key)
+            ) {
+
+              return;
+
+            }
+
+
+            seen.add(key);
+
+
+            unique.push({
+
+              element:
+                element,
+
+              tags:
+                tags,
+
+              coordinates:
+                coordinates
+
+            });
+
+          }
+        );
+
+
+        /*
+          LIMIT INITIAL DISPLAY
+          TO KEEP THE PAGE FAST
+        */
+
+        const resultsToShow =
+          unique.slice(
+            0,
+            100
+          );
+
+
+        resultsToShow.forEach(
+          item => {
+
+            const tags =
+              item.tags;
+
+
+            const coords =
+              item.coordinates;
 
 
             const name =
@@ -1393,176 +1773,89 @@
               "Unnamed Business";
 
 
-            /* ============================================
-               PHONE
-               ============================================ */
-
             const phone =
-              tags.phone ||
-              tags["contact:phone"] ||
-              "Not available";
+              getPhone(tags);
 
-
-            /* ============================================
-               WEBSITE
-               ============================================ */
 
             const website =
-              tags.website ||
-              tags["contact:website"] ||
-              "";
-
-
-            /* ============================================
-               ADDRESS
-               ============================================ */
-
-            const addressParts = [
-
-              tags["addr:housenumber"],
-
-              tags["addr:street"],
-
-              tags["addr:suburb"],
-
-              tags["addr:city"],
-
-              tags["addr:postcode"]
-
-            ].filter(Boolean);
+              getWebsite(tags);
 
 
             const address =
-              addressParts.length > 0
-
-                ? addressParts.join(", ")
-
-                : "Address not available";
+              getAddress(tags);
 
 
-            /* ============================================
-               COORDINATES
-               ============================================ */
-
-            let lat =
-              business.lat;
-
-            let lon =
-              business.lon;
+            const categoryLabel =
+              getCategoryLabel(
+                tags
+              );
 
 
-            if (
-              !lat &&
-              business.center
-            ) {
-
-              lat =
-                business.center.lat;
-
-              lon =
-                business.center.lon;
-
-            }
+            const mapURL =
+              getMapURL(
+                coords.lat,
+                coords.lon
+              );
 
 
-            /* ============================================
-               OSM ID
-               ============================================ */
-
-            const osmType =
-              business.type;
-
-
-            const osmId =
-              business.id;
+            const directionsURL =
+              getDirectionsURL(
+                coords.lat,
+                coords.lon
+              );
 
 
-            /* ============================================
-               EXACT OSM MAP
-               ============================================ */
+            const phoneHTML =
 
-            let mapUrl =
-              "#";
+              phone
 
+              ? `
 
-            let directionUrl =
-              "#";
+                <p>
+                  📞
+                  <a
+                    href="tel:${phone}"
+                    style="color:#4f46e5;font-weight:bold;"
+                  >
+                    ${phone}
+                  </a>
+                </p>
 
+              `
 
-            if (lat && lon) {
+              : `
 
-              mapUrl =
-                `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=19/${lat}/${lon}`;
+                <p>
+                  📞 Not available
+                </p>
 
-
-              /* Google Maps directions */
-
-              directionUrl =
-                `https://www.google.com/maps/dir/?api=1&destination=${lat},${lon}`;
-
-            }
-
-
-            /* ============================================
-               WEBSITE HTML
-               ============================================ */
-
-            let websiteHTML =
-              "";
+              `;
 
 
-            if (website) {
+            const websiteHTML =
 
-              let safeWebsite =
-                website;
+              website
 
-
-              if (
-                !safeWebsite.startsWith(
-                  "http://"
-                ) &&
-                !safeWebsite.startsWith(
-                  "https://"
-                )
-              ) {
-
-                safeWebsite =
-                  "https://" +
-                  safeWebsite;
-
-              }
-
-
-              websiteHTML = `
+              ? `
 
                 <p>
                   🌐
 
                   <a
-                    href="${safeWebsite}"
+                    href="${website}"
                     target="_blank"
                     rel="noopener noreferrer"
+                    style="color:#4f46e5;"
                   >
                     Website
                   </a>
+
                 </p>
 
-              `;
+              `
 
-            }
+              : "";
 
-
-            /* ============================================
-               OSM LINK
-               ============================================ */
-
-            const osmUrl =
-              `https://www.openstreetmap.org/${osmType}/${osmId}`;
-
-
-            /* ============================================
-               CARD
-               ============================================ */
 
             list.innerHTML += `
 
@@ -1573,132 +1866,95 @@
                 </h3>
 
 
+                <span
+                  class="category-label"
+                >
+                  ${escapeHTML(
+                    categoryLabel
+                  )}
+                </span>
+
+
                 <p>
                   📍
                   ${escapeHTML(address)}
                 </p>
 
 
-                <p>
-                  📞
-                  ${escapeHTML(phone)}
-                </p>
+                ${phoneHTML}
 
 
                 ${websiteHTML}
 
 
-                <p class="source">
+                <p>
+                  🗺️
+                  Exact location:
+                  ${coords.lat.toFixed(6)},
+                  ${coords.lon.toFixed(6)}
+                </p>
 
+
+                <p>
                   🗺️ Source:
                   OpenStreetMap
-
                 </p>
 
 
                 <div class="lead-actions">
 
-
-                  <!-- DETAILS -->
-
                   <button
                     onclick='showDetails(
                       ${JSON.stringify({
                         name,
-                        phone,
                         address,
+                        phone,
                         website,
-                        lat,
-                        lon,
-                        osmUrl
+                        categoryLabel,
+                        lat: coords.lat,
+                        lon: coords.lon
                       })}
                     )'
                   >
-
                     👀 View Details
-
                   </button>
 
-
-                  <!-- SAVE -->
 
                   <button
-                    class="secondary-btn"
-                    onclick='saveLead(
+                    onclick='saveRealLead(
                       ${JSON.stringify({
                         name,
-                        phone,
                         address,
+                        phone,
                         website,
-                        lat,
-                        lon,
-                        osmUrl
+                        category: categoryLabel,
+                        lat: coords.lat,
+                        lon: coords.lon
                       })}
                     )'
                   >
-
                     ⭐ Save Lead
-
                   </button>
 
 
-                  <!-- EXACT LOCATION -->
-
-                  ${
-                    lat && lon
-
-                    ?
-
-                    `
-
-                    <a
-                      class="map-btn"
-                      href="${mapUrl}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-
-                      🗺️ View Location
-
-                    </a>
-
-                    `
-
-                    :
-
-                    ""
-
-                  }
+                  <a
+                    class="map-btn secondary-btn"
+                    href="${mapURL}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    🗺️ Open Exact Map
+                  </a>
 
 
-                  <!-- DIRECTIONS -->
-
-                  ${
-                    lat && lon
-
-                    ?
-
-                    `
-
-                    <a
-                      class="direction-btn"
-                      href="${directionUrl}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-
-                      🧭 Get Directions
-
-                    </a>
-
-                    `
-
-                    :
-
-                    ""
-
-                  }
-
+                  <a
+                    class="map-btn direction-btn"
+                    href="${directionsURL}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    🧭 Get Directions
+                  </a>
 
                 </div>
 
@@ -1710,28 +1966,53 @@
         );
 
 
+        if (
+          unique.length > 100
+        ) {
+
+          list.innerHTML += `
+
+            <div class="status-message">
+
+              Showing the first 100 matching
+              businesses to keep the prototype fast.
+
+            </div>
+
+          `;
+
+        }
+
       }
 
       catch (error) {
 
+        console.error(
+          error
+        );
 
-        console.error(error);
+
+        title.innerText =
+          "⚠️ Search problem";
 
 
         list.innerHTML = `
 
           <div class="empty-message">
 
-            ❌ Could not fetch real business data.
+            <strong>
+              Something went wrong.
+            </strong>
 
             <br><br>
 
-            The OpenStreetMap/Overpass server
-            may be busy.
+            ${escapeHTML(
+              error.message
+            )}
 
             <br><br>
 
-            Please try again in a few seconds.
+            Try again in a few seconds.
 
           </div>
 
@@ -1742,15 +2023,17 @@
     }
 
 
-    /* =====================================================
-       ESCAPE HTML
-       ===================================================== */
+    /*
+      ESCAPE HTML
+    */
 
-    function escapeHTML(value) {
+    function escapeHTML(
+      text
+    ) {
 
       if (
-        value === null ||
-        value === undefined
+        text === null ||
+        text === undefined
       ) {
 
         return "";
@@ -1758,28 +2041,23 @@
       }
 
 
-      return String(value)
-
+      return String(text)
         .replace(
           /&/g,
           "&amp;"
         )
-
         .replace(
           /</g,
           "&lt;"
         )
-
         .replace(
           />/g,
           "&gt;"
         )
-
         .replace(
           /"/g,
           "&quot;"
         )
-
         .replace(
           /'/g,
           "&#039;"
@@ -1788,12 +2066,13 @@
     }
 
 
-    /* =====================================================
-       BUSINESS DETAILS
-       ===================================================== */
+    /*
+      BUSINESS DETAILS
+    */
 
-    function showDetails(lead) {
-
+    function showDetails(
+      lead
+    ) {
 
       let message =
 
@@ -1804,62 +2083,55 @@
 
         "\n\n" +
 
+        "🏷️ " +
+        lead.categoryLabel +
+
+        "\n\n" +
+
         "📍 " +
         lead.address +
 
         "\n\n" +
 
         "📞 " +
-        lead.phone;
+        (
+          lead.phone ||
+          "Not available"
+        ) +
+
+        "\n\n" +
+
+        "🌐 " +
+        (
+          lead.website ||
+          "Not available"
+        ) +
+
+        "\n\n" +
+
+        "🗺️ Coordinates\n" +
+
+        lead.lat +
+        ", " +
+        lead.lon;
 
 
-      if (lead.website) {
-
-        message +=
-
-          "\n\n🌐 " +
-          lead.website;
-
-      }
-
-
-      if (
-        lead.lat &&
-        lead.lon
-      ) {
-
-        message +=
-
-          "\n\n📌 Coordinates: " +
-
-          lead.lat +
-
-          ", " +
-
-          lead.lon;
-
-      }
-
-
-      message +=
-
-        "\n\n🗺️ Source: OpenStreetMap";
-
-
-      alert(message);
+      alert(
+        message
+      );
 
     }
 
 
-    /* =====================================================
-       SAVE LEAD
-       ===================================================== */
+    /*
+      SAVE REAL LEAD
+    */
 
-    function saveLead(lead) {
-
+    function saveRealLead(
+      lead
+    ) {
 
       const savedLeads =
-
         JSON.parse(
           localStorage.getItem(
             "savedLeads"
@@ -1868,26 +2140,24 @@
 
 
       const alreadySaved =
-
         savedLeads.some(
-          saved =>
+          item =>
 
-            saved.osmUrl ===
-            lead.osmUrl
-
-            ||
-
-            (
-              saved.name ===
+            item.name ===
               lead.name &&
 
-              saved.address ===
-              lead.address
-            )
+            item.lat ===
+              lead.lat &&
+
+            item.lon ===
+              lead.lon
+
         );
 
 
-      if (alreadySaved) {
+      if (
+        alreadySaved
+      ) {
 
         alert(
           "⭐ This lead is already saved!"
@@ -1907,19 +2177,22 @@
           lead.address,
 
         phone:
-          lead.phone,
+          lead.phone ||
+          "",
 
         website:
-          lead.website || "",
+          lead.website ||
+          "",
+
+        category:
+          lead.category ||
+          "Business",
 
         lat:
-          lead.lat || "",
+          lead.lat,
 
         lon:
-          lead.lon || "",
-
-        osmUrl:
-          lead.osmUrl || "",
+          lead.lon,
 
         status:
           "New",
@@ -1928,19 +2201,17 @@
           "",
 
         updated:
-          new Date().toLocaleString()
+          new Date()
+            .toLocaleString()
 
       });
 
 
       localStorage.setItem(
-
         "savedLeads",
-
         JSON.stringify(
           savedLeads
         )
-
       );
 
 
@@ -1950,28 +2221,23 @@
 
 
       alert(
-
         "⭐ Lead Saved!\n\n" +
-
         lead.name
-
       );
 
     }
 
 
-    /* =====================================================
-       CHANGE STATUS
-       ===================================================== */
+    /*
+      CHANGE STATUS
+    */
 
     function changeLeadStatus(
-      id,
+      index,
       status
     ) {
 
-
       const savedLeads =
-
         JSON.parse(
           localStorage.getItem(
             "savedLeads"
@@ -1979,31 +2245,24 @@
         ) || [];
 
 
-      const lead =
+      if (
+        savedLeads[index]
+      ) {
 
-        savedLeads.find(
-          item =>
-            item.osmUrl === id
-        );
-
-
-      if (lead) {
-
-        lead.status =
+        savedLeads[index].status =
           status;
 
-        lead.updated =
-          new Date().toLocaleString();
+
+        savedLeads[index].updated =
+          new Date()
+            .toLocaleString();
 
 
         localStorage.setItem(
-
           "savedLeads",
-
           JSON.stringify(
             savedLeads
           )
-
         );
 
       }
@@ -2016,32 +2275,32 @@
     }
 
 
-    /* =====================================================
-       SAVE NOTE
-       ===================================================== */
+    /*
+      SAVE NOTE
+    */
 
-    function saveNote(id) {
-
+    function saveNote(
+      index
+    ) {
 
       const noteBox =
         document.getElementById(
-          "note-" +
-          encodeURIComponent(id)
+          "note-" + index
         );
 
 
       if (!noteBox) {
+
         return;
+
       }
 
 
       const note =
-        noteBox.value;
+        noteBox.value.trim();
 
 
-      if (
-        note.trim() === ""
-      ) {
+      if (!note) {
 
         alert(
           "Please write a note first!"
@@ -2053,7 +2312,6 @@
 
 
       const savedLeads =
-
         JSON.parse(
           localStorage.getItem(
             "savedLeads"
@@ -2061,31 +2319,24 @@
         ) || [];
 
 
-      const lead =
+      if (
+        savedLeads[index]
+      ) {
 
-        savedLeads.find(
-          item =>
-            item.osmUrl === id
-        );
-
-
-      if (lead) {
-
-        lead.note =
+        savedLeads[index].note =
           note;
 
-        lead.updated =
-          new Date().toLocaleString();
+
+        savedLeads[index].updated =
+          new Date()
+            .toLocaleString();
 
 
         localStorage.setItem(
-
           "savedLeads",
-
           JSON.stringify(
             savedLeads
           )
-
         );
 
       }
@@ -2101,15 +2352,15 @@
     }
 
 
-    /* =====================================================
-       DELETE LEAD
-       ===================================================== */
+    /*
+      DELETE LEAD
+    */
 
-    function deleteLead(id) {
-
+    function deleteLead(
+      index
+    ) {
 
       const savedLeads =
-
         JSON.parse(
           localStorage.getItem(
             "savedLeads"
@@ -2117,49 +2368,43 @@
         ) || [];
 
 
-      const lead =
+      if (
+        !savedLeads[index]
+      ) {
 
-        savedLeads.find(
-          item =>
-            item.osmUrl === id
-        );
+        return;
+
+      }
 
 
       const confirmed =
         confirm(
 
-          "Remove this saved lead?\n\n" +
+          "Are you sure you want to remove this saved lead?\n\n" +
 
-          (
-            lead
-              ? lead.name
-              : "This lead"
-          )
+          savedLeads[index].name
 
         );
 
 
       if (!confirmed) {
+
         return;
+
       }
 
 
-      const remaining =
-
-        savedLeads.filter(
-          item =>
-            item.osmUrl !== id
-        );
+      savedLeads.splice(
+        index,
+        1
+      );
 
 
       localStorage.setItem(
-
         "savedLeads",
-
         JSON.stringify(
-          remaining
+          savedLeads
         )
-
       );
 
 
@@ -2170,15 +2415,13 @@
     }
 
 
-    /* =====================================================
-       DISPLAY SAVED LEADS
-       ===================================================== */
+    /*
+      DISPLAY SAVED LEADS
+    */
 
     function displaySavedLeads() {
 
-
       const savedLeads =
-
         JSON.parse(
           localStorage.getItem(
             "savedLeads"
@@ -2205,81 +2448,92 @@
 
 
       const searchText =
-
         searchBox
-
           ? searchBox.value
               .toLowerCase()
-
           : "";
 
 
       const selectedStatus =
-
         statusBox
-
           ? statusBox.value
-
           : "All";
 
 
-      const filteredLeads =
-
-        savedLeads.filter(
-          lead => {
+      savedList.innerHTML = "";
 
 
-            const text =
+      const filtered =
+        savedLeads
+          .map(
+            (
+              lead,
+              originalIndex
+            ) => ({
+              lead,
+              originalIndex
+            })
+          )
+          .filter(
+            item => {
 
-              (
-                lead.name +
+              const lead =
+                item.lead;
+
+
+              const searchable =
+
+                (
+                  lead.name ||
+                  ""
+                ).toLowerCase() +
+
                 " " +
-                lead.area +
+
+                (
+                  lead.area ||
+                  ""
+                ).toLowerCase() +
+
                 " " +
-                lead.phone
-              ).toLowerCase();
+
+                (
+                  lead.category ||
+                  ""
+                ).toLowerCase();
 
 
-            const matchesSearch =
+              const matchesSearch =
+                searchable.includes(
+                  searchText
+                );
 
-              text.includes(
-                searchText
+
+              const matchesStatus =
+
+                selectedStatus ===
+                  "All"
+
+                ||
+
+                (
+                  lead.status ||
+                  "New"
+                ) ===
+                  selectedStatus;
+
+
+              return (
+                matchesSearch &&
+                matchesStatus
               );
 
-
-            const matchesStatus =
-
-              selectedStatus ===
-              "All"
-
-              ||
-
-              (
-                lead.status ||
-                "New"
-              ) ===
-              selectedStatus;
-
-
-            return (
-
-              matchesSearch &&
-
-              matchesStatus
-
-            );
-
-          }
-        );
-
-
-      savedList.innerHTML =
-        "";
+            }
+          );
 
 
       if (
-        filteredLeads.length ===
-        0
+        filtered.length === 0
       ) {
 
         savedList.innerHTML = `
@@ -2297,84 +2551,51 @@
       }
 
 
-      filteredLeads.forEach(
-        lead => {
+      filtered.forEach(
+        item => {
+
+          const lead =
+            item.lead;
 
 
-          const status =
+          const index =
+            item.originalIndex;
+
+
+          const currentStatus =
             lead.status ||
             "New";
 
 
-          const note =
+          const currentNote =
             lead.note ||
             "";
 
 
-          const id =
-            lead.osmUrl;
+          const mapURL =
 
-
-          const encodedId =
-            encodeURIComponent(id);
-
-
-          let mapHTML =
-            "";
-
-
-          let directionHTML =
-            "";
-
-
-          if (
             lead.lat &&
             lead.lon
-          ) {
+
+            ? getMapURL(
+                lead.lat,
+                lead.lon
+              )
+
+            : "#";
 
 
-            const mapUrl =
+          const directionsURL =
 
-              `https://www.openstreetmap.org/?mlat=${lead.lat}&mlon=${lead.lon}#map=19/${lead.lat}/${lead.lon}`;
+            lead.lat &&
+            lead.lon
 
+            ? getDirectionsURL(
+                lead.lat,
+                lead.lon
+              )
 
-            const directionUrl =
-
-              `https://www.google.com/maps/dir/?api=1&destination=${lead.lat},${lead.lon}`;
-
-
-            mapHTML = `
-
-              <a
-                class="map-btn"
-                href="${mapUrl}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-
-                🗺️ View Location
-
-              </a>
-
-            `;
-
-
-            directionHTML = `
-
-              <a
-                class="direction-btn"
-                href="${directionUrl}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-
-                🧭 Directions
-
-              </a>
-
-            `;
-
-          }
+            : "#";
 
 
           savedList.innerHTML += `
@@ -2382,118 +2603,126 @@
             <div class="lead">
 
               <h3>
-
                 ${escapeHTML(
                   lead.name
                 )}
-
               </h3>
 
 
-              <p>
+              <span
+                class="category-label"
+              >
+                ${escapeHTML(
+                  lead.category ||
+                  "Business"
+                )}
+              </span>
 
+
+              <p>
                 📍
                 ${escapeHTML(
-                  lead.area
+                  lead.area ||
+                  "Location available"
                 )}
-
               </p>
 
 
               <p>
-
                 📞
-                ${escapeHTML(
+                ${
                   lead.phone
-                )}
-
+                    ? escapeHTML(
+                        lead.phone
+                      )
+                    : "Not available"
+                }
               </p>
 
 
               ${
                 lead.website
 
-                ?
+                ? `
+
+                  <p>
+                    🌐
+
+                    <a
+                      href="${escapeHTML(
+                        lead.website
+                      )}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style="color:#4f46e5;"
+                    >
+                      Website
+                    </a>
+                  </p>
 
                 `
 
-                <p>
-
-                  🌐
-
-                  <a
-                    href="${lead.website}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-
-                    Website
-
-                  </a>
-
-                </p>
-
-                `
-
-                :
-
-                ""
+                : ""
 
               }
 
 
               <select
                 onchange="changeLeadStatus(
-                  '${encodedId}',
+                  ${index},
                   this.value
                 )"
               >
 
                 <option
                   value="New"
-                  ${status === "New"
-                    ? "selected"
-                    : ""}
+                  ${
+                    currentStatus ===
+                    "New"
+                      ? "selected"
+                      : ""
+                  }
                 >
-
                   🆕 New
-
                 </option>
 
 
                 <option
                   value="Contacted"
-                  ${status === "Contacted"
-                    ? "selected"
-                    : ""}
+                  ${
+                    currentStatus ===
+                    "Contacted"
+                      ? "selected"
+                      : ""
+                  }
                 >
-
                   📞 Contacted
-
                 </option>
 
 
                 <option
                   value="Follow-up"
-                  ${status === "Follow-up"
-                    ? "selected"
-                    : ""}
+                  ${
+                    currentStatus ===
+                    "Follow-up"
+                      ? "selected"
+                      : ""
+                  }
                 >
-
                   🔔 Follow-up
-
                 </option>
 
 
                 <option
                   value="Converted"
-                  ${status === "Converted"
-                    ? "selected"
-                    : ""}
+                  ${
+                    currentStatus ===
+                    "Converted"
+                      ? "selected"
+                      : ""
+                  }
                 >
-
                   💰 Converted
-
                 </option>
 
               </select>
@@ -2504,11 +2733,11 @@
                 📝 Note:
 
                 ${
-                  escapeHTML(
-                    note
-                  ) ||
-
-                  "No note added yet"
+                  currentNote
+                    ? escapeHTML(
+                        currentNote
+                      )
+                    : "No note added yet"
                 }
 
               </div>
@@ -2516,42 +2745,64 @@
 
               <textarea
                 class="note-box"
-                id="note-${encodedId}"
+                id="note-${index}"
                 placeholder="Write a note..."
-              >${escapeHTML(note)}</textarea>
+              >${escapeHTML(
+                currentNote
+              )}</textarea>
 
 
               <div class="lead-actions">
 
-
                 <button
                   onclick="saveNote(
-                    '${encodedId}'
+                    ${index}
                   )"
                 >
-
                   💾 Save Note
-
                 </button>
 
 
-                ${mapHTML}
+                ${
+                  lead.lat &&
+                  lead.lon
+
+                  ? `
+
+                    <a
+                      class="map-btn secondary-btn"
+                      href="${mapURL}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      🗺️ Open Map
+                    </a>
 
 
-                ${directionHTML}
+                    <a
+                      class="map-btn direction-btn"
+                      href="${directionsURL}"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      🧭 Directions
+                    </a>
+
+                  `
+
+                  : ""
+
+                }
 
 
                 <button
                   class="danger-btn"
                   onclick="deleteLead(
-                    '${encodedId}'
+                    ${index}
                   )"
                 >
-
                   🗑️ Remove Lead
-
                 </button>
-
 
               </div>
 
@@ -2577,15 +2828,13 @@
     }
 
 
-    /* =====================================================
-       DASHBOARD
-       ===================================================== */
+    /*
+      DASHBOARD
+    */
 
     function updateDashboard() {
 
-
       const savedLeads =
-
         JSON.parse(
           localStorage.getItem(
             "savedLeads"
@@ -2604,7 +2853,6 @@
 
       savedLeads.forEach(
         lead => {
-
 
           const status =
             lead.status ||
@@ -2682,14 +2930,13 @@
     }
 
 
-    /* =====================================================
-       DASHBOARD FILTER
-       ===================================================== */
+    /*
+      DASHBOARD FILTER
+    */
 
     function filterDashboard(
       status
     ) {
-
 
       const statusBox =
         document.getElementById(
@@ -2708,25 +2955,65 @@
         "savedSection"
       ).scrollIntoView({
 
-        behavior: "smooth"
+        behavior:
+          "smooth"
 
       });
 
     }
 
 
-    /* =====================================================
-       INITIAL LOAD
-       ===================================================== */
+    /*
+      PRESS ENTER TO SEARCH
+    */
+
+    document.getElementById(
+      "city"
+    ).addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key ===
+          "Enter"
+        ) {
+
+          findLeads();
+
+        }
+
+      }
+    );
+
+
+    document.getElementById(
+      "businessName"
+    ).addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key ===
+          "Enter"
+        ) {
+
+          findLeads();
+
+        }
+
+      }
+    );
+
+
+    /*
+      START
+    */
 
     updateDashboard();
 
     displaySavedLeads();
 
-
   </script>
 
-
 </body>
-
 </html>
