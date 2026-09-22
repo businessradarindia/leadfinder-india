@@ -263,7 +263,7 @@
               </p>
             </div>
 
-            <button onclick="alert('Lead details coming soon!')">
+            <button onclick="<button onclick="showDetails('${lead.name}', '${lead.area}', '${lead.phone}', '${lead.rating}')">   View Details </button>">
               View Details
             </button>
 
@@ -278,7 +278,17 @@
         behavior: "smooth"
       });
     }
-
+    function showDetails(name, area, phone, rating) {
+      alert(
+        "BUSINESS DETAILS\n\n" +
+        "🏪 " + name + "\n" +
+        "📍 " + area + "\n" +
+        "📞 " + phone + "\n" +
+        "⭐ " + rating + "\n\n" +
+        "Status: Not contacted\n\n" +
+        "This lead can be saved and managed here later."
+      );
+    }
   </script>
 
 </body>
