@@ -202,6 +202,40 @@
     </p>
 
   </section>
+  <section class="dashboard">
+
+  <h2>📊 Lead Dashboard</h2>
+
+  <div class="dashboard-grid">
+
+    <div class="dashboard-card">
+      <h3>⭐ Total Saved</h3>
+      <p id="totalLeads">0</p>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>🆕 New</h3>
+      <p id="newLeads">0</p>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>📞 Contacted</h3>
+      <p id="contactedLeads">0</p>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>🔔 Follow-up</h3>
+      <p id="followupLeads">0</p>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>💰 Converted</h3>
+      <p id="convertedLeads">0</p>
+    </div>
+
+  </div>
+
+</section>
 <section class="results" id="savedSection" style="display: block;">
 
   <h2>⭐ Saved Leads</h2>
@@ -347,6 +381,7 @@ function saveLead(name, area, phone, rating) {
 
   localStorage.setItem("savedLeads", JSON.stringify(savedLeads));
 
+updateDashboard();
 displaySavedLeads();
 
 alert("⭐ Lead Saved!\n\n" + name);
@@ -361,7 +396,8 @@ function changeLeadStatus(name, status) {
     localStorage.setItem("savedLeads", JSON.stringify(savedLeads));
   }
 
-  displaySavedLeads();
+  updateDashboard();
+displaySavedLeads();
 }
    function saveNote(name) {
   const noteBox = document.getElementById("note-" + name);
@@ -439,9 +475,37 @@ function changeLeadStatus(name, status) {
   });
 }
 
- 
-    displaySavedLeads();
-  </script>
+ function updateDashboard() {
+  const savedLeads =
+    JSON.parse(localStorage.getItem("savedLeads")) || [];
 
+  let newCount = 0;
+  let contactedCount = 0;
+  let followupCount = 0;
+  let convertedCount = 0;
+
+  savedLeads.forEach(lead => {
+    const status = lead.status || "New";
+
+    if (status === "New") {
+      newCount++;
+    } else if (status === "Contacted") {
+      contactedCount++;
+    } else if (status === "Follow-up") {
+      followupCount++;
+    } else if (status === "Converted") {
+      convertedCount++;
+    }
+  });
+
+  document.getElementById("totalLeads").innerText = savedLeads.length;
+  document.getElementById("newLeads").innerText = newCount;
+  document.getElementById("contactedLeads").innerText = contactedCount;
+  document.getElementById("followupLeads").innerText = followupCount;
+  document.getElementById("convertedLeads").innerText = convertedCount;
+}
+ updateDashboard();
+displaySavedLeads();
+</script>
 </body>
 </html>
