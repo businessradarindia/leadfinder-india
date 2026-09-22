@@ -6,8 +6,13 @@
 
   <title>LeadFinder India</title>
 
-  <style>
+  <!-- Leaflet Map -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
 
+  <style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -58,7 +63,7 @@
 
     .search-box {
       background: white;
-      max-width: 850px;
+      max-width: 900px;
       margin: auto;
       padding: 25px;
       border-radius: 16px;
@@ -81,7 +86,7 @@
       border: 1px solid #d8dce5;
       border-radius: 10px;
       font-size: 16px;
-      min-width: 230px;
+      min-width: 220px;
       background: white;
     }
 
@@ -98,6 +103,80 @@
 
     button:hover {
       background: #3730a3;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .results,
+    .dashboard {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    #results {
+      display: none;
+    }
+
+    .results h2,
+    .dashboard h2 {
+      margin-bottom: 20px;
+    }
+
+    /* MAP */
+
+    .map-container {
+      background: white;
+      padding: 10px;
+      border-radius: 16px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+      margin-bottom: 25px;
+    }
+
+    #map {
+      height: 450px;
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    .map-info {
+      padding: 12px 5px 5px;
+      color: #667085;
+      font-size: 14px;
+    }
+
+    /* LEADS */
+
+    .lead {
+      background: white;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    }
+
+    .lead h3 {
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+
+    .lead p {
+      color: #667085;
+      margin: 6px 0;
+    }
+
+    .rating {
+      font-weight: bold;
+    }
+
+    .lead-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
     }
 
     .secondary-btn {
@@ -118,68 +197,13 @@
       background: #fecaca;
     }
 
-    .results,
-    .dashboard {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 20px;
+    .map-btn {
+      background: #e8f5e9;
+      color: #166534;
     }
 
-    #results {
-      display: none;
-    }
-
-    .results h2,
-    .dashboard h2 {
-      margin-bottom: 20px;
-    }
-
-    .lead {
-      background: white;
-      padding: 20px;
-      margin-bottom: 15px;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    }
-
-    .lead h3 {
-      margin-bottom: 8px;
-      font-size: 20px;
-    }
-
-    .lead p {
-      color: #667085;
-      margin: 6px 0;
-    }
-
-    .lead-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 15px;
-    }
-
-    .source {
-      display: inline-block;
-      margin-top: 10px;
-      font-size: 12px;
-      color: #8a93a3;
-    }
-
-    .loading {
-      background: white;
-      padding: 30px;
-      border-radius: 14px;
-      text-align: center;
-      color: #667085;
-    }
-
-    .error-box {
-      background: #fff7ed;
-      color: #9a3412;
-      padding: 20px;
-      border-radius: 12px;
-      margin-bottom: 15px;
+    .map-btn:hover {
+      background: #d5ead7;
     }
 
     .demo {
@@ -187,6 +211,37 @@
       color: #8a93a3;
       font-size: 13px;
       margin-top: 25px;
+    }
+
+    .source {
+      font-size: 12px;
+      color: #98a2b3 !important;
+    }
+
+    /* LOADING */
+
+    .loading {
+      background: white;
+      padding: 25px;
+      text-align: center;
+      border-radius: 12px;
+      color: #667085;
+    }
+
+    .error-message {
+      background: #fff1f2;
+      color: #b91c1c;
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .empty-message {
+      background: white;
+      padding: 25px;
+      text-align: center;
+      border-radius: 12px;
+      color: #667085;
     }
 
     /* DASHBOARD */
@@ -289,14 +344,6 @@
       margin-top: 10px !important;
     }
 
-    .empty-message {
-      background: white;
-      padding: 25px;
-      text-align: center;
-      border-radius: 12px;
-      color: #667085;
-    }
-
     /* MOBILE */
 
     @media (max-width: 750px) {
@@ -322,6 +369,10 @@
       .search-box button {
         width: 100%;
       }
+
+      #map {
+        height: 350px;
+      }
     }
 
     @media (max-width: 450px) {
@@ -339,13 +390,10 @@
         width: 100%;
       }
     }
-
   </style>
 </head>
 
-
 <body>
-
 
   <!-- NAVBAR -->
 
@@ -414,8 +462,11 @@
       </select>
 
 
-      <button onclick="findLeads()">
-        FIND REAL LEADS
+      <button
+        id="findButton"
+        onclick="findLeads()"
+      >
+        🔎 FIND REAL LEADS
       </button>
 
     </div>
@@ -423,17 +474,41 @@
   </section>
 
 
-  <!-- RESULTS -->
+  <!-- SEARCH RESULTS -->
 
-  <section class="results" id="results">
+  <section
+    class="results"
+    id="results"
+  >
 
     <h2 id="resultTitle"></h2>
 
+
+    <!-- MAP -->
+
+    <div class="map-container">
+
+      <div id="map"></div>
+
+      <div class="map-info">
+
+        🗺️ Map shows the real businesses returned
+        by OpenStreetMap for your search.
+
+      </div>
+
+    </div>
+
+
+    <!-- BUSINESS LIST -->
+
     <div id="leadList"></div>
 
+
     <p class="demo">
-      📍 Business/place data is retrieved from OpenStreetMap.
-      Contact details appear only when they are available in the source data.
+      Real business data provided through OpenStreetMap.
+      Information may be incomplete depending on what
+      has been added to OpenStreetMap.
     </p>
 
   </section>
@@ -449,8 +524,10 @@
 
     <div class="dashboard-grid">
 
-      <div class="dashboard-card"
-           onclick="filterDashboard('All')">
+      <div
+        class="dashboard-card"
+        onclick="filterDashboard('All')"
+      >
 
         <h3>
           ⭐ Total Saved
@@ -463,8 +540,10 @@
       </div>
 
 
-      <div class="dashboard-card"
-           onclick="filterDashboard('New')">
+      <div
+        class="dashboard-card"
+        onclick="filterDashboard('New')"
+      >
 
         <h3>
           🆕 New
@@ -477,8 +556,10 @@
       </div>
 
 
-      <div class="dashboard-card"
-           onclick="filterDashboard('Contacted')">
+      <div
+        class="dashboard-card"
+        onclick="filterDashboard('Contacted')"
+      >
 
         <h3>
           📞 Contacted
@@ -491,8 +572,10 @@
       </div>
 
 
-      <div class="dashboard-card"
-           onclick="filterDashboard('Follow-up')">
+      <div
+        class="dashboard-card"
+        onclick="filterDashboard('Follow-up')"
+      >
 
         <h3>
           🔔 Follow-up
@@ -505,8 +588,10 @@
       </div>
 
 
-      <div class="dashboard-card"
-           onclick="filterDashboard('Converted')">
+      <div
+        class="dashboard-card"
+        onclick="filterDashboard('Converted')"
+      >
 
         <h3>
           💰 Converted
@@ -525,11 +610,15 @@
 
   <!-- SAVED LEADS -->
 
-  <section class="results" id="savedSection">
+  <section
+    class="results"
+    id="savedSection"
+  >
 
     <h2>
       ⭐ Saved Leads
     </h2>
+
 
     <div class="saved-controls">
 
@@ -576,1694 +665,1864 @@
   </section>
 
 
+  <!-- LEAFLET -->
 
-<script>
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  ></script>
 
 
-/* =========================================================
-   REAL BUSINESS DATA
-   SOURCE: OPENSTREETMAP / OVERPASS API
-   ========================================================= */
+  <script>
 
+    /* ==========================================
+       GLOBAL MAP VARIABLES
+    ========================================== */
 
-/*
-   These coordinates are used only to tell Overpass
-   approximately where the city is.
+    let map = null;
 
-   We then search for businesses around that city.
-*/
+    let markers = [];
 
-const cityAreas = {
+    let currentBusinesses = [];
 
-  Pune: {
-    lat: 18.5204,
-    lon: 73.8567,
-    radius: 25000
-  },
 
-  Mumbai: {
-    lat: 19.0760,
-    lon: 72.8777,
-    radius: 30000
-  },
+    /* ==========================================
+       CATEGORY SETTINGS
+    ========================================== */
 
-  Bangalore: {
-    lat: 12.9716,
-    lon: 77.5946,
-    radius: 30000
-  }
+    const categoryQueries = {
 
-};
+      Restaurants: `
+        (
+          nwr["amenity"="restaurant"](area.searchArea);
+          nwr["amenity"="fast_food"](area.searchArea);
+        );
+      `,
 
+      Salons: `
+        (
+          nwr["shop"="hairdresser"](area.searchArea);
+          nwr["shop"="beauty"](area.searchArea);
+        );
+      `,
 
-/*
-   Different categories use different OpenStreetMap tags.
-*/
+      Clinics: `
+        (
+          nwr["amenity"="clinic"](area.searchArea);
+          nwr["amenity"="doctors"](area.searchArea);
+        );
+      `,
 
-const categoryFilters = {
+      Gyms: `
+        (
+          nwr["leisure"="fitness_centre"](area.searchArea);
+          nwr["sport"="fitness"](area.searchArea);
+        );
+      `
 
-  Restaurants: `
-    (
-      nwr["amenity"="restaurant"](around:RADIUS,LAT,LON);
-      nwr["amenity"="fast_food"](around:RADIUS,LAT,LON);
-      nwr["amenity"="cafe"](around:RADIUS,LAT,LON);
-    );
-  `,
+    };
 
-  Salons: `
-    (
-      nwr["shop"="hairdresser"](around:RADIUS,LAT,LON);
-      nwr["shop"="beauty"](around:RADIUS,LAT,LON);
-    );
-  `,
 
-  Clinics: `
-    (
-      nwr["amenity"="clinic"](around:RADIUS,LAT,LON);
-      nwr["amenity"="doctors"](around:RADIUS,LAT,LON);
-      nwr["healthcare"="clinic"](around:RADIUS,LAT,LON);
-    );
-  `,
+    /* ==========================================
+       ESCAPE HTML
+    ========================================== */
 
-  Gyms: `
-    (
-      nwr["leisure"="fitness_centre"](around:RADIUS,LAT,LON);
-      nwr["sport"="fitness"](around:RADIUS,LAT,LON);
-    );
-  `
+    function escapeHTML(value) {
 
-};
+      if (
+        value === null ||
+        value === undefined
+      ) {
+        return "";
+      }
 
-
-/*
-   We use more than one public Overpass server.
-
-   If the first one is busy, we automatically try
-   the next one.
-*/
-
-const overpassServers = [
-
-  "https://overpass-api.de/api/interpreter",
-
-  "https://overpass.private.coffee/api/interpreter",
-
-  "https://maps.mail.ru/osm/tools/overpass/api/interpreter"
-
-];
-
-
-
-/* =========================================================
-   HELPER FUNCTIONS
-   ========================================================= */
-
-
-function escapeHTML(value) {
-
-  if (value === undefined ||
-      value === null) {
-
-    return "";
-
-  }
-
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-
-function cleanPhone(phone) {
-
-  if (!phone) {
-
-    return "Not available";
-
-  }
-
-  return phone;
-
-}
-
-
-
-function cleanWebsite(website) {
-
-  if (!website) {
-
-    return "";
-
-  }
-
-  let url = website.trim();
-
-  if (!url.startsWith("http://") &&
-      !url.startsWith("https://")) {
-
-    url = "https://" + url;
-
-  }
-
-  return url;
-
-}
-
-
-
-/*
-   Convert an OSM result into the format our website uses.
-*/
-
-function convertOSMResult(element) {
-
-  const tags =
-    element.tags || {};
-
-
-  let lat =
-    element.lat;
-
-  let lon =
-    element.lon;
-
-
-  /*
-     Ways and relations sometimes don't have
-     direct lat/lon values.
-
-     Their center can be used instead.
-  */
-
-  if ((!lat || !lon) &&
-      element.center) {
-
-    lat =
-      element.center.lat;
-
-    lon =
-      element.center.lon;
-
-  }
-
-
-  return {
-
-    id:
-      element.type + "-" + element.id,
-
-    name:
-      tags.name ||
-      "Unnamed business",
-
-    area:
-      tags["addr:suburb"] ||
-      tags["addr:neighbourhood"] ||
-      tags["addr:city"] ||
-      tags["addr:street"] ||
-      "Location available on map",
-
-    phone:
-      tags.phone ||
-      tags["contact:phone"] ||
-      "",
-
-    website:
-      tags.website ||
-      tags["contact:website"] ||
-      "",
-
-    address:
-      buildAddress(tags),
-
-    lat:
-      lat,
-
-    lon:
-      lon,
-
-    osmId:
-      element.id,
-
-    osmType:
-      element.type
-
-  };
-
-}
-
-
-
-function buildAddress(tags) {
-
-  const parts = [
-
-    tags["addr:housenumber"],
-
-    tags["addr:street"],
-
-    tags["addr:suburb"],
-
-    tags["addr:city"],
-
-    tags["addr:postcode"]
-
-  ].filter(Boolean);
-
-
-  return parts.join(", ");
-
-}
-
-
-
-/* =========================================================
-   FIND REAL LEADS
-   ========================================================= */
-
-
-async function findLeads() {
-
-  const city =
-    document.getElementById("city").value;
-
-
-  const category =
-    document.getElementById("category").value;
-
-
-  const results =
-    document.getElementById("results");
-
-
-  const title =
-    document.getElementById("resultTitle");
-
-
-  const list =
-    document.getElementById("leadList");
-
-
-  results.style.display =
-    "block";
-
-
-  title.innerText =
-    `${city} → ${category}`;
-
-
-  list.innerHTML = `
-
-    <div class="loading">
-
-      🔎 Searching real OpenStreetMap data...
-
-      <br><br>
-
-      Please wait a few seconds.
-
-    </div>
-
-  `;
-
-
-  results.scrollIntoView({
-    behavior: "smooth"
-  });
-
-
-  try {
-
-    const data =
-      await fetchRealBusinesses(
-        city,
-        category
-      );
-
-
-    if (!data.length) {
-
-      list.innerHTML = `
-
-        <div class="empty-message">
-
-          😕 No businesses were found
-          for this category in this area.
-
-          <br><br>
-
-          Try another city or category.
-
-        </div>
-
-      `;
-
-      return;
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
     }
 
 
-    /*
-       Remove duplicates.
-    */
+    /* ==========================================
+       FIND REAL LEADS
+    ========================================== */
 
-    const uniqueBusinesses =
-      [];
+    async function findLeads() {
+
+      const city =
+        document.getElementById("city").value;
+
+      const category =
+        document.getElementById("category").value;
+
+      const results =
+        document.getElementById("results");
+
+      const title =
+        document.getElementById("resultTitle");
+
+      const list =
+        document.getElementById("leadList");
+
+      const button =
+        document.getElementById("findButton");
 
 
-    const seen =
-      new Set();
+      title.innerText =
+        `${city} → ${category}`;
 
 
-    data.forEach(business => {
-
-      const key =
-        business.name.toLowerCase()
-        + "|"
-        + business.lat
-        + "|"
-        + business.lon;
+      list.innerHTML = `
+        <div class="loading">
+          🔎 Finding real ${category.toLowerCase()} in ${city}...
+        </div>
+      `;
 
 
-      if (!seen.has(key)) {
+      results.style.display = "block";
 
-        seen.add(key);
 
-        uniqueBusinesses.push(
+      results.scrollIntoView({
+        behavior: "smooth"
+      });
+
+
+      button.disabled = true;
+
+      button.innerText =
+        "🔎 SEARCHING...";
+
+
+      try {
+
+        /*
+          First find the city using
+          OpenStreetMap Nominatim.
+        */
+
+        const geoURL =
+          "https://nominatim.openstreetmap.org/search" +
+          "?format=json" +
+          "&q=" +
+          encodeURIComponent(city + ", India") +
+          "&limit=1";
+
+
+        const geoResponse =
+          await fetch(geoURL);
+
+
+        if (!geoResponse.ok) {
+
+          throw new Error(
+            "Could not find the city."
+          );
+
+        }
+
+
+        const geoData =
+          await geoResponse.json();
+
+
+        if (!geoData.length) {
+
+          throw new Error(
+            "City could not be found."
+          );
+
+        }
+
+
+        const cityData =
+          geoData[0];
+
+
+        const south =
+          cityData.boundingbox[0];
+
+        const north =
+          cityData.boundingbox[1];
+
+        const west =
+          cityData.boundingbox[2];
+
+        const east =
+          cityData.boundingbox[3];
+
+
+        /*
+          Now search OpenStreetMap
+          inside the city area.
+        */
+
+        const query = `
+
+          [out:json][timeout:60];
+
+          (
+            ${categoryQueries[category]}
+          );
+
+          out center tags;
+
+        `;
+
+
+        /*
+          We use the bounding box from
+          Nominatim so we don't depend on
+          the Overpass wizard.
+        */
+
+        const finalQuery = `
+
+          [out:json][timeout:60];
+
+          (
+            nwr[
+              "amenity"="restaurant"
+            ](${south},${west},${north},${east});
+
+            nwr[
+              "amenity"="fast_food"
+            ](${south},${west},${north},${east});
+
+          );
+
+          out center tags;
+
+        `;
+
+
+        let queryToRun;
+
+
+        /*
+          Category-specific Overpass query.
+        */
+
+        if (category === "Restaurants") {
+
+          queryToRun = finalQuery;
+
+        }
+
+        else if (category === "Salons") {
+
+          queryToRun = `
+
+            [out:json][timeout:60];
+
+            (
+              nwr[
+                "shop"="hairdresser"
+              ](${south},${west},${north},${east});
+
+              nwr[
+                "shop"="beauty"
+              ](${south},${west},${north},${east});
+
+            );
+
+            out center tags;
+
+          `;
+
+        }
+
+        else if (category === "Clinics") {
+
+          queryToRun = `
+
+            [out:json][timeout:60];
+
+            (
+              nwr[
+                "amenity"="clinic"
+              ](${south},${west},${north},${east});
+
+              nwr[
+                "amenity"="doctors"
+              ](${south},${west},${north},${east});
+
+            );
+
+            out center tags;
+
+          `;
+
+        }
+
+        else if (category === "Gyms") {
+
+          queryToRun = `
+
+            [out:json][timeout:60];
+
+            (
+              nwr[
+                "leisure"="fitness_centre"
+              ](${south},${west},${north},${east});
+
+              nwr[
+                "sport"="fitness"
+              ](${south},${west},${north},${east});
+
+            );
+
+            out center tags;
+
+          `;
+
+        }
+
+
+        /*
+          Main Overpass server.
+        */
+
+        const overpassURL =
+          "https://overpass-api.de/api/interpreter";
+
+
+        const response =
+          await fetch(
+            overpassURL +
+            "?data=" +
+            encodeURIComponent(queryToRun)
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "OpenStreetMap search server is busy. Please try again."
+          );
+
+        }
+
+
+        const data =
+          await response.json();
+
+
+        currentBusinesses =
+          convertOSMData(data.elements);
+
+
+        /*
+          Remove duplicate businesses.
+        */
+
+        currentBusinesses =
+          removeDuplicates(currentBusinesses);
+
+
+        /*
+          Limit the number displayed so
+          the browser/map stays responsive.
+        */
+
+        currentBusinesses =
+          currentBusinesses.slice(0, 100);
+
+
+        if (
+          currentBusinesses.length === 0
+        ) {
+
+          list.innerHTML = `
+
+            <div class="empty-message">
+
+              😕 No ${category.toLowerCase()}
+              were found in ${city}.
+
+              <br><br>
+
+              Try another category or city.
+
+            </div>
+
+          `;
+
+          createMap(
+            currentBusinesses,
+            city
+          );
+
+          return;
+
+        }
+
+
+        createMap(
+          currentBusinesses,
+          city
+        );
+
+
+        displayBusinesses(
+          currentBusinesses
+        );
+
+      }
+
+
+      catch (error) {
+
+        console.error(error);
+
+
+        list.innerHTML = `
+
+          <div class="error-message">
+
+            ❌ <strong>Search failed</strong>
+
+            <br><br>
+
+            ${escapeHTML(error.message)}
+
+            <br><br>
+
+            Please wait a few seconds and
+            try the search again.
+
+          </div>
+
+        `;
+
+      }
+
+
+      finally {
+
+        button.disabled = false;
+
+        button.innerText =
+          "🔎 FIND REAL LEADS";
+
+      }
+
+    }
+
+
+    /* ==========================================
+       CONVERT OSM DATA
+    ========================================== */
+
+    function convertOSMData(elements) {
+
+      return elements
+        .map(element => {
+
+          const tags =
+            element.tags || {};
+
+
+          let lat =
+            element.lat;
+
+          let lon =
+            element.lon;
+
+
+          /*
+            Ways/relations usually return
+            their coordinates inside center.
+          */
+
+          if (
+            lat === undefined &&
+            element.center
+          ) {
+
+            lat =
+              element.center.lat;
+
+            lon =
+              element.center.lon;
+
+          }
+
+
+          if (
+            lat === undefined ||
+            lon === undefined
+          ) {
+
+            return null;
+
+          }
+
+
+          const phone =
+            tags.phone ||
+            tags["contact:phone"] ||
+            "";
+
+
+          const website =
+            tags.website ||
+            tags["contact:website"] ||
+            "";
+
+
+          const addressParts = [
+
+            tags["addr:housenumber"],
+
+            tags["addr:street"],
+
+            tags["addr:suburb"],
+
+            tags["addr:city"]
+
+          ].filter(Boolean);
+
+
+          const address =
+            addressParts.join(", ");
+
+
+          return {
+
+            id:
+              element.type +
+              "-" +
+              element.id,
+
+            name:
+              tags.name ||
+              "Unnamed business",
+
+            area:
+              address ||
+              "Location available on map",
+
+            phone:
+              phone,
+
+            website:
+              website,
+
+            rating:
+              tags.stars ||
+              "",
+
+            lat:
+              Number(lat),
+
+            lon:
+              Number(lon),
+
+            osmUrl:
+              `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=18/${lat}/${lon}`,
+
+            source:
+              "OpenStreetMap"
+
+          };
+
+        })
+
+        .filter(Boolean);
+
+    }
+
+
+    /* ==========================================
+       REMOVE DUPLICATES
+    ========================================== */
+
+    function removeDuplicates(businesses) {
+
+      const seen =
+        new Set();
+
+      return businesses.filter(
+        business => {
+
+          const key =
+            business.name.toLowerCase() +
+            "|" +
+            business.lat.toFixed(5) +
+            "|" +
+            business.lon.toFixed(5);
+
+
+          if (seen.has(key)) {
+
+            return false;
+
+          }
+
+
+          seen.add(key);
+
+          return true;
+
+        }
+      );
+
+    }
+
+
+    /* ==========================================
+       CREATE / UPDATE MAP
+    ========================================== */
+
+    function createMap(
+      businesses,
+      city
+    ) {
+
+      /*
+        Create map only once.
+      */
+
+      if (!map) {
+
+        map =
+          L.map("map");
+
+        L.tileLayer(
+          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+          {
+
+            maxZoom: 19,
+
+            attribution:
+              '&copy; OpenStreetMap contributors'
+
+          }
+        ).addTo(map);
+
+      }
+
+
+      /*
+        Remove old markers.
+      */
+
+      markers.forEach(
+        marker => {
+
+          map.removeLayer(marker);
+
+        }
+      );
+
+
+      markers = [];
+
+
+      /*
+        If there are businesses,
+        put markers on all of them.
+      */
+
+      if (
+        businesses.length > 0
+      ) {
+
+        const bounds =
+          L.latLngBounds([]);
+
+
+        businesses.forEach(
+          business => {
+
+            const marker =
+              L.marker([
+                business.lat,
+                business.lon
+              ]).addTo(map);
+
+
+            marker.bindPopup(`
+
+              <strong>
+                ${escapeHTML(business.name)}
+              </strong>
+
+              <br><br>
+
+              📍 ${escapeHTML(
+                business.area
+              )}
+
+              <br><br>
+
+              <button
+                onclick="focusBusiness(
+                  '${business.id}'
+                )"
+              >
+                👀 View Business
+              </button>
+
+            `);
+
+
+            markers.push(marker);
+
+
+            bounds.extend([
+              business.lat,
+              business.lon
+            ]);
+
+          }
+        );
+
+
+        /*
+          Automatically zoom map to
+          show the searched businesses.
+        */
+
+        map.fitBounds(
+          bounds,
+          {
+            padding: [30, 30],
+            maxZoom: 14
+          }
+        );
+
+      }
+
+
+      else {
+
+        /*
+          Default city positions.
+        */
+
+        const cityCoordinates = {
+
+          Pune: [
+            18.5204,
+            73.8567
+          ],
+
+          Mumbai: [
+            19.0760,
+            72.8777
+          ],
+
+          Bangalore: [
+            12.9716,
+            77.5946
+          ]
+
+        };
+
+
+        const coords =
+          cityCoordinates[city] ||
+          cityCoordinates.Pune;
+
+
+        map.setView(
+          coords,
+          12
+        );
+
+      }
+
+
+      /*
+        Leaflet sometimes needs this
+        after the section becomes visible.
+      */
+
+      setTimeout(
+        () => map.invalidateSize(),
+        200
+      );
+
+    }
+
+
+    /* ==========================================
+       DISPLAY BUSINESSES
+    ========================================== */
+
+    function displayBusinesses(
+      businesses
+    ) {
+
+      const list =
+        document.getElementById(
+          "leadList"
+        );
+
+
+      list.innerHTML = "";
+
+
+      businesses.forEach(
+        business => {
+
+          const phoneText =
+            business.phone
+              ? `📞 ${escapeHTML(
+                  business.phone
+                )}`
+              : "📞 Contact not available";
+
+
+          const addressText =
+            escapeHTML(
+              business.area
+            );
+
+
+          const ratingText =
+            business.rating
+              ? `⭐ ${escapeHTML(
+                  business.rating
+                )}`
+              : "⭐ Rating not available";
+
+
+          const websiteButton =
+            business.website
+              ? `
+
+                <button
+                  class="secondary-btn"
+                  onclick="window.open(
+                    '${escapeHTML(
+                      business.website
+                    )}',
+                    '_blank'
+                  )"
+                >
+                  🌐 Website
+                </button>
+
+              `
+              : "";
+
+
+          list.innerHTML += `
+
+            <div
+              class="lead"
+              id="business-${escapeHTML(
+                business.id
+              )}"
+            >
+
+              <h3>
+                🏪 ${escapeHTML(
+                  business.name
+                )}
+              </h3>
+
+
+              <p>
+                📍 ${addressText}
+              </p>
+
+
+              <p>
+                ${phoneText}
+              </p>
+
+
+              <p class="rating">
+                ${ratingText}
+              </p>
+
+
+              <p class="source">
+                🗺️ Source:
+                OpenStreetMap
+              </p>
+
+
+              <div class="lead-actions">
+
+                <button
+                  onclick="showDetails(
+                    '${business.id}'
+                  )"
+                >
+                  👀 View Details
+                </button>
+
+
+                <button
+                  onclick="saveRealLead(
+                    '${business.id}'
+                  )"
+                >
+                  ⭐ Save Lead
+                </button>
+
+
+                <button
+                  class="map-btn"
+                  onclick="focusBusiness(
+                    '${business.id}'
+                  )"
+                >
+                  🗺️ Show on Map
+                </button>
+
+
+                ${websiteButton}
+
+
+                <button
+                  class="secondary-btn"
+                  onclick="window.open(
+                    '${business.osmUrl}',
+                    '_blank'
+                  )"
+                >
+                  🔗 Open OpenStreetMap
+                </button>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      );
+
+    }
+
+
+    /* ==========================================
+       FOCUS BUSINESS ON MAP
+    ========================================== */
+
+    function focusBusiness(
+      businessId
+    ) {
+
+      const business =
+        currentBusinesses.find(
+          item =>
+            item.id === businessId
+        );
+
+
+      if (!business || !map) {
+
+        return;
+
+      }
+
+
+      map.setView(
+        [
+          business.lat,
+          business.lon
+        ],
+        17,
+        {
+          animate: true
+        }
+      );
+
+
+      const index =
+        currentBusinesses.indexOf(
           business
         );
 
-      }
 
-    });
+      if (
+        markers[index]
+      ) {
 
-
-    /*
-       Limit initial results so the page
-       doesn't become enormous.
-    */
-
-    const businesses =
-      uniqueBusinesses.slice(0, 50);
-
-
-    displayRealLeads(
-      businesses,
-      city,
-      category
-    );
-
-  }
-
-  catch(error) {
-
-    console.error(error);
-
-
-    list.innerHTML = `
-
-      <div class="error-box">
-
-        <strong>
-          ⚠️ Could not load real data right now.
-        </strong>
-
-        <br><br>
-
-        The public map-data server may be busy.
-
-        <br><br>
-
-        Please wait a few seconds and try again.
-
-      </div>
-
-    `;
-
-  }
-
-}
-
-
-
-/* =========================================================
-   CALL OVERPASS API
-   ========================================================= */
-
-
-async function fetchRealBusinesses(
-  city,
-  category
-) {
-
-  const cityInfo =
-    cityAreas[city];
-
-
-  const filter =
-    categoryFilters[category]
-      .replaceAll(
-        "RADIUS",
-        cityInfo.radius
-      )
-      .replaceAll(
-        "LAT",
-        cityInfo.lat
-      )
-      .replaceAll(
-        "LON",
-        cityInfo.lon
-      );
-
-
-  const query = `
-
-    [out:json][timeout:60];
-
-    ${filter}
-
-    out center tags;
-
-  `;
-
-
-  let lastError =
-    null;
-
-
-  /*
-     Try the public servers one by one.
-  */
-
-  for (
-    const server of overpassServers
-  ) {
-
-    try {
-
-      const response =
-        await fetch(
-          server,
-          {
-
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/x-www-form-urlencoded"
-            },
-
-            body:
-              "data=" +
-              encodeURIComponent(query)
-
-          }
-        );
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          "Server returned " +
-          response.status
-        );
+        markers[index].openPopup();
 
       }
 
 
-      const data =
-        await response.json();
+      const card =
+        document.getElementById(
+          "business-" +
+          business.id
+        );
 
 
-      return (
-        data.elements || []
-      )
-      .map(
-        convertOSMResult
-      )
-      .filter(
-        business =>
-          business.name &&
-          business.name !==
-          "Unnamed business"
-      );
+      if (card) {
 
-    }
+        card.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
 
-    catch(error) {
-
-      console.warn(
-        "Overpass server failed:",
-        server,
-        error
-      );
-
-      lastError =
-        error;
+      }
 
     }
 
-  }
+
+    /* ==========================================
+       BUSINESS DETAILS
+    ========================================== */
+
+    function showDetails(
+      businessId
+    ) {
+
+      const business =
+        currentBusinesses.find(
+          item =>
+            item.id === businessId
+        );
 
 
-  throw lastError ||
-    new Error(
-      "All Overpass servers failed."
-    );
+      if (!business) {
 
-}
+        return;
 
-
-
-/* =========================================================
-   DISPLAY REAL LEADS
-   ========================================================= */
-
-
-function displayRealLeads(
-  businesses,
-  city,
-  category
-) {
-
-  const list =
-    document.getElementById(
-      "leadList"
-    );
-
-
-  list.innerHTML = "";
-
-
-  businesses.forEach(
-    (business, index) => {
+      }
 
 
       const phone =
-        cleanPhone(
-          business.phone
-        );
+        business.phone ||
+        "Not available";
 
 
       const website =
-        cleanWebsite(
-          business.website
+        business.website ||
+        "Not available";
+
+
+      alert(
+
+        "BUSINESS DETAILS\n\n" +
+
+        "🏪 " +
+        business.name +
+        "\n\n" +
+
+        "📍 " +
+        business.area +
+        "\n\n" +
+
+        "📞 " +
+        phone +
+        "\n\n" +
+
+        "🌐 " +
+        website +
+        "\n\n" +
+
+        "🗺️ Source: OpenStreetMap\n\n" +
+
+        "Status: New\n\n" +
+
+        "This lead can be saved and managed here."
+
+      );
+
+    }
+
+
+    /* ==========================================
+       SAVE REAL LEAD
+    ========================================== */
+
+    function saveRealLead(
+      businessId
+    ) {
+
+      const business =
+        currentBusinesses.find(
+          item =>
+            item.id === businessId
         );
 
 
-      const mapLink =
-        business.lat &&
-        business.lon
+      if (!business) {
 
-        ?
+        return;
 
-        `https://www.openstreetmap.org/?mlat=${business.lat}&mlon=${business.lon}#map=18/${business.lat}/${business.lon}`
-
-        :
-
-        "#";
+      }
 
 
-      const address =
-        business.address ||
-        business.area ||
-        "Address not available";
+      const savedLeads =
+        JSON.parse(
+          localStorage.getItem(
+            "savedLeads"
+          )
+        ) || [];
 
 
-      list.innerHTML += `
-
-        <div class="lead">
-
-          <h3>
-            ${escapeHTML(
-              business.name
-            )}
-          </h3>
+      const alreadySaved =
+        savedLeads.some(
+          lead =>
+            lead.id === business.id
+        );
 
 
-          <p>
-            📍
-            ${escapeHTML(
-              address
-            )}
-          </p>
+      if (alreadySaved) {
+
+        alert(
+          "⭐ This lead is already saved!"
+        );
+
+        return;
+
+      }
 
 
-          <p>
-            📞
-            ${escapeHTML(
-              phone
-            )}
-          </p>
+      savedLeads.push({
+
+        id:
+          business.id,
+
+        name:
+          business.name,
+
+        area:
+          business.area,
+
+        phone:
+          business.phone ||
+          "Not available",
+
+        rating:
+          business.rating ||
+          "Not available",
+
+        website:
+          business.website ||
+          "",
+
+        lat:
+          business.lat,
+
+        lon:
+          business.lon,
+
+        osmUrl:
+          business.osmUrl,
+
+        status:
+          "New",
+
+        note:
+          "",
+
+        updated:
+          new Date().toLocaleString()
+
+      });
 
 
-          ${
-            website
-
-            ?
-
-            `
-              <p>
-                🌐
-                <a
-                  href="${escapeHTML(website)}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Website
-                </a>
-              </p>
-            `
-
-            :
-
-            ""
-
-          }
+      localStorage.setItem(
+        "savedLeads",
+        JSON.stringify(
+          savedLeads
+        )
+      );
 
 
-          <span class="source">
+      updateDashboard();
 
-            🗺️ Source:
-            OpenStreetMap
-
-          </span>
+      displaySavedLeads();
 
 
-          <div class="lead-actions">
-
-
-            <button
-              onclick='showRealDetails(
-                ${JSON.stringify(
-                  business
-                )}
-              )'
-            >
-
-              👀 View Details
-
-            </button>
-
-
-            <button
-              onclick='saveRealLead(
-                ${JSON.stringify(
-                  business
-                )}
-              )'
-            >
-
-              ⭐ Save Lead
-
-            </button>
-
-
-            <a
-              href="${mapLink}"
-              target="_blank"
-              rel="noopener noreferrer"
-              style="text-decoration:none;"
-            >
-
-              <button
-                class="secondary-btn"
-                type="button"
-              >
-
-                🗺️ Open Map
-
-              </button>
-
-            </a>
-
-
-          </div>
-
-        </div>
-
-      `;
+      alert(
+        "⭐ Lead Saved!\n\n" +
+        business.name
+      );
 
     }
-  );
 
-}
 
+    /* ==========================================
+       CHANGE STATUS
+    ========================================== */
 
+    function changeLeadStatus(
+      id,
+      status
+    ) {
 
-/* =========================================================
-   REAL BUSINESS DETAILS
-   ========================================================= */
-
-
-function showRealDetails(
-  business
-) {
-
-  const address =
-    business.address ||
-    business.area ||
-    "Not available";
-
-
-  const phone =
-    business.phone ||
-    "Not available";
-
-
-  const website =
-    business.website ||
-    "Not available";
-
-
-  alert(
-
-    "BUSINESS DETAILS\n\n" +
-
-    "🏪 " +
-    business.name +
-    "\n\n" +
-
-    "📍 " +
-    address +
-    "\n\n" +
-
-    "📞 " +
-    phone +
-    "\n\n" +
-
-    "🌐 " +
-    website +
-    "\n\n" +
-
-    "Status: Not contacted\n\n" +
-
-    "Source: OpenStreetMap"
-
-  );
-
-}
-
-
-
-/* =========================================================
-   SAVE REAL LEAD
-   ========================================================= */
-
-
-function saveRealLead(
-  business
-) {
-
-  const savedLeads =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
-
-
-  const uniqueId =
-    business.id ||
-    (
-      business.name +
-      "|" +
-      business.lat +
-      "|" +
-      business.lon
-    );
-
-
-  const alreadySaved =
-    savedLeads.some(
-      lead =>
-        lead.id === uniqueId
-    );
-
-
-  if (alreadySaved) {
-
-    alert(
-      "⭐ This lead is already saved!"
-    );
-
-    return;
-
-  }
-
-
-  savedLeads.push({
-
-    id:
-      uniqueId,
-
-    name:
-      business.name,
-
-    area:
-      business.area ||
-      "Location available on map",
-
-    address:
-      business.address ||
-      "",
-
-    phone:
-      business.phone ||
-      "",
-
-    website:
-      business.website ||
-      "",
-
-    lat:
-      business.lat ||
-      "",
-
-    lon:
-      business.lon ||
-      "",
-
-    status:
-      "New",
-
-    note:
-      "",
-
-    updated:
-      new Date().toLocaleString()
-
-  });
-
-
-  localStorage.setItem(
-    "savedLeads",
-    JSON.stringify(
-      savedLeads
-    )
-  );
-
-
-  updateDashboard();
-
-  displaySavedLeads();
-
-
-  alert(
-
-    "⭐ Lead Saved!\n\n" +
-
-    business.name
-
-  );
-
-}
-
-
-
-/* =========================================================
-   CHANGE STATUS
-   ========================================================= */
-
-
-function changeLeadStatus(
-  id,
-  status
-) {
-
-  const savedLeads =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
-
-
-  const lead =
-    savedLeads.find(
-      lead =>
-        lead.id === id
-    );
-
-
-  if (lead) {
-
-    lead.status =
-      status;
-
-
-    lead.updated =
-      new Date().toLocaleString();
-
-
-    localStorage.setItem(
-      "savedLeads",
-      JSON.stringify(
-        savedLeads
-      )
-    );
-
-  }
-
-
-  updateDashboard();
-
-  displaySavedLeads();
-
-}
-
-
-
-/* =========================================================
-   SAVE NOTE
-   ========================================================= */
-
-
-function saveNote(id) {
-
-  const noteBox =
-    document.getElementById(
-      "note-" + id
-    );
-
-
-  if (!noteBox) {
-
-    return;
-
-  }
-
-
-  const note =
-    noteBox.value;
-
-
-  if (
-    note.trim() === ""
-  ) {
-
-    alert(
-      "Please write a note first!"
-    );
-
-    return;
-
-  }
-
-
-  const savedLeads =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
-
-
-  const lead =
-    savedLeads.find(
-      lead =>
-        lead.id === id
-    );
-
-
-  if (lead) {
-
-    lead.note =
-      note;
-
-
-    lead.updated =
-      new Date().toLocaleString();
-
-
-    localStorage.setItem(
-      "savedLeads",
-      JSON.stringify(
-        savedLeads
-      )
-    );
-
-  }
-
-
-  alert(
-    "📝 Note Saved!"
-  );
-
-
-  displaySavedLeads();
-
-}
-
-
-
-/* =========================================================
-   DELETE LEAD
-   ========================================================= */
-
-
-function deleteLead(id) {
-
-  const savedLeads =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
-
-
-  const lead =
-    savedLeads.find(
-      lead =>
-        lead.id === id
-    );
-
-
-  const name =
-    lead
-      ? lead.name
-      : "this lead";
-
-
-  const confirmed =
-    confirm(
-
-      "Are you sure you want to remove this saved lead?\n\n" +
-      name
-
-    );
-
-
-  if (!confirmed) {
-
-    return;
-
-  }
-
-
-  const remaining =
-    savedLeads.filter(
-      lead =>
-        lead.id !== id
-    );
-
-
-  localStorage.setItem(
-    "savedLeads",
-    JSON.stringify(
-      remaining
-    )
-  );
-
-
-  updateDashboard();
-
-  displaySavedLeads();
-
-}
-
-
-
-/* =========================================================
-   DISPLAY SAVED LEADS
-   ========================================================= */
-
-
-function displaySavedLeads() {
-
-  const savedLeads =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
-
-
-  const savedList =
-    document.getElementById(
-      "savedList"
-    );
-
-
-  const searchBox =
-    document.getElementById(
-      "savedSearch"
-    );
-
-
-  const statusBox =
-    document.getElementById(
-      "savedStatus"
-    );
-
-
-  const searchText =
-    searchBox
-      ? searchBox.value
-          .toLowerCase()
-      : "";
-
-
-  const selectedStatus =
-    statusBox
-      ? statusBox.value
-      : "All";
-
-
-  savedList.innerHTML =
-    "";
-
-
-  const filteredLeads =
-    savedLeads.filter(
-      lead => {
-
-
-        const name =
-          (
-            lead.name ||
-            ""
+      const savedLeads =
+        JSON.parse(
+          localStorage.getItem(
+            "savedLeads"
           )
-          .toLowerCase();
+        ) || [];
 
 
-        const area =
-          (
-            lead.area ||
-            ""
+      const lead =
+        savedLeads.find(
+          item =>
+            item.id === id
+        );
+
+
+      if (lead) {
+
+        lead.status =
+          status;
+
+        lead.updated =
+          new Date().toLocaleString();
+
+
+        localStorage.setItem(
+          "savedLeads",
+          JSON.stringify(
+            savedLeads
           )
-          .toLowerCase();
-
-
-        const address =
-          (
-            lead.address ||
-            ""
-          )
-          .toLowerCase();
-
-
-        const matchesSearch =
-
-          name.includes(
-            searchText
-          )
-
-          ||
-
-          area.includes(
-            searchText
-          )
-
-          ||
-
-          address.includes(
-            searchText
-          );
-
-
-        const currentStatus =
-          lead.status ||
-          "New";
-
-
-        const matchesStatus =
-
-          selectedStatus ===
-          "All"
-
-          ||
-
-          currentStatus ===
-          selectedStatus;
-
-
-        return (
-          matchesSearch &&
-          matchesStatus
         );
 
       }
-    );
 
 
-  if (
-    filteredLeads.length === 0
-  ) {
+      updateDashboard();
 
-    savedList.innerHTML = `
-
-      <div class="empty-message">
-
-        No matching saved leads ⭐
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  filteredLeads.forEach(
-    lead => {
-
-
-      const currentStatus =
-        lead.status ||
-        "New";
-
-
-      const currentNote =
-        lead.note ||
-        "";
-
-
-      const updated =
-        lead.updated ||
-        "Not available";
-
-
-      const phone =
-        lead.phone ||
-        "Not available";
-
-
-      const address =
-        lead.address ||
-        lead.area ||
-        "Not available";
-
-
-      const mapLink =
-        lead.lat &&
-        lead.lon
-
-        ?
-
-        `https://www.openstreetmap.org/?mlat=${lead.lat}&mlon=${lead.lon}#map=18/${lead.lat}/${lead.lon}`
-
-        :
-
-        "#";
-
-
-      const safeId =
-        String(lead.id)
-          .replace(
-            /[^a-zA-Z0-9_-]/g,
-            "_"
-          );
-
-
-      savedList.innerHTML += `
-
-        <div class="lead">
-
-          <h3>
-            ${escapeHTML(
-              lead.name
-            )}
-          </h3>
-
-
-          <p>
-            📍
-            ${escapeHTML(
-              address
-            )}
-          </p>
-
-
-          <p>
-            📞
-            ${escapeHTML(
-              phone
-            )}
-          </p>
-
-
-          ${
-            lead.website
-
-            ?
-
-            `
-              <p>
-                🌐
-                <a
-                  href="${escapeHTML(
-                    cleanWebsite(
-                      lead.website
-                    )
-                  )}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Website
-                </a>
-              </p>
-            `
-
-            :
-
-            ""
-
-          }
-
-
-          <select
-            onchange="changeLeadStatus(
-              '${escapeHTML(
-                lead.id
-              )}',
-              this.value
-            )"
-          >
-
-            <option
-              value="New"
-              ${
-                currentStatus ===
-                "New"
-                  ? "selected"
-                  : ""
-              }
-            >
-              🆕 New
-            </option>
-
-
-            <option
-              value="Contacted"
-              ${
-                currentStatus ===
-                "Contacted"
-                  ? "selected"
-                  : ""
-              }
-            >
-              📞 Contacted
-            </option>
-
-
-            <option
-              value="Follow-up"
-              ${
-                currentStatus ===
-                "Follow-up"
-                  ? "selected"
-                  : ""
-              }
-            >
-              🔔 Follow-up
-            </option>
-
-
-            <option
-              value="Converted"
-              ${
-                currentStatus ===
-                "Converted"
-                  ? "selected"
-                  : ""
-              }
-            >
-              💰 Converted
-            </option>
-
-          </select>
-
-
-          <div class="saved-note">
-
-            📝 Note:
-
-            ${
-              escapeHTML(
-                currentNote
-              ) ||
-              "No note added yet"
-            }
-
-          </div>
-
-
-          <textarea
-            class="note-box"
-            id="note-${safeId}"
-            placeholder="Write a note..."
-          >${escapeHTML(
-            currentNote
-          )}</textarea>
-
-
-          <div class="lead-actions">
-
-
-            <button
-              onclick="saveNote(
-                '${escapeHTML(
-                  lead.id
-                )}'
-              )"
-            >
-
-              💾 Save Note
-
-            </button>
-
-
-            ${
-              lead.lat &&
-              lead.lon
-
-              ?
-
-              `
-                <a
-                  href="${mapLink}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style="text-decoration:none;"
-                >
-
-                  <button
-                    class="secondary-btn"
-                    type="button"
-                  >
-
-                    🗺️ Map
-
-                  </button>
-
-                </a>
-              `
-
-              :
-
-              ""
-
-            }
-
-
-            <button
-              class="danger-btn"
-              onclick="deleteLead(
-                '${escapeHTML(
-                  lead.id
-                )}'
-              )"
-            >
-
-              🗑️ Remove Lead
-
-            </button>
-
-
-          </div>
-
-
-          <p class="updated">
-
-            🕐 Last updated:
-            ${escapeHTML(
-              updated
-            )}
-
-          </p>
-
-
-        </div>
-
-      `;
+      displaySavedLeads();
 
     }
-  );
-
-}
 
 
+    /* ==========================================
+       SAVE NOTE
+    ========================================== */
 
-/* =========================================================
-   DASHBOARD
-   ========================================================= */
+    function saveNote(
+      id
+    ) {
 
-
-function updateDashboard() {
-
-  const savedLeads =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
+      const noteBox =
+        document.getElementById(
+          "note-" + id
+        );
 
 
-  let newCount =
-    0;
+      if (!noteBox) {
+
+        return;
+
+      }
 
 
-  let contactedCount =
-    0;
-
-
-  let followupCount =
-    0;
-
-
-  let convertedCount =
-    0;
-
-
-  savedLeads.forEach(
-    lead => {
-
-
-      const status =
-        lead.status ||
-        "New";
+      const note =
+        noteBox.value;
 
 
       if (
-        status === "New"
+        note.trim() === ""
       ) {
 
-        newCount++;
+        alert(
+          "Please write a note first!"
+        );
+
+        return;
 
       }
 
-      else if (
-        status === "Contacted"
-      ) {
 
-        contactedCount++;
+      const savedLeads =
+        JSON.parse(
+          localStorage.getItem(
+            "savedLeads"
+          )
+        ) || [];
+
+
+      const lead =
+        savedLeads.find(
+          item =>
+            item.id === id
+        );
+
+
+      if (lead) {
+
+        lead.note =
+          note;
+
+        lead.updated =
+          new Date().toLocaleString();
+
+
+        localStorage.setItem(
+          "savedLeads",
+          JSON.stringify(
+            savedLeads
+          )
+        );
 
       }
 
-      else if (
-        status === "Follow-up"
-      ) {
 
-        followupCount++;
+      alert(
+        "📝 Note Saved!"
+      );
+
+
+      displaySavedLeads();
+
+    }
+
+
+    /* ==========================================
+       DELETE LEAD
+    ========================================== */
+
+    function deleteLead(
+      id
+    ) {
+
+      const savedLeads =
+        JSON.parse(
+          localStorage.getItem(
+            "savedLeads"
+          )
+        ) || [];
+
+
+      const lead =
+        savedLeads.find(
+          item =>
+            item.id === id
+        );
+
+
+      if (!lead) {
+
+        return;
 
       }
 
-      else if (
-        status === "Converted"
+
+      const confirmed =
+        confirm(
+
+          "Are you sure you want to remove this saved lead?\n\n" +
+          lead.name
+
+        );
+
+
+      if (!confirmed) {
+
+        return;
+
+      }
+
+
+      const updatedLeads =
+        savedLeads.filter(
+          item =>
+            item.id !== id
+        );
+
+
+      localStorage.setItem(
+        "savedLeads",
+        JSON.stringify(
+          updatedLeads
+        )
+      );
+
+
+      updateDashboard();
+
+      displaySavedLeads();
+
+    }
+
+
+    /* ==========================================
+       DISPLAY SAVED LEADS
+    ========================================== */
+
+    function displaySavedLeads() {
+
+      const savedLeads =
+        JSON.parse(
+          localStorage.getItem(
+            "savedLeads"
+          )
+        ) || [];
+
+
+      const savedList =
+        document.getElementById(
+          "savedList"
+        );
+
+
+      const searchBox =
+        document.getElementById(
+          "savedSearch"
+        );
+
+
+      const statusBox =
+        document.getElementById(
+          "savedStatus"
+        );
+
+
+      const searchText =
+        searchBox
+          ? searchBox.value
+              .toLowerCase()
+          : "";
+
+
+      const selectedStatus =
+        statusBox
+          ? statusBox.value
+          : "All";
+
+
+      savedList.innerHTML = "";
+
+
+      const filteredLeads =
+        savedLeads.filter(
+          lead => {
+
+            const matchesSearch =
+
+              lead.name
+                .toLowerCase()
+                .includes(
+                  searchText
+                )
+
+              ||
+
+              lead.area
+                .toLowerCase()
+                .includes(
+                  searchText
+                );
+
+
+            const matchesStatus =
+
+              selectedStatus ===
+              "All"
+
+              ||
+
+              (lead.status ||
+              "New") ===
+              selectedStatus;
+
+
+            return (
+              matchesSearch &&
+              matchesStatus
+            );
+
+          }
+        );
+
+
+      if (
+        filteredLeads.length === 0
       ) {
 
-        convertedCount++;
+        savedList.innerHTML = `
+
+          <div class="empty-message">
+
+            No matching saved leads ⭐
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      filteredLeads.forEach(
+        lead => {
+
+          const currentStatus =
+            lead.status ||
+            "New";
+
+
+          const currentNote =
+            lead.note ||
+            "";
+
+
+          const updated =
+            lead.updated ||
+            "Not available";
+
+
+          savedList.innerHTML += `
+
+            <div class="lead">
+
+              <h3>
+                ${escapeHTML(
+                  lead.name
+                )}
+              </h3>
+
+
+              <p>
+                📍 ${escapeHTML(
+                  lead.area
+                )}
+              </p>
+
+
+              <p>
+                📞 ${escapeHTML(
+                  lead.phone ||
+                  "Not available"
+                )}
+              </p>
+
+
+              <p class="rating">
+                ⭐ ${escapeHTML(
+                  lead.rating ||
+                  "Not available"
+                )}
+              </p>
+
+
+              <select
+                onchange="changeLeadStatus(
+                  '${escapeHTML(
+                    lead.id
+                  )}',
+                  this.value
+                )"
+              >
+
+                <option
+                  value="New"
+                  ${currentStatus === "New"
+                    ? "selected"
+                    : ""}
+                >
+                  🆕 New
+                </option>
+
+
+                <option
+                  value="Contacted"
+                  ${currentStatus === "Contacted"
+                    ? "selected"
+                    : ""}
+                >
+                  📞 Contacted
+                </option>
+
+
+                <option
+                  value="Follow-up"
+                  ${currentStatus === "Follow-up"
+                    ? "selected"
+                    : ""}
+                >
+                  🔔 Follow-up
+                </option>
+
+
+                <option
+                  value="Converted"
+                  ${currentStatus === "Converted"
+                    ? "selected"
+                    : ""}
+                >
+                  💰 Converted
+                </option>
+
+              </select>
+
+
+              <div class="saved-note">
+
+                📝 Note:
+
+                ${escapeHTML(
+                  currentNote ||
+                  "No note added yet"
+                )}
+
+              </div>
+
+
+              <textarea
+                class="note-box"
+                id="note-${escapeHTML(
+                  lead.id
+                )}"
+                placeholder="Write a note..."
+              >${escapeHTML(
+                currentNote
+              )}</textarea>
+
+
+              <div class="lead-actions">
+
+                <button
+                  onclick="saveNote(
+                    '${escapeHTML(
+                      lead.id
+                    )}'
+                  )"
+                >
+                  💾 Save Note
+                </button>
+
+
+                <button
+                  class="map-btn"
+                  onclick="openSavedLeadMap(
+                    '${escapeHTML(
+                      lead.id
+                    )}'
+                  )"
+                >
+                  🗺️ Open Map
+                </button>
+
+
+                <button
+                  class="danger-btn"
+                  onclick="deleteLead(
+                    '${escapeHTML(
+                      lead.id
+                    )}'
+                  )"
+                >
+                  🗑️ Remove Lead
+                </button>
+
+              </div>
+
+
+              <p class="updated">
+
+                🕐 Last updated:
+                ${escapeHTML(
+                  updated
+                )}
+
+              </p>
+
+            </div>
+
+          `;
+
+        }
+      );
+
+    }
+
+
+    /* ==========================================
+       OPEN SAVED LEAD MAP
+    ========================================== */
+
+    function openSavedLeadMap(
+      id
+    ) {
+
+      const savedLeads =
+        JSON.parse(
+          localStorage.getItem(
+            "savedLeads"
+          )
+        ) || [];
+
+
+      const lead =
+        savedLeads.find(
+          item =>
+            item.id === id
+        );
+
+
+      if (!lead) {
+
+        return;
+
+      }
+
+
+      if (
+        lead.lat &&
+        lead.lon
+      ) {
+
+        window.open(
+          `https://www.openstreetmap.org/?mlat=${lead.lat}&mlon=${lead.lon}#map=18/${lead.lat}/${lead.lon}`,
+          "_blank"
+        );
 
       }
 
     }
-  );
 
 
-  document.getElementById(
-    "totalLeads"
-  ).innerText =
-    savedLeads.length;
+    /* ==========================================
+       DASHBOARD
+    ========================================== */
+
+    function updateDashboard() {
+
+      const savedLeads =
+        JSON.parse(
+          localStorage.getItem(
+            "savedLeads"
+          )
+        ) || [];
 
 
-  document.getElementById(
-    "newLeads"
-  ).innerText =
-    newCount;
+      let newCount = 0;
+
+      let contactedCount = 0;
+
+      let followupCount = 0;
+
+      let convertedCount = 0;
 
 
-  document.getElementById(
-    "contactedLeads"
-  ).innerText =
-    contactedCount;
+      savedLeads.forEach(
+        lead => {
+
+          const status =
+            lead.status ||
+            "New";
 
 
-  document.getElementById(
-    "followupLeads"
-  ).innerText =
-    followupCount;
+          if (
+            status === "New"
+          ) {
+
+            newCount++;
+
+          }
+
+          else if (
+            status === "Contacted"
+          ) {
+
+            contactedCount++;
+
+          }
+
+          else if (
+            status === "Follow-up"
+          ) {
+
+            followupCount++;
+
+          }
+
+          else if (
+            status === "Converted"
+          ) {
+
+            convertedCount++;
+
+          }
+
+        }
+      );
 
 
-  document.getElementById(
-    "convertedLeads"
-  ).innerText =
-    convertedCount;
-
-}
+      document.getElementById(
+        "totalLeads"
+      ).innerText =
+        savedLeads.length;
 
 
-
-/* =========================================================
-   DASHBOARD FILTER
-   ========================================================= */
-
-
-function filterDashboard(
-  status
-) {
-
-  const statusBox =
-    document.getElementById(
-      "savedStatus"
-    );
+      document.getElementById(
+        "newLeads"
+      ).innerText =
+        newCount;
 
 
-  statusBox.value =
-    status;
+      document.getElementById(
+        "contactedLeads"
+      ).innerText =
+        contactedCount;
 
 
-  displaySavedLeads();
+      document.getElementById(
+        "followupLeads"
+      ).innerText =
+        followupCount;
 
 
-  document.getElementById(
-    "savedSection"
-  ).scrollIntoView({
-    behavior: "smooth"
-  });
+      document.getElementById(
+        "convertedLeads"
+      ).innerText =
+        convertedCount;
 
-}
-
+    }
 
 
-/* =========================================================
-   START
-   ========================================================= */
+    /* ==========================================
+       DASHBOARD FILTER
+    ========================================== */
+
+    function filterDashboard(
+      status
+    ) {
+
+      const statusBox =
+        document.getElementById(
+          "savedStatus"
+        );
 
 
-updateDashboard();
+      statusBox.value =
+        status;
 
-displaySavedLeads();
+
+      displaySavedLeads();
 
 
-</script>
+      document.getElementById(
+        "savedSection"
+      ).scrollIntoView({
+        behavior: "smooth"
+      });
 
+    }
+
+
+    /* ==========================================
+       START
+    ========================================== */
+
+    updateDashboard();
+
+    displaySavedLeads();
+
+  </script>
 
 </body>
 </html>
