@@ -1,1382 +1,1207 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>LeadFinder India</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #172033;
-    }
-
-    .navbar {
-      background: #172033;
-      color: white;
-      padding: 18px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .logo {
-      font-size: 22px;
-      font-weight: bold;
-    }
-
-    .tag {
-      font-size: 13px;
-      opacity: 0.8;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 55px 20px 35px;
-    }
-
-    .hero h1 {
-      font-size: 42px;
-      margin-bottom: 15px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: #657085;
-      margin-bottom: 30px;
-    }
-
-    .search-box {
-      background: white;
-      max-width: 950px;
-      margin: auto;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    input,
-    select,
-    textarea {
-      font-family: inherit;
-    }
-
-    .search-box input,
-    .search-box select {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #d8dce5;
-      border-radius: 10px;
-      font-size: 16px;
-      background: white;
-    }
-
-    .business-name {
-      grid-column: 1 / -1;
-    }
-
-    .search-button {
-      grid-column: 1 / -1;
-      padding: 14px 20px;
-      border: none;
-      border-radius: 10px;
-      background: #4f46e5;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .search-button:hover {
-      background: #3730a3;
-    }
-
-    .results,
-    .dashboard {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-
-    #results {
-      display: none;
-    }
-
-    .results h2,
-    .dashboard h2 {
-      margin-bottom: 20px;
-    }
-
-    .status-message {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-      color: #667085;
-      margin-bottom: 20px;
-    }
-
-    .lead {
-      background: white;
-      padding: 20px;
-      margin-bottom: 15px;
-      border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    }
-
-    .lead h3 {
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
-
-    .lead p {
-      color: #667085;
-      margin: 6px 0;
-    }
-
-    .rating {
-      font-weight: bold;
-    }
-
-    .category-label {
-      display: inline-block;
-      margin-top: 5px;
-      padding: 5px 9px;
-      background: #eef0ff;
-      color: #3730a3;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .lead-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 15px;
-    }
-
-    button,
-    .map-btn {
-      padding: 11px 15px;
-      border: none;
-      border-radius: 9px;
-      background: #4f46e5;
-      color: white;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    button:hover,
-    .map-btn:hover {
-      background: #3730a3;
-    }
-
-    .secondary-btn {
-      background: #eef0ff;
-      color: #3730a3;
-    }
-
-    .secondary-btn:hover {
-      background: #dfe2ff;
-    }
-
-    .direction-btn {
-      background: #059669;
-    }
-
-    .direction-btn:hover {
-      background: #047857;
-    }
-
-    .danger-btn {
-      background: #fee2e2;
-      color: #b91c1c;
-    }
-
-    .danger-btn:hover {
-      background: #fecaca;
-    }
-
-    .demo {
-      text-align: center;
-      color: #8a93a3;
-      font-size: 13px;
-      margin-top: 25px;
-      line-height: 1.6;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 30px;
-      background: white;
-      border-radius: 12px;
-      color: #4f46e5;
-      font-weight: bold;
-    }
-
-    .empty-message {
-      background: white;
-      padding: 30px;
-      text-align: center;
-      border-radius: 12px;
-      color: #667085;
-      line-height: 1.6;
-    }
-
-    /* DASHBOARD */
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-    }
-
-    .dashboard-card {
-      background: white;
-      padding: 18px 10px;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .dashboard-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.10);
-    }
-
-    .dashboard-card h3 {
-      font-size: 13px;
-      margin-bottom: 8px;
-      color: #667085;
-    }
-
-    .dashboard-card p {
-      font-size: 25px;
-      font-weight: bold;
-    }
-
-    /* SAVED LEADS */
-
-    .saved-controls {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    #savedSearch {
-      flex: 1;
-      min-width: 220px;
-      padding: 12px;
-      border: 1px solid #d8dce5;
-      border-radius: 9px;
-    }
-
-    #savedStatus {
-      padding: 12px;
-      border: 1px solid #d8dce5;
-      border-radius: 9px;
-      background: white;
-    }
-
-    #savedList {
-      display: grid;
-      gap: 15px;
-    }
-
-    #savedList .lead {
-      margin-bottom: 0;
-      border: 1px solid #e5e7eb;
-    }
-
-    #savedList select {
-      margin-top: 12px;
-      padding: 9px;
-      border: 1px solid #d8dce5;
-      border-radius: 8px;
-      background: white;
-    }
-
-    .note-box {
-      width: 100%;
-      min-height: 70px;
-      margin-top: 12px;
-      padding: 10px;
-      border: 1px solid #d8dce5;
-      border-radius: 9px;
-      resize: vertical;
-    }
-
-    .saved-note {
-      margin-top: 12px;
-      padding: 10px;
-      background: #f8f9fc;
-      border-radius: 8px;
-      color: #4b5563;
-    }
-
-    .updated {
-      font-size: 12px;
-      color: #98a2b3 !important;
-      margin-top: 10px !important;
-    }
-
-    /* MOBILE */
-
-    @media (max-width: 750px) {
-
-      .navbar {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .hero h1 {
-        font-size: 32px;
-      }
-
-      .search-box {
-        grid-template-columns: 1fr;
-      }
-
-      .business-name,
-      .search-button {
-        grid-column: auto;
-      }
-
-      .dashboard-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 450px) {
-
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .results,
-      .dashboard {
-        padding: 15px;
-      }
-
-      .lead-actions button,
-      .lead-actions a {
-        width: 100%;
-        text-align: center;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>LeadFinder India</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #172033;
+}
+
+/* NAVBAR */
+
+.navbar {
+  background: #172033;
+  color: white;
+  padding: 18px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.tag {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+/* HERO */
+
+.hero {
+  text-align: center;
+  padding: 55px 20px 35px;
+}
+
+.hero h1 {
+  font-size: 42px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #657085;
+  margin-bottom: 30px;
+}
+
+.search-box {
+  background: white;
+  max-width: 950px;
+  margin: auto;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+.search-box input,
+.search-box select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #d8dce5;
+  border-radius: 10px;
+  font-size: 16px;
+  background: white;
+}
+
+.business-name {
+  grid-column: 1 / -1;
+}
+
+.search-button {
+  grid-column: 1 / -1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #4f46e5;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background: #3730a3;
+}
+
+/* RESULTS */
+
+.results,
+.dashboard {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+#results {
+  display: none;
+}
+
+.results h2,
+.dashboard h2 {
+  margin-bottom: 20px;
+}
+
+.status-message,
+.empty-message,
+.loading {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  color: #667085;
+  margin-bottom: 20px;
+}
+
+.loading {
+  color: #4f46e5;
+  font-weight: bold;
+}
+
+/* LEADS */
+
+.lead {
+  background: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.lead h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.lead p {
+  color: #667085;
+  margin: 6px 0;
+}
+
+.rating {
+  font-weight: bold;
+}
+
+.category-label {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px 9px;
+  background: #eef0ff;
+  color: #3730a3;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.lead-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+button,
+.map-btn {
+  padding: 11px 15px;
+  border: none;
+  border-radius: 9px;
+  background: #4f46e5;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+button:hover,
+.map-btn:hover {
+  background: #3730a3;
+}
+
+.secondary-btn {
+  background: #eef0ff;
+  color: #3730a3;
+}
+
+.secondary-btn:hover {
+  background: #dfe2ff;
+}
+
+.direction-btn {
+  background: #059669;
+}
+
+.direction-btn:hover {
+  background: #047857;
+}
+
+.danger-btn {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.danger-btn:hover {
+  background: #fecaca;
+}
+
+.demo {
+  text-align: center;
+  color: #8a93a3;
+  font-size: 13px;
+  margin-top: 25px;
+  line-height: 1.6;
+}
+
+/* DASHBOARD */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.dashboard-card {
+  background: white;
+  padding: 18px 10px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.10);
+}
+
+.dashboard-card h3 {
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: #667085;
+}
+
+.dashboard-card p {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+/* SAVED LEADS */
+
+.saved-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+#savedSearch {
+  flex: 1;
+  min-width: 220px;
+  padding: 12px;
+  border: 1px solid #d8dce5;
+  border-radius: 9px;
+}
+
+#savedStatus {
+  padding: 12px;
+  border: 1px solid #d8dce5;
+  border-radius: 9px;
+  background: white;
+}
+
+#savedList {
+  display: grid;
+  gap: 15px;
+}
+
+#savedList .lead {
+  margin-bottom: 0;
+  border: 1px solid #e5e7eb;
+}
+
+#savedList select {
+  margin-top: 12px;
+  padding: 9px;
+  border: 1px solid #d8dce5;
+  border-radius: 8px;
+  background: white;
+}
+
+.note-box {
+  width: 100%;
+  min-height: 70px;
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid #d8dce5;
+  border-radius: 9px;
+  resize: vertical;
+}
+
+.saved-note {
+  margin-top: 12px;
+  padding: 10px;
+  background: #f8f9fc;
+  border-radius: 8px;
+  color: #4b5563;
+}
+
+.updated {
+  font-size: 12px;
+  color: #98a2b3 !important;
+  margin-top: 10px !important;
+}
+
+/* MOBILE */
+
+@media (max-width: 750px) {
+
+  .navbar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .search-box {
+    grid-template-columns: 1fr;
+  }
+
+  .business-name,
+  .search-button {
+    grid-column: auto;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 450px) {
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results,
+  .dashboard {
+    padding: 15px;
+  }
+
+  .lead-actions button,
+  .lead-actions a {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+</style>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
+<!-- NAVBAR -->
 
-  <nav class="navbar">
+<nav class="navbar">
 
-    <div class="logo">
-      🇮🇳 LeadFinder India
-    </div>
+  <div class="logo">
+    🇮🇳 LeadFinder India
+  </div>
 
-    <div class="tag">
-      B2B Lead Discovery
-    </div>
+  <div class="tag">
+    B2B Lead Discovery
+  </div>
 
-  </nav>
+</nav>
 
 
-  <!-- SEARCH -->
+<!-- HERO / SEARCH -->
 
-  <section class="hero">
+<section class="hero">
 
-    <h1>
-      Find Businesses. Find Opportunities.
-    </h1>
+  <h1>
+    Find Businesses. Find Opportunities.
+  </h1>
 
-    <p>
-      Discover real businesses using OpenStreetMap data.
-    </p>
+  <p>
+    Discover real businesses using OpenStreetMap data.
+  </p>
 
+  <div class="search-box">
 
-    <div class="search-box">
+    <!-- CITY DROPDOWN -->
 
-      <!-- CITY DROPDOWN -->
+    <select id="city">
 
-      <select id="city">
+      <option value="pune">
+        🏙️ Pune
+      </option>
 
-        <option value="Pune">
-          📍 Pune
-        </option>
+      <option value="mumbai">
+        🏙️ Mumbai
+      </option>
 
-        <option value="Mumbai">
-          📍 Mumbai
-        </option>
+      <option value="delhi">
+        🏙️ Delhi
+      </option>
 
-        <option value="Delhi">
-          📍 Delhi
-        </option>
+      <option value="hyderabad">
+        🏙️ Hyderabad
+      </option>
 
-        <option value="New Delhi">
-          📍 New Delhi
-        </option>
+      <option value="bengaluru">
+        🏙️ Bengaluru
+      </option>
 
-        <option value="Bengaluru">
-          📍 Bengaluru
-        </option>
+      <option value="chennai">
+        🏙️ Chennai
+      </option>
 
-        <option value="Hyderabad">
-          📍 Hyderabad
-        </option>
+      <option value="kolkata">
+        🏙️ Kolkata
+      </option>
 
-        <option value="Chennai">
-          📍 Chennai
-        </option>
+      <option value="ahmedabad">
+        🏙️ Ahmedabad
+      </option>
 
-        <option value="Kolkata">
-          📍 Kolkata
-        </option>
+      <option value="jaipur">
+        🏙️ Jaipur
+      </option>
 
-        <option value="Ahmedabad">
-          📍 Ahmedabad
-        </option>
+      <option value="surat">
+        🏙️ Surat
+      </option>
 
-        <option value="Jaipur">
-          📍 Jaipur
-        </option>
+      <option value="nagpur">
+        🏙️ Nagpur
+      </option>
 
-        <option value="Surat">
-          📍 Surat
-        </option>
+      <option value="nashik">
+        🏙️ Nashik
+      </option>
 
-        <option value="Nagpur">
-          📍 Nagpur
-        </option>
+      <option value="thane">
+        🏙️ Thane
+      </option>
 
-        <option value="Nashik">
-          📍 Nashik
-        </option>
+      <option value="navimumbai">
+        🏙️ Navi Mumbai
+      </option>
 
-        <option value="Indore">
-          📍 Indore
-        </option>
+      <option value="noida">
+        🏙️ Noida
+      </option>
 
-        <option value="Bhopal">
-          📍 Bhopal
-        </option>
+      <option value="gurugram">
+        🏙️ Gurugram
+      </option>
 
-        <option value="Lucknow">
-          📍 Lucknow
-        </option>
+      <option value="lucknow">
+        🏙️ Lucknow
+      </option>
 
-        <option value="Kanpur">
-          📍 Kanpur
-        </option>
+      <option value="indore">
+        🏙️ Indore
+      </option>
 
-        <option value="Patna">
-          📍 Patna
-        </option>
+      <option value="bhopal">
+        🏙️ Bhopal
+      </option>
 
-        <option value="Vadodara">
-          📍 Vadodara
-        </option>
+      <option value="patna">
+        🏙️ Patna
+      </option>
 
-        <option value="Visakhapatnam">
-          📍 Visakhapatnam
-        </option>
+      <option value="chandigarh">
+        🏙️ Chandigarh
+      </option>
 
-        <option value="Coimbatore">
-          📍 Coimbatore
-        </option>
+      <option value="coimbatore">
+        🏙️ Coimbatore
+      </option>
 
-        <option value="Kochi">
-          📍 Kochi
-        </option>
+      <option value="vadodara">
+        🏙️ Vadodara
+      </option>
 
-        <option value="Chandigarh">
-          📍 Chandigarh
-        </option>
+    </select>
 
-        <option value="Bhubaneswar">
-          📍 Bhubaneswar
-        </option>
 
-        <option value="Noida">
-          📍 Noida
-        </option>
+    <!-- CATEGORY -->
 
-        <option value="Gurugram">
-          📍 Gurugram
-        </option>
+    <select id="category">
 
-        <option value="Ghaziabad">
-          📍 Ghaziabad
-        </option>
+      <option value="restaurant">
+        🍽️ Restaurants
+      </option>
 
-        <option value="Thane">
-          📍 Thane
-        </option>
+      <option value="cafe">
+        ☕ Cafes
+      </option>
 
-        <option value="Pimpri-Chinchwad">
-          📍 Pimpri-Chinchwad
-        </option>
+      <option value="fast_food">
+        🍔 Fast Food
+      </option>
 
-      </select>
+      <option value="salon">
+        💇 Salons
+      </option>
 
+      <option value="medical">
+        💊 Medical Stores / Pharmacies
+      </option>
 
-      <!-- CATEGORY -->
+      <option value="hospital">
+        🏥 Hospitals
+      </option>
 
-      <select id="category">
+      <option value="clinic">
+        🩺 Clinics
+      </option>
 
-        <option value="restaurant">
-          🍽️ Restaurants
-        </option>
+      <option value="veterinary">
+        🐾 Vet Clinics
+      </option>
 
-        <option value="cafe">
-          ☕ Cafes
-        </option>
+      <option value="dentist">
+        🦷 Dentists
+      </option>
 
-        <option value="fast_food">
-          🍔 Fast Food
-        </option>
+      <option value="garage">
+        🚗 Garages / Car Repair
+      </option>
 
-        <option value="salon">
-          💇 Salons
-        </option>
+      <option value="school">
+        🏫 Schools
+      </option>
 
-        <option value="medical">
-          💊 Medical Stores / Pharmacies
-        </option>
+      <option value="college">
+        🎓 Colleges / Universities
+      </option>
 
-        <option value="hospital">
-          🏥 Hospitals
-        </option>
+      <option value="gym">
+        🏋️ Gyms / Fitness
+      </option>
 
-        <option value="clinic">
-          🩺 Clinics / Doctors
-        </option>
+      <option value="hotel">
+        🏨 Hotels
+      </option>
 
-        <option value="veterinary">
-          🐾 Vet Clinics
-        </option>
+      <option value="bakery">
+        🥐 Bakeries
+      </option>
 
-        <option value="dentist">
-          🦷 Dentists
-        </option>
+      <option value="supermarket">
+        🛒 Supermarkets
+      </option>
 
-        <option value="garage">
-          🚗 Garages / Car Repair
-        </option>
+      <option value="clothing">
+        👕 Clothing Stores
+      </option>
 
-        <option value="school">
-          🏫 Schools
-        </option>
+      <option value="electronics">
+        💻 Electronics Stores
+      </option>
 
-        <option value="college">
-          🎓 Colleges / Universities
-        </option>
+      <option value="bank">
+        🏦 Banks
+      </option>
 
-        <option value="gym">
-          🏋️ Gyms / Fitness
-        </option>
+      <option value="car_dealer">
+        🚘 Car Dealers
+      </option>
 
-        <option value="hotel">
-          🏨 Hotels
-        </option>
+      <option value="beauty">
+        💄 Beauty Stores
+      </option>
 
-        <option value="bakery">
-          🥐 Bakeries
-        </option>
+      <option value="all">
+        🔎 All Businesses
+      </option>
 
-        <option value="supermarket">
-          🛒 Supermarkets
-        </option>
+    </select>
 
-        <option value="clothing">
-          👕 Clothing Stores
-        </option>
 
-        <option value="electronics">
-          💻 Electronics Stores
-        </option>
+    <!-- OPTIONAL BUSINESS NAME -->
 
-        <option value="bank">
-          🏦 Banks
-        </option>
+    <input
+      class="business-name"
+      id="businessName"
+      type="text"
+      placeholder="🔎 Optional business name or idea — e.g. McDonald's, Apollo, cafe"
+    >
 
-        <option value="car_dealer">
-          🚘 Car Dealers
-        </option>
 
-        <option value="beauty">
-          💄 Beauty Stores
-        </option>
+    <button
+      class="search-button"
+      onclick="findLeads()"
+    >
+      🔎 FIND REAL LEADS
+    </button>
 
-        <option value="all">
-          🔎 All Businesses
-        </option>
+  </div>
 
-      </select>
+</section>
 
 
-      <!-- OPTIONAL BUSINESS NAME -->
+<!-- RESULTS -->
 
-      <input
-        class="business-name"
-        id="businessName"
-        type="text"
-        placeholder="🔎 Optional business name — e.g. McDonald's, Apollo, Cafe"
-      >
+<section class="results" id="results">
 
+  <h2 id="resultTitle"></h2>
 
-      <button
-        class="search-button"
-        onclick="findLeads()"
-      >
-        🔎 FIND REAL LEADS
-      </button>
+  <div id="leadList"></div>
 
-    </div>
+  <p class="demo">
 
-  </section>
+    Data source:
+    <strong>OpenStreetMap</strong> /
+    Overpass API.
 
+    <br>
 
-  <!-- RESULTS -->
+    Phone numbers and websites are shown only
+    when publicly mapped in OpenStreetMap.
 
-  <section
-    class="results"
-    id="results"
-  >
+    <br>
 
-    <h2 id="resultTitle"></h2>
+    © OpenStreetMap contributors
 
-    <div id="leadList"></div>
+  </p>
 
-    <p class="demo">
+</section>
 
-      Data source:
-      <strong>OpenStreetMap</strong>
-      / Overpass API.
 
-      <br>
+<!-- DASHBOARD -->
 
-      Contact numbers and websites appear only when they are publicly mapped
-      in OpenStreetMap.
+<section class="dashboard">
 
-      <br>
+  <h2>
+    📊 Lead Dashboard
+  </h2>
 
-      © OpenStreetMap contributors
+  <div class="dashboard-grid">
 
-    </p>
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('All')"
+    >
 
-  </section>
+      <h3>
+        ⭐ Total Saved
+      </h3>
 
-
-  <!-- DASHBOARD -->
-
-  <section class="dashboard">
-
-    <h2>
-      📊 Lead Dashboard
-    </h2>
-
-
-    <div class="dashboard-grid">
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('All')"
-      >
-
-        <h3>
-          ⭐ Total Saved
-        </h3>
-
-        <p id="totalLeads">
-          0
-        </p>
-
-      </div>
-
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('New')"
-      >
-
-        <h3>
-          🆕 New
-        </h3>
-
-        <p id="newLeads">
-          0
-        </p>
-
-      </div>
-
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('Contacted')"
-      >
-
-        <h3>
-          📞 Contacted
-        </h3>
-
-        <p id="contactedLeads">
-          0
-        </p>
-
-      </div>
-
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('Follow-up')"
-      >
-
-        <h3>
-          🔔 Follow-up
-        </h3>
-
-        <p id="followupLeads">
-          0
-        </p>
-
-      </div>
-
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('Converted')"
-      >
-
-        <h3>
-          💰 Converted
-        </h3>
-
-        <p id="convertedLeads">
-          0
-        </p>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- SAVED LEADS -->
-
-  <section
-    class="results"
-    id="savedSection"
-  >
-
-    <h2>
-      ⭐ Saved Leads
-    </h2>
-
-
-    <div class="saved-controls">
-
-      <input
-        type="text"
-        id="savedSearch"
-        placeholder="🔎 Search saved leads..."
-        oninput="displaySavedLeads()"
-      >
-
-
-      <select
-        id="savedStatus"
-        onchange="displaySavedLeads()"
-      >
-
-        <option value="All">
-          All Statuses
-        </option>
-
-        <option value="New">
-          🆕 New
-        </option>
-
-        <option value="Contacted">
-          📞 Contacted
-        </option>
-
-        <option value="Follow-up">
-          🔔 Follow-up
-        </option>
-
-        <option value="Converted">
-          💰 Converted
-        </option>
-
-      </select>
+      <p id="totalLeads">
+        0
+      </p>
 
     </div>
 
 
-    <div id="savedList"></div>
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('New')"
+    >
 
-  </section>
+      <h3>
+        🆕 New
+      </h3>
+
+      <p id="newLeads">
+        0
+      </p>
+
+    </div>
 
 
-  <script>
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('Contacted')"
+    >
 
-    /*
-    =========================================================
-    LEADFINDER INDIA
-    REAL OPENSTREETMAP DATA
-    IMPROVED CITY + CATEGORY SEARCH
-    =========================================================
-    */
+      <h3>
+        📞 Contacted
+      </h3>
+
+      <p id="contactedLeads">
+        0
+      </p>
+
+    </div>
 
 
-    /*
-    =========================================================
-    OVERPASS SERVERS
-    =========================================================
-    */
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('Follow-up')"
+    >
 
-    const OVERPASS_SERVERS = [
+      <h3>
+        🔔 Follow-up
+      </h3>
 
-      "https://overpass-api.de/api/interpreter",
+      <p id="followupLeads">
+        0
+      </p>
 
-      "https://overpass.kumi.systems/api/interpreter",
+    </div>
 
-      "https://overpass.private.coffee/api/interpreter"
+
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('Converted')"
+    >
+
+      <h3>
+        💰 Converted
+      </h3>
+
+      <p id="convertedLeads">
+        0
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- SAVED LEADS -->
+
+<section
+  class="results"
+  id="savedSection"
+>
+
+  <h2>
+    ⭐ Saved Leads
+  </h2>
+
+  <div class="saved-controls">
+
+    <input
+      type="text"
+      id="savedSearch"
+      placeholder="🔎 Search saved leads..."
+      oninput="displaySavedLeads()"
+    >
+
+    <select
+      id="savedStatus"
+      onchange="displaySavedLeads()"
+    >
+
+      <option value="All">
+        All Statuses
+      </option>
+
+      <option value="New">
+        🆕 New
+      </option>
+
+      <option value="Contacted">
+        📞 Contacted
+      </option>
+
+      <option value="Follow-up">
+        🔔 Follow-up
+      </option>
+
+      <option value="Converted">
+        💰 Converted
+      </option>
+
+    </select>
+
+  </div>
+
+  <div id="savedList"></div>
+
+</section>
+
+
+<script>
+
+/*
+====================================================
+LEADFINDER INDIA
+REAL OPENSTREETMAP + OVERPASS
+====================================================
+*/
+
+
+/*
+====================================================
+OVERPASS SERVERS
+====================================================
+
+Multiple servers are used as fallbacks.
+If one is busy, another can be tried.
+*/
+
+const OVERPASS_SERVERS = [
+
+  "https://overpass-api.de/api/interpreter",
+
+  "https://overpass.kumi.systems/api/interpreter",
+
+  "https://overpass.private.coffee/api/interpreter"
+
+];
+
+
+/*
+====================================================
+CITY BOUNDING BOXES
+====================================================
+
+Format:
+
+south, west, north, east
+
+These are intentionally city-sized search areas.
+*/
+
+const cityBounds = {
+
+  pune: {
+    name: "Pune",
+    bbox: [18.35, 73.70, 18.70, 74.05]
+  },
+
+  mumbai: {
+    name: "Mumbai",
+    bbox: [18.85, 72.75, 19.35, 73.15]
+  },
+
+  delhi: {
+    name: "Delhi",
+    bbox: [28.40, 76.80, 28.90, 77.35]
+  },
+
+  hyderabad: {
+    name: "Hyderabad",
+    bbox: [17.20, 78.20, 17.65, 78.70]
+  },
+
+  bengaluru: {
+    name: "Bengaluru",
+    bbox: [12.80, 77.35, 13.20, 77.85]
+  },
+
+  chennai: {
+    name: "Chennai",
+    bbox: [12.80, 80.05, 13.30, 80.40]
+  },
+
+  kolkata: {
+    name: "Kolkata",
+    bbox: [22.35, 88.20, 22.75, 88.55]
+  },
+
+  ahmedabad: {
+    name: "Ahmedabad",
+    bbox: [22.90, 72.35, 23.20, 72.75]
+  },
+
+  jaipur: {
+    name: "Jaipur",
+    bbox: [26.75, 75.60, 27.10, 76.00]
+  },
+
+  surat: {
+    name: "Surat",
+    bbox: [21.05, 72.65, 21.35, 73.00]
+  },
+
+  nagpur: {
+    name: "Nagpur",
+    bbox: [20.95, 78.90, 21.35, 79.30]
+  },
+
+  nashik: {
+    name: "Nashik",
+    bbox: [19.85, 73.65, 20.15, 74.00]
+  },
+
+  thane: {
+    name: "Thane",
+    bbox: [19.15, 72.85, 19.35, 73.10]
+  },
+
+  navimumbai: {
+    name: "Navi Mumbai",
+    bbox: [18.85, 72.90, 19.15, 73.20]
+  },
+
+  noida: {
+    name: "Noida",
+    bbox: [28.45, 77.25, 28.70, 77.50]
+  },
+
+  gurugram: {
+    name: "Gurugram",
+    bbox: [28.30, 76.90, 28.60, 77.20]
+  },
+
+  lucknow: {
+    name: "Lucknow",
+    bbox: [26.70, 80.75, 27.00, 81.15]
+  },
+
+  indore: {
+    name: "Indore",
+    bbox: [22.55, 75.65, 23.00, 76.05]
+  },
+
+  bhopal: {
+    name: "Bhopal",
+    bbox: [23.05, 77.20, 23.45, 77.60]
+  },
+
+  patna: {
+    name: "Patna",
+    bbox: [25.45, 84.90, 25.75, 85.35]
+  },
+
+  chandigarh: {
+    name: "Chandigarh",
+    bbox: [30.60, 76.65, 30.85, 76.95]
+  },
+
+  coimbatore: {
+    name: "Coimbatore",
+    bbox: [10.85, 76.75, 11.15, 77.15]
+  },
+
+  vadodara: {
+    name: "Vadodara",
+    bbox: [22.15, 72.95, 22.45, 73.35]
+  }
+
+};
+
+
+/*
+====================================================
+CATEGORY -> OSM TAGS
+====================================================
+*/
+
+const categoryQueries = {
+
+  restaurant:
+    '["amenity"="restaurant"]',
+
+  cafe:
+    '["amenity"="cafe"]',
+
+  fast_food:
+    '["amenity"="fast_food"]',
+
+  salon:
+    '["shop"~"hairdresser|beauty"]',
+
+  medical:
+    '["amenity"="pharmacy"]',
+
+  hospital:
+    '["amenity"="hospital"]',
+
+  clinic:
+    '["amenity"~"clinic|doctors"]',
+
+  veterinary:
+    '["amenity"="veterinary"]',
+
+  dentist:
+    '["amenity"="dentist"]',
+
+  garage:
+    '["shop"="car_repair"]',
+
+  school:
+    '["amenity"="school"]',
+
+  college:
+    '["amenity"~"college|university"]',
+
+  gym:
+    '["leisure"="fitness_centre"]',
+
+  hotel:
+    '["tourism"="hotel"]',
+
+  bakery:
+    '["shop"="bakery"]',
+
+  supermarket:
+    '["shop"="supermarket"]',
+
+  clothing:
+    '["shop"="clothes"]',
+
+  electronics:
+    '["shop"="electronics"]',
+
+  bank:
+    '["amenity"="bank"]',
+
+  car_dealer:
+    '["shop"="car"]',
+
+  beauty:
+    '["shop"="beauty"]'
+
+};
+
+
+/*
+====================================================
+HTML ESCAPE
+====================================================
+*/
+
+function escapeHTML(text) {
+
+  if (
+    text === null ||
+    text === undefined
+  ) {
+    return "";
+  }
+
+  return String(text)
+
+    .replace(/&/g, "&amp;")
+
+    .replace(/</g, "&lt;")
+
+    .replace(/>/g, "&gt;")
+
+    .replace(/"/g, "&quot;")
+
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+====================================================
+REGEX ESCAPE
+====================================================
+*/
+
+function escapeRegex(text) {
+
+  return text.replace(
+    /[.*+?^${}()|[\]\\]/g,
+    "\\$&"
+  );
+
+}
+
+
+/*
+====================================================
+BUILD OVERPASS QUERY
+====================================================
+*/
+
+function buildOverpassQuery(
+  bbox,
+  category,
+  businessName
+) {
+
+  const south = bbox[0];
+  const west = bbox[1];
+  const north = bbox[2];
+  const east = bbox[3];
+
+
+  let nameFilter = "";
+
+
+  if (
+    businessName &&
+    businessName.trim() !== ""
+  ) {
+
+    const safeName =
+      escapeRegex(
+        businessName.trim()
+      );
+
+    nameFilter =
+      `[name~"${safeName}",i]`;
+
+  }
+
+
+  let queryParts = [];
+
+
+  /*
+  ALL BUSINESSES
+
+  We search common named business
+  categories rather than literally
+  every OSM object.
+  */
+
+  if (category === "all") {
+
+    queryParts = [
+
+      `nwr["name"]["amenity"](${south},${west},${north},${east});`,
+
+      `nwr["name"]["shop"](${south},${west},${north},${east});`,
+
+      `nwr["name"]["tourism"](${south},${west},${north},${east});`,
+
+      `nwr["name"]["leisure"](${south},${west},${north},${east});`
 
     ];
 
+  }
 
-    /*
-    =========================================================
-    CITY DATABASE
-    Coordinates are used instead of relying only on
-    Nominatim city bounding boxes.
-    =========================================================
-    */
-
-    const cityCenters = {
-
-      "Pune": {
-        lat: 18.5204,
-        lon: 73.8567,
-        radius: 35000
-      },
-
-      "Mumbai": {
-        lat: 19.0760,
-        lon: 72.8777,
-        radius: 35000
-      },
-
-      "Delhi": {
-        lat: 28.6139,
-        lon: 77.2090,
-        radius: 35000
-      },
-
-      "New Delhi": {
-        lat: 28.6139,
-        lon: 77.2090,
-        radius: 30000
-      },
-
-      "Bengaluru": {
-        lat: 12.9716,
-        lon: 77.5946,
-        radius: 35000
-      },
-
-      "Hyderabad": {
-        lat: 17.3850,
-        lon: 78.4867,
-        radius: 35000
-      },
-
-      "Chennai": {
-        lat: 13.0827,
-        lon: 80.2707,
-        radius: 35000
-      },
-
-      "Kolkata": {
-        lat: 22.5726,
-        lon: 88.3639,
-        radius: 35000
-      },
-
-      "Ahmedabad": {
-        lat: 23.0225,
-        lon: 72.5714,
-        radius: 35000
-      },
-
-      "Jaipur": {
-        lat: 26.9124,
-        lon: 75.7873,
-        radius: 35000
-      },
-
-      "Surat": {
-        lat: 21.1702,
-        lon: 72.8311,
-        radius: 30000
-      },
-
-      "Nagpur": {
-        lat: 21.1458,
-        lon: 79.0882,
-        radius: 30000
-      },
-
-      "Nashik": {
-        lat: 19.9975,
-        lon: 73.7898,
-        radius: 30000
-      },
-
-      "Indore": {
-        lat: 22.7196,
-        lon: 75.8577,
-        radius: 30000
-      },
-
-      "Bhopal": {
-        lat: 23.2599,
-        lon: 77.4126,
-        radius: 30000
-      },
-
-      "Lucknow": {
-        lat: 26.8467,
-        lon: 80.9462,
-        radius: 30000
-      },
-
-      "Kanpur": {
-        lat: 26.4499,
-        lon: 80.3319,
-        radius: 30000
-      },
-
-      "Patna": {
-        lat: 25.5941,
-        lon: 85.1376,
-        radius: 30000
-      },
-
-      "Vadodara": {
-        lat: 22.3072,
-        lon: 73.1812,
-        radius: 30000
-      },
-
-      "Visakhapatnam": {
-        lat: 17.6868,
-        lon: 83.2185,
-        radius: 30000
-      },
-
-      "Coimbatore": {
-        lat: 11.0168,
-        lon: 76.9558,
-        radius: 30000
-      },
-
-      "Kochi": {
-        lat: 9.9312,
-        lon: 76.2673,
-        radius: 30000
-      },
-
-      "Chandigarh": {
-        lat: 30.7333,
-        lon: 76.7794,
-        radius: 25000
-      },
-
-      "Bhubaneswar": {
-        lat: 20.2961,
-        lon: 85.8245,
-        radius: 25000
-      },
-
-      "Noida": {
-        lat: 28.5355,
-        lon: 77.3910,
-        radius: 25000
-      },
-
-      "Gurugram": {
-        lat: 28.4595,
-        lon: 77.0266,
-        radius: 25000
-      },
-
-      "Ghaziabad": {
-        lat: 28.6692,
-        lon: 77.4538,
-        radius: 25000
-      },
-
-      "Thane": {
-        lat: 19.2183,
-        lon: 72.9781,
-        radius: 25000
-      },
-
-      "Pimpri-Chinchwad": {
-        lat: 18.6298,
-        lon: 73.7997,
-        radius: 25000
-      }
-
-    };
-
-
-    /*
-    =========================================================
-    CATEGORY QUERIES
-    Multiple tags are used where useful.
-    =========================================================
-    */
-
-    const categoryQueries = {
-
-      restaurant: `
-        nwr["amenity"="restaurant"](around:__RADIUS__,__LAT__,__LON__);
-      `,
-
-      cafe: `
-        nwr["amenity"="cafe"](around:__RADIUS__,__LAT__,__LON__);
-      `,
-
-      fast_food: `
-        nwr["amenity"="fast_food"](around:__RADIUS__,__LAT__,__LON__);
-      `,
-
-      salon: `
-        nwr["shop"="hairdresser"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["shop"="beauty"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["amenity"="beauty_salon"](around:__RADIUS__,__LAT__,__LON__);
-      `,
-
-      medical: `
-        nwr["amenity"="pharmacy"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["shop"="chemist"](around:__RADIUS__,__LAT__,__LON__);
-      `,
-
-      hospital: `
-        nwr["amenity"="hospital"](around:__RADIUS__,__LAT__,__LON__);
-      `,
-
-      clinic: `
-        nwr["amenity"="clinic"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["amenity"="doctors"](around:__RADIUS__,__LAT__,__LON__);
-      `,
-
-      veterinary: `
-        nwr["amenity"="veterinary"](around:__RADIUS__,__LAT__,__LON__);
-      `,
-
-      dentist: `
-        nwr["amenity"="dentist"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+  else {
 
-      garage: `
-        nwr["shop"="car_repair"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["amenity"="car_repair"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+    const tag =
+      categoryQueries[category];
 
-      school: `
-        nwr["amenity"="school"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+    queryParts = [
 
-      college: `
-        nwr["amenity"="college"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["amenity"="university"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+      `nwr${tag}${nameFilter}(${south},${west},${north},${east});`
 
-      gym: `
-        nwr["leisure"="fitness_centre"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["sport"="fitness"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+    ];
 
-      hotel: `
-        nwr["tourism"="hotel"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["tourism"="guest_house"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+  }
 
-      bakery: `
-        nwr["shop"="bakery"](around:__RADIUS__,__LAT__,__LON__);
-      `,
 
-      supermarket: `
-        nwr["shop"="supermarket"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+  return `
 
-      clothing: `
-        nwr["shop"="clothes"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["shop"="fashion"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+    [out:json][timeout:90];
 
-      electronics: `
-        nwr["shop"="electronics"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["shop"="computer"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+    (
 
-      bank: `
-        nwr["amenity"="bank"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+      ${queryParts.join("\n")}
 
-      car_dealer: `
-        nwr["shop"="car"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+    );
 
-      beauty: `
-        nwr["shop"="beauty"](around:__RADIUS__,__LAT__,__LON__);
-        nwr["amenity"="beauty_salon"](around:__RADIUS__,__LAT__,__LON__);
-      `,
+    out center tags;
 
-      all: `
-        nwr["name"](around:__RADIUS__,__LAT__,__LON__);
-      `
+  `;
 
-    };
+}
 
 
-    /*
-    =========================================================
-    CATEGORY DISPLAY NAMES
-    =========================================================
-    */
+/*
+====================================================
+SEARCH OVERPASS WITH FALLBACK SERVERS
+====================================================
+*/
 
-    const categoryNames = {
+async function searchOverpass(query) {
 
-      restaurant: "🍽️ Restaurants",
+  let lastError = null;
 
-      cafe: "☕ Cafes",
 
-      fast_food: "🍔 Fast Food",
+  for (
+    const server of OVERPASS_SERVERS
+  ) {
 
-      salon: "💇 Salons",
-
-      medical: "💊 Medical Stores / Pharmacies",
-
-      hospital: "🏥 Hospitals",
-
-      clinic: "🩺 Clinics / Doctors",
-
-      veterinary: "🐾 Vet Clinics",
-
-      dentist: "🦷 Dentists",
-
-      garage: "🚗 Garages / Car Repair",
-
-      school: "🏫 Schools",
-
-      college: "🎓 Colleges / Universities",
-
-      gym: "🏋️ Gyms / Fitness",
-
-      hotel: "🏨 Hotels",
-
-      bakery: "🥐 Bakeries",
-
-      supermarket: "🛒 Supermarkets",
-
-      clothing: "👕 Clothing Stores",
-
-      electronics: "💻 Electronics Stores",
-
-      bank: "🏦 Banks",
-
-      car_dealer: "🚘 Car Dealers",
-
-      beauty: "💄 Beauty Stores",
-
-      all: "🔎 All Businesses"
-
-    };
-
-
-    /*
-    =========================================================
-    ESCAPE REGEX
-    =========================================================
-    */
-
-    function escapeRegex(text) {
-
-      return text.replace(
-        /[.*+?^${}()|[\]\\]/g,
-        "\\$&"
-      );
-
-    }
-
-
-    /*
-    =========================================================
-    ESCAPE HTML
-    =========================================================
-    */
-
-    function escapeHTML(text) {
-
-      if (
-        text === null ||
-        text === undefined
-      ) {
-
-        return "";
-
-      }
-
-      return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-
-    }
-
-
-    /*
-    =========================================================
-    BUILD SEARCH QUERY
-    =========================================================
-    */
-
-    function buildOverpassQuery(
-      city,
-      category,
-      businessName
-    ) {
-
-      const location =
-        cityCenters[city];
-
-      if (!location) {
-
-        throw new Error(
-          "This city is not available yet."
-        );
-
-      }
-
-
-      let categoryQuery =
-        categoryQueries[category];
-
-
-      if (!categoryQuery) {
-
-        categoryQuery =
-          categoryQueries.all;
-
-      }
-
-
-      categoryQuery =
-        categoryQuery
-          .replaceAll(
-            "__RADIUS__",
-            location.radius
-          )
-          .replaceAll(
-            "__LAT__",
-            location.lat
-          )
-          .replaceAll(
-            "__LON__",
-            location.lon
-          );
-
-
-      /*
-      BUSINESS NAME FILTER
-
-      We use Overpass regex filtering when
-      a business name is entered.
-      */
-
-      if (
-        businessName &&
-        businessName.trim() !== ""
-      ) {
-
-        const safeName =
-          escapeRegex(
-            businessName.trim()
-          );
-
-
-        /*
-        Convert each query line into
-        a name-filtered version.
-        */
-
-        categoryQuery =
-          categoryQuery.replace(
-            /(\]\()(around)/g,
-            `][name~"${safeName}",i]($2`
-          );
-
-      }
-
-
-      return `
-
-        [out:json][timeout:90];
-
-        (
-
-          ${categoryQuery}
-
-        );
-
-        out center tags;
-
-      `;
-
-    }
-
-
-    /*
-    =========================================================
-    SEARCH ONE OVERPASS SERVER
-    =========================================================
-    */
-
-    async function searchServer(
-      server,
-      query
-    ) {
+    try {
 
       const controller =
         new AbortController();
@@ -1385,2079 +1210,1997 @@
       const timeout =
         setTimeout(
           () => controller.abort(),
-          30000
+          90000
         );
 
 
-      try {
+      const response =
+        await fetch(
+          server,
+          {
 
-        const response =
-          await fetch(
-            server,
-            {
-              method: "POST",
+            method: "POST",
 
-              headers: {
-                "Content-Type":
-                  "application/x-www-form-urlencoded"
-              },
+            headers: {
+              "Content-Type":
+                "application/x-www-form-urlencoded"
+            },
 
-              body:
-                "data=" +
-                encodeURIComponent(query),
+            body:
+              "data=" +
+              encodeURIComponent(query),
 
-              signal:
-                controller.signal
-            }
-          );
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            "Server returned " +
-            response.status
-          );
-
-        }
-
-
-        return await response.json();
-
-      }
-
-      finally {
-
-        clearTimeout(timeout);
-
-      }
-
-    }
-
-
-    /*
-    =========================================================
-    TRY MULTIPLE OVERPASS SERVERS
-    =========================================================
-    */
-
-    async function searchOverpass(
-      query
-    ) {
-
-      let lastError = null;
-
-
-      for (
-        const server
-        of OVERPASS_SERVERS
-      ) {
-
-        try {
-
-          const data =
-            await searchServer(
-              server,
-              query
-            );
-
-
-          if (
-            data &&
-            Array.isArray(
-              data.elements
-            )
-          ) {
-
-            return data;
+            signal:
+              controller.signal
 
           }
+        );
 
-        }
 
-        catch (error) {
+      clearTimeout(timeout);
 
-          console.warn(
-            "Overpass server failed:",
-            server,
-            error
-          );
 
-          lastError =
-            error;
+      if (!response.ok) {
 
-        }
+        throw new Error(
+          "Server returned " +
+          response.status
+        );
 
       }
 
 
-      throw new Error(
-        "All business-data servers are temporarily busy. Please try again."
+      return await response.json();
+
+    }
+
+    catch (error) {
+
+      lastError = error;
+
+      console.warn(
+        "Overpass server failed:",
+        server,
+        error
       );
 
     }
 
+  }
+
+
+  throw new Error(
+    "All business-data servers are currently busy. Please try again in a few seconds."
+  );
+
+}
+
+
+/*
+====================================================
+GET COORDINATES
+====================================================
+*/
+
+function getCoordinates(element) {
+
+  if (
+    element.type === "node" &&
+    element.lat !== undefined &&
+    element.lon !== undefined
+  ) {
+
+    return {
+      lat: Number(element.lat),
+      lon: Number(element.lon)
+    };
+
+  }
+
+
+  if (
+    element.center &&
+    element.center.lat !== undefined &&
+    element.center.lon !== undefined
+  ) {
+
+    return {
+      lat: Number(element.center.lat),
+      lon: Number(element.center.lon)
+    };
+
+  }
+
+
+  return null;
+
+}
+
+
+/*
+====================================================
+GET CATEGORY LABEL
+====================================================
+*/
+
+function getCategoryLabel(tags) {
+
+  if (!tags) {
+    return "Business";
+  }
+
+
+  if (tags.amenity) {
+
+    const map = {
+
+      restaurant: "Restaurant",
+
+      cafe: "Cafe",
+
+      fast_food: "Fast Food",
+
+      pharmacy: "Medical / Pharmacy",
+
+      hospital: "Hospital",
+
+      clinic: "Clinic",
+
+      doctors: "Doctors",
+
+      veterinary: "Veterinary Clinic",
+
+      dentist: "Dentist",
+
+      school: "School",
+
+      college: "College / University",
+
+      university: "University",
+
+      bank: "Bank"
+
+    };
+
+
+    if (map[tags.amenity]) {
+
+      return map[tags.amenity];
+
+    }
+
+  }
+
+
+  if (tags.shop) {
+
+    const map = {
+
+      hairdresser: "Hair Salon",
+
+      beauty: "Beauty",
+
+      car_repair: "Garage / Car Repair",
+
+      bakery: "Bakery",
+
+      supermarket: "Supermarket",
+
+      clothes: "Clothing Store",
+
+      electronics: "Electronics",
+
+      car: "Car Dealer"
+
+    };
+
+
+    if (map[tags.shop]) {
+
+      return map[tags.shop];
+
+    }
+
+  }
+
+
+  if (
+    tags.tourism === "hotel"
+  ) {
+
+    return "Hotel";
+
+  }
+
+
+  if (
+    tags.leisure === "fitness_centre"
+  ) {
+
+    return "Gym / Fitness";
+
+  }
+
+
+  return "Business";
+
+}
+
+
+/*
+====================================================
+GET PHONE
+====================================================
+*/
+
+function getPhone(tags) {
+
+  if (!tags) {
+    return null;
+  }
+
+
+  return (
+
+    tags.phone ||
+
+    tags["contact:phone"] ||
+
+    tags["contact:mobile"] ||
+
+    tags.mobile ||
+
+    null
+
+  );
+
+}
+
+
+/*
+====================================================
+GET WEBSITE
+====================================================
+*/
+
+function getWebsite(tags) {
+
+  if (!tags) {
+    return null;
+  }
+
+
+  return (
+
+    tags.website ||
+
+    tags["contact:website"] ||
+
+    null
+
+  );
+
+}
+
+
+/*
+====================================================
+GET ADDRESS
+====================================================
+*/
+
+function getAddress(tags) {
+
+  if (!tags) {
+
+    return "Location available on map";
+
+  }
+
+
+  const parts = [];
+
+
+  if (tags["addr:housenumber"]) {
+
+    parts.push(
+      tags["addr:housenumber"]
+    );
+
+  }
+
+
+  if (tags["addr:street"]) {
+
+    parts.push(
+      tags["addr:street"]
+    );
+
+  }
+
+
+  if (tags["addr:suburb"]) {
+
+    parts.push(
+      tags["addr:suburb"]
+    );
+
+  }
+
+
+  if (tags["addr:city"]) {
+
+    parts.push(
+      tags["addr:city"]
+    );
+
+  }
+
+
+  if (tags["addr:postcode"]) {
+
+    parts.push(
+      tags["addr:postcode"]
+    );
+
+  }
+
+
+  if (parts.length === 0) {
+
+    return "Location available on map";
+
+  }
+
+
+  return parts.join(", ");
+
+}
+
+
+/*
+====================================================
+EXACT OPENSTREETMAP URL
+====================================================
+*/
+
+function getMapURL(
+  lat,
+  lon
+) {
+
+  return (
+
+    "https://www.openstreetmap.org/" +
+
+    "?mlat=" +
+    encodeURIComponent(lat) +
+
+    "&mlon=" +
+    encodeURIComponent(lon) +
+
+    "#map=19/" +
+    encodeURIComponent(lat) +
+    "/" +
+    encodeURIComponent(lon)
+
+  );
+
+}
+
+
+/*
+====================================================
+GOOGLE MAPS DIRECTIONS
+====================================================
+*/
+
+function getDirectionsURL(
+  lat,
+  lon
+) {
+
+  return (
+
+    "https://www.google.com/maps/dir/?api=1" +
+
+    "&destination=" +
+
+    encodeURIComponent(
+      lat + "," + lon
+    )
+
+  );
+
+}
+
+
+/*
+====================================================
+MAIN SEARCH
+====================================================
+*/
+
+async function findLeads() {
+
+  const cityKey =
+    document.getElementById(
+      "city"
+    ).value;
+
+
+  const category =
+    document.getElementById(
+      "category"
+    ).value;
+
+
+  const businessName =
+    document.getElementById(
+      "businessName"
+    ).value.trim();
+
+
+  const results =
+    document.getElementById(
+      "results"
+    );
+
+
+  const title =
+    document.getElementById(
+      "resultTitle"
+    );
+
+
+  const list =
+    document.getElementById(
+      "leadList"
+    );
+
+
+  const city =
+    cityBounds[cityKey];
+
+
+  if (!city) {
+
+    alert(
+      "Please select a city."
+    );
+
+    return;
+
+  }
+
+
+  results.style.display =
+    "block";
+
+
+  results.scrollIntoView({
+    behavior: "smooth"
+  });
+
+
+  const categoryText =
+    document
+      .getElementById("category")
+      .selectedOptions[0]
+      .text;
+
+
+  title.innerText =
+    "🔎 Searching...";
+
+
+  list.innerHTML = `
+
+    <div class="loading">
+
+      🌍 Searching real OpenStreetMap data...
+
+      <br><br>
+
+      ${escapeHTML(city.name)}
+      →
+      ${escapeHTML(categoryText)}
+
+    </div>
+
+  `;
+
+
+  try {
 
     /*
-    =========================================================
-    GET COORDINATES
-    =========================================================
+    BUILD QUERY
     */
 
-    function getCoordinates(
-      element
+    const query =
+      buildOverpassQuery(
+        city.bbox,
+        category,
+        businessName
+      );
+
+
+    /*
+    GET DATA
+    */
+
+    const data =
+      await searchOverpass(
+        query
+      );
+
+
+    title.innerText =
+
+      `${city.name} → ${categoryText}` +
+
+      (
+
+        businessName
+
+        ? ` → "${businessName}"`
+
+        : ""
+
+      );
+
+
+    list.innerHTML = "";
+
+
+    if (
+      !data.elements ||
+      data.elements.length === 0
     ) {
-
-      if (
-        element.type === "node" &&
-        element.lat &&
-        element.lon
-      ) {
-
-        return {
-
-          lat:
-            Number(element.lat),
-
-          lon:
-            Number(element.lon)
-
-        };
-
-      }
-
-
-      if (
-        element.center &&
-        element.center.lat &&
-        element.center.lon
-      ) {
-
-        return {
-
-          lat:
-            Number(
-              element.center.lat
-            ),
-
-          lon:
-            Number(
-              element.center.lon
-            )
-
-        };
-
-      }
-
-
-      return null;
-
-    }
-
-
-    /*
-    =========================================================
-    GET CATEGORY LABEL
-    =========================================================
-    */
-
-    function getCategoryLabel(
-      tags
-    ) {
-
-      if (!tags) {
-
-        return "Business";
-
-      }
-
-
-      if (tags.amenity) {
-
-        const map = {
-
-          restaurant:
-            "Restaurant",
-
-          cafe:
-            "Cafe",
-
-          fast_food:
-            "Fast Food",
-
-          pharmacy:
-            "Medical / Pharmacy",
-
-          hospital:
-            "Hospital",
-
-          clinic:
-            "Clinic",
-
-          doctors:
-            "Doctors",
-
-          veterinary:
-            "Veterinary Clinic",
-
-          dentist:
-            "Dentist",
-
-          school:
-            "School",
-
-          college:
-            "College / University",
-
-          university:
-            "University",
-
-          bank:
-            "Bank",
-
-          beauty_salon:
-            "Beauty Salon"
-
-        };
-
-
-        if (
-          map[tags.amenity]
-        ) {
-
-          return map[
-            tags.amenity
-          ];
-
-        }
-
-      }
-
-
-      if (tags.shop) {
-
-        const map = {
-
-          hairdresser:
-            "Hair Salon",
-
-          beauty:
-            "Beauty",
-
-          car_repair:
-            "Garage / Car Repair",
-
-          bakery:
-            "Bakery",
-
-          supermarket:
-            "Supermarket",
-
-          clothes:
-            "Clothing Store",
-
-          fashion:
-            "Fashion Store",
-
-          electronics:
-            "Electronics",
-
-          computer:
-            "Computer / Electronics",
-
-          car:
-            "Car Dealer",
-
-          chemist:
-            "Medical / Pharmacy"
-
-        };
-
-
-        if (
-          map[tags.shop]
-        ) {
-
-          return map[
-            tags.shop
-          ];
-
-        }
-
-      }
-
-
-      if (
-        tags.tourism ===
-        "hotel"
-      ) {
-
-        return "Hotel";
-
-      }
-
-
-      if (
-        tags.tourism ===
-        "guest_house"
-      ) {
-
-        return "Guest House";
-
-      }
-
-
-      if (
-        tags.leisure ===
-        "fitness_centre"
-      ) {
-
-        return "Gym / Fitness";
-
-      }
-
-
-      return "Business";
-
-    }
-
-
-    /*
-    =========================================================
-    GET PHONE
-    =========================================================
-    */
-
-    function getPhone(tags) {
-
-      if (!tags) {
-
-        return null;
-
-      }
-
-
-      return (
-
-        tags.phone ||
-
-        tags["contact:phone"] ||
-
-        tags["contact:mobile"] ||
-
-        tags.mobile ||
-
-        null
-
-      );
-
-    }
-
-
-    /*
-    =========================================================
-    GET WEBSITE
-    =========================================================
-    */
-
-    function getWebsite(tags) {
-
-      if (!tags) {
-
-        return null;
-
-      }
-
-
-      return (
-
-        tags.website ||
-
-        tags["contact:website"] ||
-
-        null
-
-      );
-
-    }
-
-
-    /*
-    =========================================================
-    GET ADDRESS
-    =========================================================
-    */
-
-    function getAddress(tags) {
-
-      if (!tags) {
-
-        return "Location available on map";
-
-      }
-
-
-      const parts = [];
-
-
-      const fields = [
-
-        "addr:housenumber",
-
-        "addr:street",
-
-        "addr:suburb",
-
-        "addr:neighbourhood",
-
-        "addr:district",
-
-        "addr:city",
-
-        "addr:postcode"
-
-      ];
-
-
-      fields.forEach(
-        field => {
-
-          if (
-            tags[field]
-          ) {
-
-            parts.push(
-              tags[field]
-            );
-
-          }
-
-        }
-      );
-
-
-      if (
-        parts.length === 0
-      ) {
-
-        return (
-          "Location available on map"
-        );
-
-      }
-
-
-      return parts.join(
-        ", "
-      );
-
-    }
-
-
-    /*
-    =========================================================
-    EXACT OPENSTREETMAP MAP
-    =========================================================
-    */
-
-    function getMapURL(
-      lat,
-      lon
-    ) {
-
-      return (
-
-        "https://www.openstreetmap.org/" +
-
-        "?mlat=" +
-        encodeURIComponent(lat) +
-
-        "&mlon=" +
-        encodeURIComponent(lon) +
-
-        "#map=19/" +
-        encodeURIComponent(lat) +
-        "/" +
-        encodeURIComponent(lon)
-
-      );
-
-    }
-
-
-    /*
-    =========================================================
-    GOOGLE DIRECTIONS
-    =========================================================
-    */
-
-    function getDirectionsURL(
-      lat,
-      lon
-    ) {
-
-      return (
-
-        "https://www.google.com/maps/dir/?api=1" +
-
-        "&destination=" +
-
-        encodeURIComponent(
-          lat + "," + lon
-        )
-
-      );
-
-    }
-
-
-    /*
-    =========================================================
-    FIND LEADS
-    =========================================================
-    */
-
-    async function findLeads() {
-
-      const city =
-        document.getElementById(
-          "city"
-        ).value;
-
-
-      const category =
-        document.getElementById(
-          "category"
-        ).value;
-
-
-      const businessName =
-        document.getElementById(
-          "businessName"
-        ).value.trim();
-
-
-      const results =
-        document.getElementById(
-          "results"
-        );
-
-
-      const title =
-        document.getElementById(
-          "resultTitle"
-        );
-
-
-      const list =
-        document.getElementById(
-          "leadList"
-        );
-
-
-      const location =
-        cityCenters[city];
-
-
-      if (!location) {
-
-        alert(
-          "Please select a valid city."
-        );
-
-        return;
-
-      }
-
-
-      results.style.display =
-        "block";
-
-
-      results.scrollIntoView({
-        behavior:
-          "smooth"
-      });
-
-
-      title.innerText =
-        "🔎 Searching...";
-
 
       list.innerHTML = `
 
-        <div class="loading">
+        <div class="empty-message">
 
-          🌍 Searching real OpenStreetMap
-          businesses in ${escapeHTML(city)}...
+          😕 No matching businesses found.
 
           <br><br>
 
-          This may take a few seconds.
+          Try another category or remove
+          the optional business-name search.
+
+          <br><br>
+
+          You can also try
+          <strong>All Businesses</strong>.
 
         </div>
 
       `;
 
+      return;
 
-      try {
+    }
 
-        /*
-        BUILD QUERY
-        */
 
-        const query =
-          buildOverpassQuery(
-            city,
-            category,
-            businessName
+    /*
+    REMOVE DUPLICATES
+    */
+
+    const unique = [];
+
+    const seen = new Set();
+
+
+    data.elements.forEach(
+      element => {
+
+        const tags =
+          element.tags || {};
+
+
+        const name =
+          tags.name;
+
+
+        if (!name) {
+          return;
+        }
+
+
+        const coordinates =
+          getCoordinates(
+            element
           );
 
 
-        /*
-        SEARCH OVERPASS
-        */
-
-        const data =
-          await searchOverpass(
-            query
-          );
+        if (!coordinates) {
+          return;
+        }
 
 
-        /*
-        TITLE
-        */
+        const key =
 
-        title.innerText =
+          name.toLowerCase() +
 
-          `${city} → ` +
+          "|" +
 
-          `${categoryNames[category] || "Businesses"}` +
+          coordinates.lat.toFixed(6) +
 
-          (
+          "|" +
 
-            businessName
+          coordinates.lon.toFixed(6);
 
-            ? ` → "${businessName}"`
-
-            : ""
-
-          );
-
-
-        list.innerHTML = "";
-
-
-        /*
-        NO RESULTS
-        */
 
         if (
-          !data.elements ||
-          data.elements.length === 0
+          seen.has(key)
         ) {
-
-          list.innerHTML = `
-
-            <div class="empty-message">
-
-              😕 No matching businesses were found
-              in this search area.
-
-              <br><br>
-
-              Try:
-
-              <br>
-
-              • Another category
-
-              <br>
-
-              • Removing the business name
-
-              <br>
-
-              • Searching another nearby city
-
-              <br><br>
-
-              <strong>
-                OpenStreetMap coverage differs
-                between places and categories.
-              </strong>
-
-            </div>
-
-          `;
 
           return;
 
         }
 
 
-        /*
-        REMOVE DUPLICATES
-        */
+        seen.add(key);
 
-        const unique =
-          [];
 
-        const seen =
-          new Set();
+        unique.push({
 
+          tags: tags,
 
-        data.elements.forEach(
-          element => {
+          coordinates:
+            coordinates
 
-            const tags =
-              element.tags || {};
-
-
-            const name =
-              tags.name;
-
-
-            if (!name) {
-
-              return;
-
-            }
-
-
-            const coordinates =
-              getCoordinates(
-                element
-              );
-
-
-            if (!coordinates) {
-
-              return;
-
-            }
-
-
-            const key =
-
-              name.toLowerCase() +
-
-              "|" +
-
-              coordinates.lat.toFixed(6) +
-
-              "|" +
-
-              coordinates.lon.toFixed(6);
-
-
-            if (
-              seen.has(key)
-            ) {
-
-              return;
-
-            }
-
-
-            seen.add(key);
-
-
-            unique.push({
-
-              tags:
-                tags,
-
-              coordinates:
-                coordinates
-
-            });
-
-          }
-        );
-
-
-        /*
-        SHOW UP TO 150
-        */
-
-        const resultsToShow =
-          unique.slice(
-            0,
-            150
-          );
-
-
-        resultsToShow.forEach(
-          item => {
-
-            const tags =
-              item.tags;
-
-
-            const coords =
-              item.coordinates;
-
-
-            const name =
-              tags.name ||
-              "Unnamed Business";
-
-
-            const phone =
-              getPhone(tags);
-
-
-            const website =
-              getWebsite(tags);
-
-
-            const address =
-              getAddress(tags);
-
-
-            const categoryLabel =
-              getCategoryLabel(
-                tags
-              );
-
-
-            const mapURL =
-              getMapURL(
-                coords.lat,
-                coords.lon
-              );
-
-
-            const directionsURL =
-              getDirectionsURL(
-                coords.lat,
-                coords.lon
-              );
-
-
-            const phoneHTML =
-
-              phone
-
-              ? `
-
-                <p>
-
-                  📞
-
-                  <a
-                    href="tel:${escapeHTML(phone)}"
-                    style="
-                      color:#4f46e5;
-                      font-weight:bold;
-                    "
-                  >
-                    ${escapeHTML(phone)}
-                  </a>
-
-                </p>
-
-              `
-
-              : `
-
-                <p>
-                  📞 Not available
-                </p>
-
-              `;
-
-
-            const websiteHTML =
-
-              website
-
-              ? `
-
-                <p>
-
-                  🌐
-
-                  <a
-                    href="${escapeHTML(website)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style="
-                      color:#4f46e5;
-                    "
-                  >
-                    Website
-                  </a>
-
-                </p>
-
-              `
-
-              : "";
-
-
-            list.innerHTML += `
-
-              <div class="lead">
-
-                <h3>
-                  ${escapeHTML(name)}
-                </h3>
-
-
-                <span class="category-label">
-
-                  ${escapeHTML(
-                    categoryLabel
-                  )}
-
-                </span>
-
-
-                <p>
-
-                  📍
-
-                  ${escapeHTML(
-                    address
-                  )}
-
-                </p>
-
-
-                ${phoneHTML}
-
-
-                ${websiteHTML}
-
-
-                <p>
-
-                  🗺️ Exact location:
-
-                  ${coords.lat.toFixed(6)},
-                  ${coords.lon.toFixed(6)}
-
-                </p>
-
-
-                <p>
-
-                  🗺️ Source:
-                  OpenStreetMap
-
-                </p>
-
-
-                <div class="lead-actions">
-
-
-                  <button
-                    onclick='showDetails(
-                      ${JSON.stringify({
-                        name: name,
-                        address: address,
-                        phone: phone,
-                        website: website,
-                        categoryLabel: categoryLabel,
-                        lat: coords.lat,
-                        lon: coords.lon
-                      })}
-                    )'
-                  >
-
-                    👀 View Details
-
-                  </button>
-
-
-                  <button
-                    onclick='saveRealLead(
-                      ${JSON.stringify({
-                        name: name,
-                        address: address,
-                        phone: phone,
-                        website: website,
-                        category: categoryLabel,
-                        lat: coords.lat,
-                        lon: coords.lon
-                      })}
-                    )'
-                  >
-
-                    ⭐ Save Lead
-
-                  </button>
-
-
-                  <a
-                    class="map-btn secondary-btn"
-                    href="${mapURL}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-
-                    🗺️ Open Exact Map
-
-                  </a>
-
-
-                  <a
-                    class="map-btn direction-btn"
-                    href="${directionsURL}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-
-                    🧭 Get Directions
-
-                  </a>
-
-
-                </div>
-
-              </div>
-
-            `;
-
-          }
-        );
-
-
-        /*
-        RESULT COUNT
-        */
-
-        list.innerHTML = `
-
-          <div class="status-message">
-
-            ✅ Found
-            <strong>${unique.length}</strong>
-            mapped business
-            ${unique.length === 1 ? "" : "es"}
-
-            <br>
-
-            Showing up to 150 results.
-
-          </div>
-
-        ` + list.innerHTML;
-
-
-      }
-
-      catch (error) {
-
-        console.error(
-          error
-        );
-
-
-        title.innerText =
-          "⚠️ Search problem";
-
-
-        list.innerHTML = `
-
-          <div class="empty-message">
-
-            <strong>
-              The business-data server is temporarily busy.
-            </strong>
-
-            <br><br>
-
-            Please wait a few seconds and try again.
-
-            <br><br>
-
-            Your website and code are okay —
-            this can happen because OpenStreetMap's
-            public Overpass servers have usage limits.
-
-          </div>
-
-        `;
-
-      }
-
-    }
-
-
-    /*
-    =========================================================
-    BUSINESS DETAILS
-    =========================================================
-    */
-
-    function showDetails(
-      lead
-    ) {
-
-      const message =
-
-        "BUSINESS DETAILS\n\n" +
-
-        "🏪 " +
-        lead.name +
-
-        "\n\n" +
-
-        "🏷️ " +
-        lead.categoryLabel +
-
-        "\n\n" +
-
-        "📍 " +
-        lead.address +
-
-        "\n\n" +
-
-        "📞 " +
-        (
-          lead.phone ||
-          "Not available"
-        ) +
-
-        "\n\n" +
-
-        "🌐 " +
-        (
-          lead.website ||
-          "Not available"
-        ) +
-
-        "\n\n" +
-
-        "🗺️ Coordinates\n" +
-
-        lead.lat +
-        ", " +
-        lead.lon;
-
-
-      alert(
-        message
-      );
-
-    }
-
-
-    /*
-    =========================================================
-    SAVE REAL LEAD
-    =========================================================
-    */
-
-    function saveRealLead(
-      lead
-    ) {
-
-      const savedLeads =
-        JSON.parse(
-          localStorage.getItem(
-            "savedLeads"
-          )
-        ) || [];
-
-
-      const alreadySaved =
-        savedLeads.some(
-          item =>
-
-            item.name ===
-              lead.name &&
-
-            item.lat ===
-              lead.lat &&
-
-            item.lon ===
-              lead.lon
-
-        );
-
-
-      if (
-        alreadySaved
-      ) {
-
-        alert(
-          "⭐ This lead is already saved!"
-        );
-
-        return;
-
-      }
-
-
-      savedLeads.push({
-
-        name:
-          lead.name,
-
-        area:
-          lead.address,
-
-        phone:
-          lead.phone ||
-          "",
-
-        website:
-          lead.website ||
-          "",
-
-        category:
-          lead.category ||
-          "Business",
-
-        lat:
-          lead.lat,
-
-        lon:
-          lead.lon,
-
-        status:
-          "New",
-
-        note:
-          "",
-
-        updated:
-          new Date()
-            .toLocaleString()
-
-      });
-
-
-      localStorage.setItem(
-        "savedLeads",
-        JSON.stringify(
-          savedLeads
-        )
-      );
-
-
-      updateDashboard();
-
-      displaySavedLeads();
-
-
-      alert(
-        "⭐ Lead Saved!\n\n" +
-        lead.name
-      );
-
-    }
-
-
-    /*
-    =========================================================
-    CHANGE STATUS
-    =========================================================
-    */
-
-    function changeLeadStatus(
-      index,
-      status
-    ) {
-
-      const savedLeads =
-        JSON.parse(
-          localStorage.getItem(
-            "savedLeads"
-          )
-        ) || [];
-
-
-      if (
-        savedLeads[index]
-      ) {
-
-        savedLeads[index].status =
-          status;
-
-
-        savedLeads[index].updated =
-          new Date()
-            .toLocaleString();
-
-
-        localStorage.setItem(
-          "savedLeads",
-          JSON.stringify(
-            savedLeads
-          )
-        );
-
-      }
-
-
-      updateDashboard();
-
-      displaySavedLeads();
-
-    }
-
-
-    /*
-    =========================================================
-    SAVE NOTE
-    =========================================================
-    */
-
-    function saveNote(
-      index
-    ) {
-
-      const noteBox =
-        document.getElementById(
-          "note-" + index
-        );
-
-
-      if (!noteBox) {
-
-        return;
-
-      }
-
-
-      const note =
-        noteBox.value.trim();
-
-
-      if (!note) {
-
-        alert(
-          "Please write a note first!"
-        );
-
-        return;
-
-      }
-
-
-      const savedLeads =
-        JSON.parse(
-          localStorage.getItem(
-            "savedLeads"
-          )
-        ) || [];
-
-
-      if (
-        savedLeads[index]
-      ) {
-
-        savedLeads[index].note =
-          note;
-
-
-        savedLeads[index].updated =
-          new Date()
-            .toLocaleString();
-
-
-        localStorage.setItem(
-          "savedLeads",
-          JSON.stringify(
-            savedLeads
-          )
-        );
-
-      }
-
-
-      alert(
-        "📝 Note Saved!"
-      );
-
-
-      displaySavedLeads();
-
-    }
-
-
-    /*
-    =========================================================
-    DELETE LEAD
-    =========================================================
-    */
-
-    function deleteLead(
-      index
-    ) {
-
-      const savedLeads =
-        JSON.parse(
-          localStorage.getItem(
-            "savedLeads"
-          )
-        ) || [];
-
-
-      if (
-        !savedLeads[index]
-      ) {
-
-        return;
-
-      }
-
-
-      const confirmed =
-        confirm(
-
-          "Are you sure you want to remove this saved lead?\n\n" +
-
-          savedLeads[index].name
-
-        );
-
-
-      if (!confirmed) {
-
-        return;
-
-      }
-
-
-      savedLeads.splice(
-        index,
-        1
-      );
-
-
-      localStorage.setItem(
-        "savedLeads",
-        JSON.stringify(
-          savedLeads
-        )
-      );
-
-
-      updateDashboard();
-
-      displaySavedLeads();
-
-    }
-
-
-    /*
-    =========================================================
-    DISPLAY SAVED LEADS
-    =========================================================
-    */
-
-    function displaySavedLeads() {
-
-      const savedLeads =
-        JSON.parse(
-          localStorage.getItem(
-            "savedLeads"
-          )
-        ) || [];
-
-
-      const savedList =
-        document.getElementById(
-          "savedList"
-        );
-
-
-      const searchBox =
-        document.getElementById(
-          "savedSearch"
-        );
-
-
-      const statusBox =
-        document.getElementById(
-          "savedStatus"
-        );
-
-
-      const searchText =
-        searchBox
-          ? searchBox.value
-              .toLowerCase()
-          : "";
-
-
-      const selectedStatus =
-        statusBox
-          ? statusBox.value
-          : "All";
-
-
-      savedList.innerHTML =
-        "";
-
-
-      const filtered =
-        savedLeads
-          .map(
-            (
-              lead,
-              originalIndex
-            ) => ({
-              lead,
-              originalIndex
-            })
-          )
-          .filter(
-            item => {
-
-              const lead =
-                item.lead;
-
-
-              const searchable =
-
-                (
-                  lead.name ||
-                  ""
-                ).toLowerCase() +
-
-                " " +
-
-                (
-                  lead.area ||
-                  ""
-                ).toLowerCase() +
-
-                " " +
-
-                (
-                  lead.category ||
-                  ""
-                ).toLowerCase();
-
-
-              const matchesSearch =
-                searchable.includes(
-                  searchText
-                );
-
-
-              const matchesStatus =
-
-                selectedStatus ===
-                  "All"
-
-                ||
-
-                (
-                  lead.status ||
-                  "New"
-                ) ===
-                  selectedStatus;
-
-
-              return (
-                matchesSearch &&
-                matchesStatus
-              );
-
-            }
-          );
-
-
-      if (
-        filtered.length === 0
-      ) {
-
-        savedList.innerHTML = `
-
-          <div class="empty-message">
-
-            No matching saved leads ⭐
-
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      filtered.forEach(
-        item => {
-
-          const lead =
-            item.lead;
-
-
-          const index =
-            item.originalIndex;
-
-
-          const currentStatus =
-            lead.status ||
-            "New";
-
-
-          const currentNote =
-            lead.note ||
-            "";
-
-
-          const hasCoordinates =
-            lead.lat !== undefined &&
-            lead.lon !== undefined;
-
-
-          const mapURL =
-            hasCoordinates
-
-            ? getMapURL(
-                lead.lat,
-                lead.lon
-              )
-
-            : "#";
-
-
-          const directionsURL =
-            hasCoordinates
-
-            ? getDirectionsURL(
-                lead.lat,
-                lead.lon
-              )
-
-            : "#";
-
-
-          savedList.innerHTML += `
-
-            <div class="lead">
-
-              <h3>
-                ${escapeHTML(
-                  lead.name
-                )}
-              </h3>
-
-
-              <span class="category-label">
-
-                ${escapeHTML(
-                  lead.category ||
-                  "Business"
-                )}
-
-              </span>
-
-
-              <p>
-
-                📍
-
-                ${escapeHTML(
-                  lead.area ||
-                  "Location available"
-                )}
-
-              </p>
-
-
-              <p>
-
-                📞
-
-                ${
-                  lead.phone
-
-                  ? escapeHTML(
-                      lead.phone
-                    )
-
-                  : "Not available"
-                }
-
-              </p>
-
-
-              ${
-                lead.website
-
-                ? `
-
-                  <p>
-
-                    🌐
-
-                    <a
-                      href="${escapeHTML(
-                        lead.website
-                      )}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style="
-                        color:#4f46e5;
-                      "
-                    >
-
-                      Website
-
-                    </a>
-
-                  </p>
-
-                `
-
-                : ""
-
-              }
-
-
-              <select
-                onchange="changeLeadStatus(
-                  ${index},
-                  this.value
-                )"
-              >
-
-                <option
-                  value="New"
-                  ${
-                    currentStatus ===
-                    "New"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  🆕 New
-                </option>
-
-
-                <option
-                  value="Contacted"
-                  ${
-                    currentStatus ===
-                    "Contacted"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  📞 Contacted
-                </option>
-
-
-                <option
-                  value="Follow-up"
-                  ${
-                    currentStatus ===
-                    "Follow-up"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  🔔 Follow-up
-                </option>
-
-
-                <option
-                  value="Converted"
-                  ${
-                    currentStatus ===
-                    "Converted"
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  💰 Converted
-                </option>
-
-              </select>
-
-
-              <div class="saved-note">
-
-                📝 Note:
-
-                ${
-                  currentNote
-
-                  ? escapeHTML(
-                      currentNote
-                    )
-
-                  : "No note added yet"
-                }
-
-              </div>
-
-
-              <textarea
-                class="note-box"
-                id="note-${index}"
-                placeholder="Write a note..."
-              >${escapeHTML(
-                currentNote
-              )}</textarea>
-
-
-              <div class="lead-actions">
-
-                <button
-                  onclick="saveNote(
-                    ${index}
-                  )"
-                >
-
-                  💾 Save Note
-
-                </button>
-
-
-                ${
-                  hasCoordinates
-
-                  ? `
-
-                    <a
-                      class="map-btn secondary-btn"
-                      href="${mapURL}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-
-                      🗺️ Open Exact Map
-
-                    </a>
-
-
-                    <a
-                      class="map-btn direction-btn"
-                      href="${directionsURL}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-
-                      🧭 Directions
-
-                    </a>
-
-                  `
-
-                  : ""
-
-                }
-
-
-                <button
-                  class="danger-btn"
-                  onclick="deleteLead(
-                    ${index}
-                  )"
-                >
-
-                  🗑️ Remove Lead
-
-                </button>
-
-              </div>
-
-
-              <p class="updated">
-
-                🕐 Last updated:
-
-                ${escapeHTML(
-                  lead.updated ||
-                  "Not available"
-                )}
-
-              </p>
-
-            </div>
-
-          `;
-
-        }
-      );
-
-    }
-
-
-    /*
-    =========================================================
-    DASHBOARD
-    =========================================================
-    */
-
-    function updateDashboard() {
-
-      const savedLeads =
-        JSON.parse(
-          localStorage.getItem(
-            "savedLeads"
-          )
-        ) || [];
-
-
-      let newCount = 0;
-
-      let contactedCount = 0;
-
-      let followupCount = 0;
-
-      let convertedCount = 0;
-
-
-      savedLeads.forEach(
-        lead => {
-
-          const status =
-            lead.status ||
-            "New";
-
-
-          if (
-            status === "New"
-          ) {
-
-            newCount++;
-
-          }
-
-          else if (
-            status === "Contacted"
-          ) {
-
-            contactedCount++;
-
-          }
-
-          else if (
-            status === "Follow-up"
-          ) {
-
-            followupCount++;
-
-          }
-
-          else if (
-            status === "Converted"
-          ) {
-
-            convertedCount++;
-
-          }
-
-        }
-      );
-
-
-      document.getElementById(
-        "totalLeads"
-      ).innerText =
-        savedLeads.length;
-
-
-      document.getElementById(
-        "newLeads"
-      ).innerText =
-        newCount;
-
-
-      document.getElementById(
-        "contactedLeads"
-      ).innerText =
-        contactedCount;
-
-
-      document.getElementById(
-        "followupLeads"
-      ).innerText =
-        followupCount;
-
-
-      document.getElementById(
-        "convertedLeads"
-      ).innerText =
-        convertedCount;
-
-    }
-
-
-    /*
-    =========================================================
-    DASHBOARD FILTER
-    =========================================================
-    */
-
-    function filterDashboard(
-      status
-    ) {
-
-      const statusBox =
-        document.getElementById(
-          "savedStatus"
-        );
-
-
-      statusBox.value =
-        status;
-
-
-      displaySavedLeads();
-
-
-      document.getElementById(
-        "savedSection"
-      ).scrollIntoView({
-
-        behavior:
-          "smooth"
-
-      });
-
-    }
-
-
-    /*
-    =========================================================
-    ENTER KEY SEARCH
-    =========================================================
-    */
-
-    document.getElementById(
-      "businessName"
-    ).addEventListener(
-      "keydown",
-      function(event) {
-
-        if (
-          event.key ===
-          "Enter"
-        ) {
-
-          findLeads();
-
-        }
+        });
 
       }
     );
 
 
     /*
-    =========================================================
-    START
-    =========================================================
+    LIMIT RESULTS
     */
 
-    updateDashboard();
+    const resultsToShow =
+      unique.slice(
+        0,
+        100
+      );
 
-    displaySavedLeads();
 
-  </script>
+    /*
+    DISPLAY
+    */
+
+    resultsToShow.forEach(
+      item => {
+
+        const tags =
+          item.tags;
+
+
+        const coords =
+          item.coordinates;
+
+
+        const name =
+          tags.name ||
+          "Unnamed Business";
+
+
+        const phone =
+          getPhone(tags);
+
+
+        const website =
+          getWebsite(tags);
+
+
+        const address =
+          getAddress(tags);
+
+
+        const categoryLabel =
+          getCategoryLabel(
+            tags
+          );
+
+
+        const mapURL =
+          getMapURL(
+            coords.lat,
+            coords.lon
+          );
+
+
+        const directionsURL =
+          getDirectionsURL(
+            coords.lat,
+            coords.lon
+          );
+
+
+        /*
+        PHONE HTML
+        */
+
+        const phoneHTML =
+
+          phone
+
+          ? `
+
+            <p>
+
+              📞
+
+              <a
+                href="tel:${escapeHTML(phone)}"
+                style="
+                  color:#4f46e5;
+                  font-weight:bold;
+                  text-decoration:none;
+                "
+              >
+
+                ${escapeHTML(phone)}
+
+              </a>
+
+            </p>
+
+          `
+
+          : `
+
+            <p>
+              📞 Not available
+            </p>
+
+          `;
+
+
+        /*
+        WEBSITE HTML
+        */
+
+        const websiteHTML =
+
+          website
+
+          ? `
+
+            <p>
+
+              🌐
+
+              <a
+                href="${escapeHTML(website)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="color:#4f46e5;"
+              >
+
+                Website
+
+              </a>
+
+            </p>
+
+          `
+
+          : "";
+
+
+        /*
+        CREATE LEAD CARD
+        */
+
+        const leadData = {
+
+          name: name,
+
+          address: address,
+
+          phone: phone,
+
+          website: website,
+
+          categoryLabel:
+            categoryLabel,
+
+          lat:
+            coords.lat,
+
+          lon:
+            coords.lon
+
+        };
+
+
+        list.innerHTML += `
+
+          <div class="lead">
+
+            <h3>
+              ${escapeHTML(name)}
+            </h3>
+
+
+            <span class="category-label">
+
+              ${escapeHTML(
+                categoryLabel
+              )}
+
+            </span>
+
+
+            <p>
+
+              📍
+              ${escapeHTML(address)}
+
+            </p>
+
+
+            ${phoneHTML}
+
+
+            ${websiteHTML}
+
+
+            <p>
+
+              🗺️ Exact location:
+
+              ${coords.lat.toFixed(6)},
+              ${coords.lon.toFixed(6)}
+
+            </p>
+
+
+            <p>
+
+              🗺️ Source:
+              OpenStreetMap
+
+            </p>
+
+
+            <div class="lead-actions">
+
+
+              <!-- DETAILS -->
+
+              <button
+                onclick='showDetails(
+                  ${JSON.stringify(
+                    leadData
+                  )}
+                )'
+              >
+
+                👀 View Details
+
+              </button>
+
+
+              <!-- SAVE -->
+
+              <button
+                onclick='saveRealLead(
+                  ${JSON.stringify(
+                    leadData
+                  )}
+                )'
+              >
+
+                ⭐ Save Lead
+
+              </button>
+
+
+              <!-- EXACT OSM MAP -->
+
+              <a
+                class="map-btn secondary-btn"
+                href="${mapURL}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+
+                🗺️ Open Exact Map
+
+              </a>
+
+
+              <!-- DIRECTIONS -->
+
+              <a
+                class="map-btn direction-btn"
+                href="${directionsURL}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+
+                🧭 Get Directions
+
+              </a>
+
+
+            </div>
+
+          </div>
+
+        `;
+
+      }
+    );
+
+
+    /*
+    SHOW RESULT COUNT
+    */
+
+    const countMessage = `
+
+      <div class="status-message">
+
+        🔎 Found
+        <strong>${unique.length}</strong>
+        matching businesses.
+
+        ${
+          unique.length > 100
+
+          ? "<br>Showing the first 100."
+
+          : ""
+        }
+
+      </div>
+
+    `;
+
+
+    list.insertAdjacentHTML(
+      "afterbegin",
+      countMessage
+    );
+
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+
+    title.innerText =
+      "⚠️ Search problem";
+
+
+    list.innerHTML = `
+
+      <div class="empty-message">
+
+        <strong>
+          Something went wrong.
+        </strong>
+
+        <br><br>
+
+        ${escapeHTML(
+          error.message
+        )}
+
+        <br><br>
+
+        The OpenStreetMap data servers
+        can occasionally be busy.
+
+        <br><br>
+
+        Please try the search again.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+/*
+====================================================
+BUSINESS DETAILS
+====================================================
+*/
+
+function showDetails(
+  lead
+) {
+
+  const message =
+
+    "BUSINESS DETAILS\n\n" +
+
+    "🏪 " +
+    lead.name +
+
+    "\n\n" +
+
+    "🏷️ " +
+    lead.categoryLabel +
+
+    "\n\n" +
+
+    "📍 " +
+    lead.address +
+
+    "\n\n" +
+
+    "📞 " +
+    (
+      lead.phone ||
+      "Not available"
+    ) +
+
+    "\n\n" +
+
+    "🌐 " +
+    (
+      lead.website ||
+      "Not available"
+    ) +
+
+    "\n\n" +
+
+    "🗺️ Coordinates\n" +
+
+    lead.lat +
+    ", " +
+    lead.lon;
+
+
+  alert(
+    message
+  );
+
+}
+
+
+/*
+====================================================
+SAVE REAL LEAD
+====================================================
+*/
+
+function saveRealLead(
+  lead
+) {
+
+  const savedLeads =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  const alreadySaved =
+    savedLeads.some(
+      item =>
+
+        item.name ===
+          lead.name &&
+
+        Number(item.lat) ===
+          Number(lead.lat) &&
+
+        Number(item.lon) ===
+          Number(lead.lon)
+
+    );
+
+
+  if (
+    alreadySaved
+  ) {
+
+    alert(
+      "⭐ This lead is already saved!"
+    );
+
+    return;
+
+  }
+
+
+  savedLeads.push({
+
+    name:
+      lead.name,
+
+    area:
+      lead.address,
+
+    phone:
+      lead.phone || "",
+
+    website:
+      lead.website || "",
+
+    category:
+      lead.categoryLabel ||
+      "Business",
+
+    lat:
+      lead.lat,
+
+    lon:
+      lead.lon,
+
+    status:
+      "New",
+
+    note:
+      "",
+
+    updated:
+      new Date()
+        .toLocaleString()
+
+  });
+
+
+  localStorage.setItem(
+    "savedLeads",
+    JSON.stringify(
+      savedLeads
+    )
+  );
+
+
+  updateDashboard();
+
+  displaySavedLeads();
+
+
+  alert(
+    "⭐ Lead Saved!\n\n" +
+    lead.name +
+    "\n\nStatus: New"
+  );
+
+}
+
+
+/*
+====================================================
+CHANGE STATUS
+====================================================
+*/
+
+function changeLeadStatus(
+  index,
+  status
+) {
+
+  const savedLeads =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  if (
+    savedLeads[index]
+  ) {
+
+    savedLeads[index].status =
+      status;
+
+
+    savedLeads[index].updated =
+      new Date()
+        .toLocaleString();
+
+
+    localStorage.setItem(
+      "savedLeads",
+      JSON.stringify(
+        savedLeads
+      )
+    );
+
+  }
+
+
+  updateDashboard();
+
+  displaySavedLeads();
+
+}
+
+
+/*
+====================================================
+SAVE NOTE
+====================================================
+*/
+
+function saveNote(
+  index
+) {
+
+  const noteBox =
+    document.getElementById(
+      "note-" + index
+    );
+
+
+  if (!noteBox) {
+    return;
+  }
+
+
+  const note =
+    noteBox.value.trim();
+
+
+  if (!note) {
+
+    alert(
+      "Please write a note first!"
+    );
+
+    return;
+
+  }
+
+
+  const savedLeads =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  if (
+    savedLeads[index]
+  ) {
+
+    savedLeads[index].note =
+      note;
+
+
+    savedLeads[index].updated =
+      new Date()
+        .toLocaleString();
+
+
+    localStorage.setItem(
+      "savedLeads",
+      JSON.stringify(
+        savedLeads
+      )
+    );
+
+  }
+
+
+  alert(
+    "📝 Note Saved!"
+  );
+
+
+  displaySavedLeads();
+
+}
+
+
+/*
+====================================================
+DELETE LEAD
+====================================================
+*/
+
+function deleteLead(
+  index
+) {
+
+  const savedLeads =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  if (
+    !savedLeads[index]
+  ) {
+
+    return;
+
+  }
+
+
+  const confirmed =
+    confirm(
+
+      "Are you sure you want to remove this saved lead?\n\n" +
+
+      savedLeads[index].name
+
+    );
+
+
+  if (!confirmed) {
+    return;
+  }
+
+
+  savedLeads.splice(
+    index,
+    1
+  );
+
+
+  localStorage.setItem(
+    "savedLeads",
+    JSON.stringify(
+      savedLeads
+    )
+  );
+
+
+  updateDashboard();
+
+  displaySavedLeads();
+
+}
+
+
+/*
+====================================================
+DISPLAY SAVED LEADS
+====================================================
+*/
+
+function displaySavedLeads() {
+
+  const savedLeads =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  const savedList =
+    document.getElementById(
+      "savedList"
+    );
+
+
+  const searchBox =
+    document.getElementById(
+      "savedSearch"
+    );
+
+
+  const statusBox =
+    document.getElementById(
+      "savedStatus"
+    );
+
+
+  const searchText =
+    searchBox
+      ? searchBox.value
+          .toLowerCase()
+      : "";
+
+
+  const selectedStatus =
+    statusBox
+      ? statusBox.value
+      : "All";
+
+
+  savedList.innerHTML = "";
+
+
+  const filtered =
+    savedLeads
+      .map(
+        (
+          lead,
+          originalIndex
+        ) => ({
+
+          lead,
+          originalIndex
+
+        })
+      )
+
+      .filter(
+        item => {
+
+          const lead =
+            item.lead;
+
+
+          const searchable =
+
+            (
+              lead.name ||
+              ""
+            ).toLowerCase() +
+
+            " " +
+
+            (
+              lead.area ||
+              ""
+            ).toLowerCase() +
+
+            " " +
+
+            (
+              lead.category ||
+              ""
+            ).toLowerCase();
+
+
+          const matchesSearch =
+            searchable.includes(
+              searchText
+            );
+
+
+          const matchesStatus =
+
+            selectedStatus ===
+              "All"
+
+            ||
+
+            (
+              lead.status ||
+              "New"
+            ) ===
+              selectedStatus;
+
+
+          return (
+            matchesSearch &&
+            matchesStatus
+          );
+
+        }
+      );
+
+
+  if (
+    filtered.length === 0
+  ) {
+
+    savedList.innerHTML = `
+
+      <div class="empty-message">
+
+        No matching saved leads ⭐
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  filtered.forEach(
+    item => {
+
+      const lead =
+        item.lead;
+
+
+      const index =
+        item.originalIndex;
+
+
+      const currentStatus =
+        lead.status ||
+        "New";
+
+
+      const currentNote =
+        lead.note ||
+        "";
+
+
+      const hasCoordinates =
+        lead.lat !== undefined &&
+        lead.lon !== undefined;
+
+
+      const mapURL =
+        hasCoordinates
+
+        ? getMapURL(
+            lead.lat,
+            lead.lon
+          )
+
+        : "#";
+
+
+      const directionsURL =
+        hasCoordinates
+
+        ? getDirectionsURL(
+            lead.lat,
+            lead.lon
+          )
+
+        : "#";
+
+
+      savedList.innerHTML += `
+
+        <div class="lead">
+
+          <h3>
+
+            ${escapeHTML(
+              lead.name
+            )}
+
+          </h3>
+
+
+          <span class="category-label">
+
+            ${escapeHTML(
+              lead.category ||
+              "Business"
+            )}
+
+          </span>
+
+
+          <p>
+
+            📍
+            ${escapeHTML(
+              lead.area ||
+              "Location available"
+            )}
+
+          </p>
+
+
+          <p>
+
+            📞
+
+            ${
+              lead.phone
+
+              ? escapeHTML(
+                  lead.phone
+                )
+
+              : "Not available"
+
+            }
+
+          </p>
+
+
+          ${
+            lead.website
+
+            ? `
+
+              <p>
+
+                🌐
+
+                <a
+                  href="${escapeHTML(
+                    lead.website
+                  )}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style="color:#4f46e5;"
+                >
+
+                  Website
+
+                </a>
+
+              </p>
+
+            `
+
+            : ""
+
+          }
+
+
+          <!-- STATUS -->
+
+          <select
+            onchange="changeLeadStatus(
+              ${index},
+              this.value
+            )"
+          >
+
+            <option
+              value="New"
+              ${
+                currentStatus ===
+                "New"
+                  ? "selected"
+                  : ""
+              }
+            >
+
+              🆕 New
+
+            </option>
+
+
+            <option
+              value="Contacted"
+              ${
+                currentStatus ===
+                "Contacted"
+                  ? "selected"
+                  : ""
+              }
+            >
+
+              📞 Contacted
+
+            </option>
+
+
+            <option
+              value="Follow-up"
+              ${
+                currentStatus ===
+                "Follow-up"
+                  ? "selected"
+                  : ""
+              }
+            >
+
+              🔔 Follow-up
+
+            </option>
+
+
+            <option
+              value="Converted"
+              ${
+                currentStatus ===
+                "Converted"
+                  ? "selected"
+                  : ""
+              }
+            >
+
+              💰 Converted
+
+            </option>
+
+          </select>
+
+
+          <!-- NOTE -->
+
+          <div class="saved-note">
+
+            📝 Note:
+
+            ${
+              currentNote
+
+              ? escapeHTML(
+                  currentNote
+                )
+
+              : "No note added yet"
+
+            }
+
+          </div>
+
+
+          <textarea
+            class="note-box"
+            id="note-${index}"
+            placeholder="Write a note..."
+          >${escapeHTML(
+            currentNote
+          )}</textarea>
+
+
+          <div class="lead-actions">
+
+
+            <button
+              onclick="saveNote(
+                ${index}
+              )"
+            >
+
+              💾 Save Note
+
+            </button>
+
+
+            ${
+              hasCoordinates
+
+              ? `
+
+                <a
+                  class="map-btn secondary-btn"
+                  href="${mapURL}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+
+                  🗺️ Open Exact Map
+
+                </a>
+
+
+                <a
+                  class="map-btn direction-btn"
+                  href="${directionsURL}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+
+                  🧭 Directions
+
+                </a>
+
+              `
+
+              : ""
+
+            }
+
+
+            <button
+              class="danger-btn"
+              onclick="deleteLead(
+                ${index}
+              )"
+            >
+
+              🗑️ Remove Lead
+
+            </button>
+
+
+          </div>
+
+
+          <p class="updated">
+
+            🕐 Last updated:
+
+            ${escapeHTML(
+              lead.updated ||
+              "Not available"
+            )}
+
+          </p>
+
+
+        </div>
+
+      `;
+
+    }
+  );
+
+}
+
+
+/*
+====================================================
+DASHBOARD
+====================================================
+*/
+
+function updateDashboard() {
+
+  const savedLeads =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  let newCount = 0;
+
+  let contactedCount = 0;
+
+  let followupCount = 0;
+
+  let convertedCount = 0;
+
+
+  savedLeads.forEach(
+    lead => {
+
+      const status =
+        lead.status ||
+        "New";
+
+
+      if (
+        status === "New"
+      ) {
+
+        newCount++;
+
+      }
+
+      else if (
+        status ===
+        "Contacted"
+      ) {
+
+        contactedCount++;
+
+      }
+
+      else if (
+        status ===
+        "Follow-up"
+      ) {
+
+        followupCount++;
+
+      }
+
+      else if (
+        status ===
+        "Converted"
+      ) {
+
+        convertedCount++;
+
+      }
+
+    }
+  );
+
+
+  document.getElementById(
+    "totalLeads"
+  ).innerText =
+    savedLeads.length;
+
+
+  document.getElementById(
+    "newLeads"
+  ).innerText =
+    newCount;
+
+
+  document.getElementById(
+    "contactedLeads"
+  ).innerText =
+    contactedCount;
+
+
+  document.getElementById(
+    "followupLeads"
+  ).innerText =
+    followupCount;
+
+
+  document.getElementById(
+    "convertedLeads"
+  ).innerText =
+    convertedCount;
+
+}
+
+
+/*
+====================================================
+DASHBOARD FILTER
+====================================================
+*/
+
+function filterDashboard(
+  status
+) {
+
+  const statusBox =
+    document.getElementById(
+      "savedStatus"
+    );
+
+
+  statusBox.value =
+    status;
+
+
+  displaySavedLeads();
+
+
+  document.getElementById(
+    "savedSection"
+  ).scrollIntoView({
+
+    behavior:
+      "smooth"
+
+  });
+
+}
+
+
+/*
+====================================================
+ENTER KEY SEARCH
+====================================================
+*/
+
+document.getElementById(
+  "businessName"
+).addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key === "Enter"
+    ) {
+
+      findLeads();
+
+    }
+
+  }
+);
+
+
+/*
+====================================================
+START
+====================================================
+*/
+
+updateDashboard();
+
+displaySavedLeads();
+
+</script>
 
 </body>
 </html>
