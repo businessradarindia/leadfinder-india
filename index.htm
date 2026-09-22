@@ -271,10 +271,18 @@
   ⭐ Save Lead
 </button>
 
+<select onchange="updateStatus('${lead.name}', this.value)">
+  <option value="New">🆕 New</option>
+  <option value="Contacted">📞 Contacted</option>
+  <option value="Follow-up">🔔 Follow-up</option>
+  <option value="Converted">💰 Converted</option>
+</select>
+
           </div>
         `;
 
-      });
+      }
+                       );
 
       results.style.display = "block";
 
@@ -301,7 +309,13 @@ function saveLead(name, area, phone, rating) {
     "📞 " + phone + "\n" +
     "⭐ " + rating
   );
-} 
+} function updateStatus(name, status) {
+  alert(
+    "📌 Status Updated!\n\n" +
+    "🏪 " + name + "\n" +
+    "Status: " + status
+  );
+}
   </script>
 
 </body>
