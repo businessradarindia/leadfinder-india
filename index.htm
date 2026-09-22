@@ -202,7 +202,13 @@
     </p>
 
   </section>
+<section class="results" id="savedSection">
 
+  <h2>⭐ Saved Leads</h2>
+
+  <div id="savedList"></div>
+
+</section>
   <script>
 
     const demoLeads = [
@@ -308,13 +314,26 @@
       );
     }
 function saveLead(name, area, phone, rating) {
-  alert(
-    "⭐ Lead Saved!\n\n" +
-    "🏪 " + name + "\n" +
-    "📍 " + area + "\n" +
-    "📞 " + phone + "\n" +
-    "⭐ " + rating
-  );
+  const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
+
+  const alreadySaved = savedLeads.some(lead => lead.name === name);
+
+  if (alreadySaved) {
+    alert("⭐ This lead is already saved!");
+    return;
+  }
+
+  savedLeads.push({
+    name: name,
+    area: area,
+    phone: phone,
+    rating: rating
+  });
+
+  localStorage.setItem("savedLeads", JSON.stringify(savedLeads));
+
+  alert("⭐ Lead Saved!\n\n" + name);
+}
 } function updateStatus(name, status) {
   alert(
     "📌 Status Updated!\n\n" +
@@ -337,6 +356,31 @@ function saveLead(name, area, phone, rating) {
     "Note: " + note
   );
 }
+    function displaySavedLeads() {
+  const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
+  const savedList = document.getElementById("savedList");
+
+  savedList.innerHTML = "";
+
+  if (savedLeads.length === 0) {
+    savedList.innerHTML = "<p>No saved leads yet ⭐</p>";
+    return;
+  }
+
+  savedLeads.forEach(lead => {
+    savedList.innerHTML += `
+      <div class="lead">
+        <div>
+          <h3>${lead.name}</h3>
+          <p>📍 ${lead.area}</p>
+          <p>📞 ${lead.phone}</p>
+          <p class="rating">⭐ ${lead.rating}</p>
+        </div>
+      </div>
+    `;
+  });
+}
+    displaySavedLeads();
   </script>
 
 </body>
