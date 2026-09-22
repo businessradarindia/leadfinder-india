@@ -267,6 +267,10 @@
   View Details
 </button>
 
+<button onclick="saveLead('${lead.name}', '${lead.area}', '${lead.phone}', '${lead.rating}')">
+  ⭐ Save Lead
+</button>
+
           </div>
         `;
 
@@ -289,6 +293,15 @@
         "This lead can be saved and managed here later."
       );
     }
+function saveLead(name, area, phone, rating) {
+  alert(
+    "⭐ Lead Saved!\n\n" +
+    "🏪 " + name + "\n" +
+    "📍 " + area + "\n" +
+    "📞 " + phone + "\n" +
+    "⭐ " + rating
+  );
+} 
   </script>
 
 </body>
