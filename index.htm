@@ -206,6 +206,21 @@
 
   <h2>⭐ Saved Leads</h2>
 
+  <input
+    type="text"
+    id="savedSearch"
+    placeholder="🔎 Search saved leads..."
+    oninput="displaySavedLeads()"
+  >
+
+  <select id="savedStatus" onchange="displaySavedLeads()">
+    <option value="All">All Statuses</option>
+    <option value="New">🆕 New</option>
+    <option value="Contacted">📞 Contacted</option>
+    <option value="Follow-up">🔔 Follow-up</option>
+    <option value="Converted">💰 Converted</option>
+  </select>
+
   <div id="savedList"></div>
 
 </section>
@@ -358,18 +373,36 @@ function updateStatus(name, status) {
     "Note: " + note
   );
 }
-    function displaySavedLeads() {
+   function displaySavedLeads() {
   const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
   const savedList = document.getElementById("savedList");
 
+  const searchBox = document.getElementById("savedSearch");
+  const statusBox = document.getElementById("savedStatus");
+
+  const searchText = searchBox ? searchBox.value.toLowerCase() : "";
+  const selectedStatus = statusBox ? statusBox.value : "All";
+
   savedList.innerHTML = "";
 
-  if (savedLeads.length === 0) {
-    savedList.innerHTML = "<p>No saved leads yet ⭐</p>";
+  const filteredLeads = savedLeads.filter(lead => {
+    const matchesSearch =
+      lead.name.toLowerCase().includes(searchText) ||
+      lead.area.toLowerCase().includes(searchText);
+
+    const matchesStatus =
+      selectedStatus === "All" ||
+      (lead.status || "New") === selectedStatus;
+
+    return matchesSearch && matchesStatus;
+  });
+
+  if (filteredLeads.length === 0) {
+    savedList.innerHTML = "<p>No matching saved leads ⭐</p>";
     return;
   }
 
-  savedLeads.forEach(lead => {
+  filteredLeads.forEach(lead => {
     savedList.innerHTML += `
       <div class="lead">
         <div>
@@ -377,11 +410,14 @@ function updateStatus(name, status) {
           <p>📍 ${lead.area}</p>
           <p>📞 ${lead.phone}</p>
           <p class="rating">⭐ ${lead.rating}</p>
+          <p>📌 Status: ${lead.status || "New"}</p>
         </div>
       </div>
     `;
   });
 }
+
+ 
     displaySavedLeads();
   </script>
 
