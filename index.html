@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LeadFinder India</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
+
+    .navbar {
+      background: #172033;
+      color: white;
+      padding: 18px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .tag {
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 70px 20px 45px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #657085;
+      margin-bottom: 35px;
+    }
+
+    .search-box {
+      background: white;
+      max-width: 850px;
+      margin: auto;
+      padding: 28px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    select {
+      padding: 15px;
+      border: 1px solid #d8dce5;
+      border-radius: 10px;
+      font-size: 16px;
+      min-width: 250px;
+      background: white;
+    }
+
+    button {
+      padding: 15px 25px;
+      border: none;
+      border-radius: 10px;
+      background: #4f46e5;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #3730a3;
+    }
+
+    .results {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      display: none;
+    }
+
+    .results h2 {
+      margin-bottom: 20px;
+    }
+
+    .lead {
+      background: white;
+      padding: 22px;
+      margin-bottom: 15px;
+      border-radius: 14px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .lead h3 {
+      margin-bottom: 8px;
+    }
+
+    .lead p {
+      color: #667085;
+      margin: 4px 0;
+    }
+
+    .rating {
+      font-weight: bold;
+    }
+
+    .demo {
+      text-align: center;
+      color: #8a93a3;
+      font-size: 13px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 650px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .lead {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      select {
+        width: 100%;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="logo">🇮🇳 LeadFinder India</div>
+    <div class="tag">B2B Lead Discovery</div>
+  </nav>
+
+  <section class="hero">
+    <h1>Find Businesses. Find Opportunities.</h1>
+
+    <p>
+      Search businesses by city and category.
+    </p>
+
+    <div class="search-box">
+
+      <select id="city">
+        <option value="Pune">Pune</option>
+        <option value="Mumbai">Mumbai</option>
+        <option value="Bangalore">Bangalore</option>
+      </select>
+
+      <select id="category">
+        <option value="Restaurants">Restaurants</option>
+        <option value="Salons">Salons</option>
+        <option value="Clinics">Clinics</option>
+        <option value="Gyms">Gyms</option>
+      </select>
+
+      <button onclick="findLeads()">
+        FIND LEADS
+      </button>
+
+    </div>
+  </section>
+
+  <section class="results" id="results">
+
+    <h2 id="resultTitle"></h2>
+
+    <div id="leadList"></div>
+
+    <p class="demo">
+      ⚠️ Demo data only — real business data will be added later.
+    </p>
+
+  </section>
+
+  <script>
+
+    const demoLeads = [
+      {
+        name: "Urban Spoon Restaurant",
+        area: "Kharadi, Pune",
+        phone: "98765 43210",
+        rating: "4.3"
+      },
+      {
+        name: "The Food Corner",
+        area: "Viman Nagar, Pune",
+        phone: "98220 12345",
+        rating: "4.1"
+      },
+      {
+        name: "Spice Garden",
+        area: "Wakad, Pune",
+        phone: "97654 67890",
+        rating: "4.5"
+      },
+      {
+        name: "Cafe Avenue",
+        area: "Kalyani Nagar, Pune",
+        phone: "98989 11223",
+        rating: "4.2"
+      }
+    ];
+
+    function findLeads() {
+
+      const city = document.getElementById("city").value;
+      const category = document.getElementById("category").value;
+
+      const results = document.getElementById("results");
+      const title = document.getElementById("resultTitle");
+      const list = document.getElementById("leadList");
+
+      title.innerText =
+        `${city} → ${category}`;
+
+      list.innerHTML = "";
+
+      demoLeads.forEach(lead => {
+
+        list.innerHTML += `
+          <div class="lead">
+
+            <div>
+              <h3>${lead.name}</h3>
+
+              <p>📍 ${lead.area}</p>
+
+              <p>📞 ${lead.phone}</p>
+
+              <p class="rating">
+                ⭐ ${lead.rating}
+              </p>
+            </div>
+
+            <button onclick="alert('Lead details coming soon!')">
+              View Details
+            </button>
+
+          </div>
+        `;
+
+      });
+
+      results.style.display = "block";
+
+      results.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+  </script>
+
+</body>
+</html>
