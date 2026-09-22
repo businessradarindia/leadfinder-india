@@ -61,7 +61,7 @@
       margin: auto;
       padding: 25px;
       border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
       display: flex;
       gap: 15px;
       flex-wrap: wrap;
@@ -98,7 +98,8 @@
       background: #3730a3;
     }
 
-    .results {
+    .results,
+    .dashboard {
       max-width: 1000px;
       margin: 30px auto;
       padding: 20px;
@@ -108,7 +109,8 @@
       display: none;
     }
 
-    .results h2 {
+    .results h2,
+    .dashboard h2 {
       margin-bottom: 20px;
     }
 
@@ -117,11 +119,12 @@
       padding: 20px;
       margin-bottom: 15px;
       border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     }
 
     .lead h3 {
       margin-bottom: 8px;
+      font-size: 20px;
     }
 
     .lead p {
@@ -140,26 +143,22 @@
       margin-top: 15px;
     }
 
-    .lead-actions button,
-    .lead-actions select {
-      width: auto;
+    .secondary-btn {
+      background: #eef0ff;
+      color: #3730a3;
     }
 
-    .lead-actions select {
-      padding: 11px;
-      border: 1px solid #d8dce5;
-      border-radius: 9px;
-      background: white;
+    .secondary-btn:hover {
+      background: #dfe2ff;
     }
 
-    .note-box {
-      width: 100%;
-      min-height: 70px;
-      margin-top: 12px;
-      padding: 10px;
-      border: 1px solid #d8dce5;
-      border-radius: 9px;
-      resize: vertical;
+    .danger-btn {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .danger-btn:hover {
+      background: #fecaca;
     }
 
     .demo {
@@ -170,16 +169,6 @@
     }
 
     /* DASHBOARD */
-
-    .dashboard {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-
-    .dashboard h2 {
-      margin-bottom: 15px;
-    }
 
     .dashboard-grid {
       display: grid;
@@ -192,7 +181,14 @@
       padding: 18px 10px;
       border-radius: 12px;
       text-align: center;
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .dashboard-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.10);
     }
 
     .dashboard-card h3 {
@@ -207,10 +203,6 @@
     }
 
     /* SAVED LEADS */
-
-    #savedSection {
-      display: block;
-    }
 
     .saved-controls {
       display: flex;
@@ -244,7 +236,7 @@
       border: 1px solid #e5e7eb;
     }
 
-    #savedList .lead select {
+    #savedList select {
       margin-top: 12px;
       padding: 9px;
       border: 1px solid #d8dce5;
@@ -252,21 +244,42 @@
       background: white;
     }
 
-    #savedList .lead textarea {
-      margin-top: 10px;
+    .note-box {
+      width: 100%;
+      min-height: 70px;
+      margin-top: 12px;
+      padding: 10px;
+      border: 1px solid #d8dce5;
+      border-radius: 9px;
+      resize: vertical;
     }
 
     .saved-note {
-      margin-top: 10px;
+      margin-top: 12px;
       padding: 10px;
       background: #f8f9fc;
       border-radius: 8px;
       color: #4b5563;
     }
 
+    .updated {
+      font-size: 12px;
+      color: #98a2b3 !important;
+      margin-top: 10px !important;
+    }
+
+    .empty-message {
+      background: white;
+      padding: 25px;
+      text-align: center;
+      border-radius: 12px;
+      color: #667085;
+    }
+
     /* MOBILE */
 
     @media (max-width: 750px) {
+
       .navbar {
         flex-direction: column;
         text-align: center;
@@ -291,6 +304,7 @@
     }
 
     @media (max-width: 450px) {
+
       .dashboard-grid {
         grid-template-columns: 1fr;
       }
@@ -299,20 +313,38 @@
       .dashboard {
         padding: 15px;
       }
+
+      .lead-actions button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- NAVBAR -->
+
   <nav class="navbar">
-    <div class="logo">🇮🇳 LeadFinder India</div>
-    <div class="tag">B2B Lead Discovery</div>
+
+    <div class="logo">
+      🇮🇳 LeadFinder India
+    </div>
+
+    <div class="tag">
+      B2B Lead Discovery
+    </div>
+
   </nav>
+
+
+  <!-- SEARCH -->
 
   <section class="hero">
 
-    <h1>Find Businesses. Find Opportunities.</h1>
+    <h1>
+      Find Businesses. Find Opportunities.
+    </h1>
 
     <p>
       Search businesses by city and category.
@@ -341,6 +373,7 @@
 
   </section>
 
+
   <!-- SEARCH RESULTS -->
 
   <section class="results" id="results">
@@ -355,35 +388,38 @@
 
   </section>
 
+
   <!-- DASHBOARD -->
 
   <section class="dashboard">
 
-    <h2>📊 Lead Dashboard</h2>
+    <h2>
+      📊 Lead Dashboard
+    </h2>
 
     <div class="dashboard-grid">
 
-      <div class="dashboard-card">
+      <div class="dashboard-card" onclick="filterDashboard('All')">
         <h3>⭐ Total Saved</h3>
         <p id="totalLeads">0</p>
       </div>
 
-      <div class="dashboard-card">
+      <div class="dashboard-card" onclick="filterDashboard('New')">
         <h3>🆕 New</h3>
         <p id="newLeads">0</p>
       </div>
 
-      <div class="dashboard-card">
+      <div class="dashboard-card" onclick="filterDashboard('Contacted')">
         <h3>📞 Contacted</h3>
         <p id="contactedLeads">0</p>
       </div>
 
-      <div class="dashboard-card">
+      <div class="dashboard-card" onclick="filterDashboard('Follow-up')">
         <h3>🔔 Follow-up</h3>
         <p id="followupLeads">0</p>
       </div>
 
-      <div class="dashboard-card">
+      <div class="dashboard-card" onclick="filterDashboard('Converted')">
         <h3>💰 Converted</h3>
         <p id="convertedLeads">0</p>
       </div>
@@ -392,11 +428,14 @@
 
   </section>
 
+
   <!-- SAVED LEADS -->
 
   <section class="results" id="savedSection">
 
-    <h2>⭐ Saved Leads</h2>
+    <h2>
+      ⭐ Saved Leads
+    </h2>
 
     <div class="saved-controls">
 
@@ -411,11 +450,27 @@
         id="savedStatus"
         onchange="displaySavedLeads()"
       >
-        <option value="All">All Statuses</option>
-        <option value="New">🆕 New</option>
-        <option value="Contacted">📞 Contacted</option>
-        <option value="Follow-up">🔔 Follow-up</option>
-        <option value="Converted">💰 Converted</option>
+
+        <option value="All">
+          All Statuses
+        </option>
+
+        <option value="New">
+          🆕 New
+        </option>
+
+        <option value="Contacted">
+          📞 Contacted
+        </option>
+
+        <option value="Follow-up">
+          🔔 Follow-up
+        </option>
+
+        <option value="Converted">
+          💰 Converted
+        </option>
+
       </select>
 
     </div>
@@ -424,33 +479,41 @@
 
   </section>
 
+
   <script>
 
+    /* DEMO BUSINESSES */
+
     const demoLeads = [
+
       {
         name: "Urban Spoon Restaurant",
         area: "Kharadi, Pune",
         phone: "98765 43210",
         rating: "4.3"
       },
+
       {
         name: "The Food Corner",
         area: "Viman Nagar, Pune",
         phone: "98220 12345",
         rating: "4.1"
       },
+
       {
         name: "Spice Garden",
         area: "Wakad, Pune",
         phone: "97654 67890",
         rating: "4.5"
       },
+
       {
         name: "Cafe Avenue",
         area: "Kalyani Nagar, Pune",
         phone: "98989 11223",
         rating: "4.2"
       }
+
     ];
 
 
@@ -458,16 +521,26 @@
 
     function findLeads() {
 
-      const city = document.getElementById("city").value;
-      const category = document.getElementById("category").value;
+      const city =
+        document.getElementById("city").value;
 
-      const results = document.getElementById("results");
-      const title = document.getElementById("resultTitle");
-      const list = document.getElementById("leadList");
+      const category =
+        document.getElementById("category").value;
 
-      title.innerText = `${city} → ${category}`;
+      const results =
+        document.getElementById("results");
+
+      const title =
+        document.getElementById("resultTitle");
+
+      const list =
+        document.getElementById("leadList");
+
+      title.innerText =
+        `${city} → ${category}`;
 
       list.innerHTML = "";
+
 
       demoLeads.forEach(lead => {
 
@@ -475,37 +548,43 @@
 
           <div class="lead">
 
-            <div>
+            <h3>
+              ${lead.name}
+            </h3>
 
-              <h3>${lead.name}</h3>
+            <p>
+              📍 ${lead.area}
+            </p>
 
-              <p>📍 ${lead.area}</p>
+            <p>
+              📞 ${lead.phone}
+            </p>
 
-              <p>📞 ${lead.phone}</p>
-
-              <p class="rating">
-                ⭐ ${lead.rating}
-              </p>
-
-            </div>
+            <p class="rating">
+              ⭐ ${lead.rating}
+            </p>
 
             <div class="lead-actions">
 
-              <button onclick="showDetails(
-                '${lead.name}',
-                '${lead.area}',
-                '${lead.phone}',
-                '${lead.rating}'
-              )">
-                View Details
+              <button
+                onclick="showDetails(
+                  '${lead.name}',
+                  '${lead.area}',
+                  '${lead.phone}',
+                  '${lead.rating}'
+                )"
+              >
+                👀 View Details
               </button>
 
-              <button onclick="saveLead(
-                '${lead.name}',
-                '${lead.area}',
-                '${lead.phone}',
-                '${lead.rating}'
-              )">
+              <button
+                onclick="saveLead(
+                  '${lead.name}',
+                  '${lead.area}',
+                  '${lead.phone}',
+                  '${lead.rating}'
+                )"
+              >
                 ⭐ Save Lead
               </button>
 
@@ -517,6 +596,7 @@
 
       });
 
+
       results.style.display = "block";
 
       results.scrollIntoView({
@@ -526,18 +606,31 @@
     }
 
 
-    /* VIEW DETAILS */
+    /* BUSINESS DETAILS */
 
-    function showDetails(name, area, phone, rating) {
+    function showDetails(
+      name,
+      area,
+      phone,
+      rating
+    ) {
 
       alert(
+
         "BUSINESS DETAILS\n\n" +
+
         "🏪 " + name + "\n" +
+
         "📍 " + area + "\n" +
+
         "📞 " + phone + "\n" +
+
         "⭐ " + rating + "\n\n" +
+
         "Status: Not contacted\n\n" +
-        "This lead can be saved and managed here later."
+
+        "This lead can be saved and managed here."
+
       );
 
     }
@@ -545,42 +638,70 @@
 
     /* SAVE LEAD */
 
-    function saveLead(name, area, phone, rating) {
+    function saveLead(
+      name,
+      area,
+      phone,
+      rating
+    ) {
 
       const savedLeads =
-        JSON.parse(localStorage.getItem("savedLeads")) || [];
+        JSON.parse(
+          localStorage.getItem("savedLeads")
+        ) || [];
+
 
       const alreadySaved =
-        savedLeads.some(lead => lead.name === name);
+        savedLeads.some(
+          lead => lead.name === name
+        );
+
 
       if (alreadySaved) {
 
-        alert("⭐ This lead is already saved!");
+        alert(
+          "⭐ This lead is already saved!"
+        );
 
         return;
 
       }
 
+
       savedLeads.push({
+
         name: name,
+
         area: area,
+
         phone: phone,
+
         rating: rating,
+
         status: "New",
-        note: ""
+
+        note: "",
+
+        updated:
+          new Date().toLocaleString()
+
       });
+
 
       localStorage.setItem(
         "savedLeads",
         JSON.stringify(savedLeads)
       );
 
+
       updateDashboard();
 
       displaySavedLeads();
 
+
       alert(
-        "⭐ Lead Saved!\n\n" + name
+        "⭐ Lead Saved!\n\n" +
+        name
       );
 
     }
@@ -588,17 +709,30 @@
 
     /* CHANGE STATUS */
 
-    function changeLeadStatus(name, status) {
+    function changeLeadStatus(
+      name,
+      status
+    ) {
 
       const savedLeads =
-        JSON.parse(localStorage.getItem("savedLeads")) || [];
+        JSON.parse(
+          localStorage.getItem("savedLeads")
+        ) || [];
+
 
       const lead =
-        savedLeads.find(lead => lead.name === name);
+        savedLeads.find(
+          lead => lead.name === name
+        );
+
 
       if (lead) {
 
         lead.status = status;
+
+        lead.updated =
+          new Date().toLocaleString();
+
 
         localStorage.setItem(
           "savedLeads",
@@ -606,6 +740,7 @@
         );
 
       }
+
 
       updateDashboard();
 
@@ -619,27 +754,45 @@
     function saveNote(name) {
 
       const noteBox =
-        document.getElementById("note-" + name);
+        document.getElementById(
+          "note-" + name
+        );
 
-      const note = noteBox.value;
+
+      const note =
+        noteBox.value;
+
 
       if (note.trim() === "") {
 
-        alert("Please write a note first!");
+        alert(
+          "Please write a note first!"
+        );
 
         return;
 
       }
 
+
       const savedLeads =
-        JSON.parse(localStorage.getItem("savedLeads")) || [];
+        JSON.parse(
+          localStorage.getItem("savedLeads")
+        ) || [];
+
 
       const lead =
-        savedLeads.find(lead => lead.name === name);
+        savedLeads.find(
+          lead => lead.name === name
+        );
+
 
       if (lead) {
 
         lead.note = note;
+
+        lead.updated =
+          new Date().toLocaleString();
+
 
         localStorage.setItem(
           "savedLeads",
@@ -648,9 +801,53 @@
 
       }
 
+
       alert(
-        "📝 Note Saved!\n\n" + name
+        "📝 Note Saved!\n\n" +
+        name
       );
+
+
+      displaySavedLeads();
+
+    }
+
+
+    /* DELETE LEAD */
+
+    function deleteLead(name) {
+
+      const confirmed =
+        confirm(
+          "Are you sure you want to remove this saved lead?\n\n" +
+          name
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      let savedLeads =
+        JSON.parse(
+          localStorage.getItem("savedLeads")
+        ) || [];
+
+
+      savedLeads =
+        savedLeads.filter(
+          lead => lead.name !== name
+        );
+
+
+      localStorage.setItem(
+        "savedLeads",
+        JSON.stringify(savedLeads)
+      );
+
+
+      updateDashboard();
 
       displaySavedLeads();
 
@@ -662,49 +859,91 @@
     function displaySavedLeads() {
 
       const savedLeads =
-        JSON.parse(localStorage.getItem("savedLeads")) || [];
+        JSON.parse(
+          localStorage.getItem("savedLeads")
+        ) || [];
+
 
       const savedList =
-        document.getElementById("savedList");
+        document.getElementById(
+          "savedList"
+        );
+
 
       const searchBox =
-        document.getElementById("savedSearch");
+        document.getElementById(
+          "savedSearch"
+        );
+
 
       const statusBox =
-        document.getElementById("savedStatus");
+        document.getElementById(
+          "savedStatus"
+        );
+
 
       const searchText =
         searchBox
           ? searchBox.value.toLowerCase()
           : "";
 
+
       const selectedStatus =
         statusBox
           ? statusBox.value
           : "All";
 
+
       savedList.innerHTML = "";
+
 
       const filteredLeads =
         savedLeads.filter(lead => {
 
           const matchesSearch =
-            lead.name.toLowerCase().includes(searchText) ||
-            lead.area.toLowerCase().includes(searchText);
+
+            lead.name
+              .toLowerCase()
+              .includes(searchText)
+
+            ||
+
+            lead.area
+              .toLowerCase()
+              .includes(searchText);
+
 
           const matchesStatus =
-            selectedStatus === "All" ||
-            (lead.status || "New") === selectedStatus;
 
-          return matchesSearch && matchesStatus;
+            selectedStatus === "All"
+
+            ||
+
+            (lead.status || "New")
+              === selectedStatus;
+
+
+          return (
+            matchesSearch &&
+            matchesStatus
+          );
 
         });
 
 
-      if (filteredLeads.length === 0) {
+      if (
+        filteredLeads.length === 0
+      ) {
 
-        savedList.innerHTML =
-          "<p>No matching saved leads ⭐</p>";
+        savedList.innerHTML = `
+
+          <div class="empty-message">
+
+            No matching saved leads ⭐
+
+          </div>
+
+        `;
 
         return;
 
@@ -716,23 +955,36 @@
         const currentStatus =
           lead.status || "New";
 
+
         const currentNote =
           lead.note || "";
+
+
+        const updated =
+          lead.updated ||
+          "Not available";
 
 
         savedList.innerHTML += `
 
           <div class="lead">
 
-            <h3>${lead.name}</h3>
+            <h3>
+              ${lead.name}
+            </h3>
 
-            <p>📍 ${lead.area}</p>
+            <p>
+              📍 ${lead.area}
+            </p>
 
-            <p>📞 ${lead.phone}</p>
+            <p>
+              📞 ${lead.phone}
+            </p>
 
             <p class="rating">
               ⭐ ${lead.rating}
             </p>
+
 
             <select
               onchange="changeLeadStatus(
@@ -743,28 +995,36 @@
 
               <option
                 value="New"
-                ${currentStatus === "New" ? "selected" : ""}
+                ${currentStatus === "New"
+                  ? "selected"
+                  : ""}
               >
                 🆕 New
               </option>
 
               <option
                 value="Contacted"
-                ${currentStatus === "Contacted" ? "selected" : ""}
+                ${currentStatus === "Contacted"
+                  ? "selected"
+                  : ""}
               >
                 📞 Contacted
               </option>
 
               <option
                 value="Follow-up"
-                ${currentStatus === "Follow-up" ? "selected" : ""}
+                ${currentStatus === "Follow-up"
+                  ? "selected"
+                  : ""}
               >
                 🔔 Follow-up
               </option>
 
               <option
                 value="Converted"
-                ${currentStatus === "Converted" ? "selected" : ""}
+                ${currentStatus === "Converted"
+                  ? "selected"
+                  : ""}
               >
                 💰 Converted
               </option>
@@ -775,7 +1035,8 @@
             <div class="saved-note">
 
               📝 Note:
-              ${currentNote || "No note added yet"}
+              ${currentNote ||
+              "No note added yet"}
 
             </div>
 
@@ -787,11 +1048,35 @@
             >${currentNote}</textarea>
 
 
-            <button
-              onclick="saveNote('${lead.name}')"
-            >
-              💾 Save Note
-            </button>
+            <div class="lead-actions">
+
+              <button
+                onclick="saveNote(
+                  '${lead.name}'
+                )"
+              >
+                💾 Save Note
+              </button>
+
+
+              <button
+                class="danger-btn"
+                onclick="deleteLead(
+                  '${lead.name}'
+                )"
+              >
+                🗑️ Remove Lead
+              </button>
+
+            </div>
+
+
+            <p class="updated">
+
+              🕐 Last updated:
+              ${updated}
+
+            </p>
 
           </div>
 
@@ -807,11 +1092,17 @@
     function updateDashboard() {
 
       const savedLeads =
-        JSON.parse(localStorage.getItem("savedLeads")) || [];
+        JSON.parse(
+          localStorage.getItem("savedLeads")
+        ) || [];
+
 
       let newCount = 0;
+
       let contactedCount = 0;
+
       let followupCount = 0;
+
       let convertedCount = 0;
 
 
@@ -820,19 +1111,32 @@
         const status =
           lead.status || "New";
 
+
         if (status === "New") {
 
           newCount++;
 
-        } else if (status === "Contacted") {
+        }
+
+        else if (
+          status === "Contacted"
+        ) {
 
           contactedCount++;
 
-        } else if (status === "Follow-up") {
+        }
+
+        else if (
+          status === "Follow-up"
+        ) {
 
           followupCount++;
 
-        } else if (status === "Converted") {
+        }
+
+        else if (
+          status === "Converted"
+        ) {
 
           convertedCount++;
 
@@ -841,20 +1145,59 @@
       });
 
 
-      document.getElementById("totalLeads").innerText =
+      document.getElementById(
+        "totalLeads"
+      ).innerText =
         savedLeads.length;
 
-      document.getElementById("newLeads").innerText =
+
+      document.getElementById(
+        "newLeads"
+      ).innerText =
         newCount;
 
-      document.getElementById("contactedLeads").innerText =
+
+      document.getElementById(
+        "contactedLeads"
+      ).innerText =
         contactedCount;
 
-      document.getElementById("followupLeads").innerText =
+
+      document.getElementById(
+        "followupLeads"
+      ).innerText =
         followupCount;
 
-      document.getElementById("convertedLeads").innerText =
+
+      document.getElementById(
+        "convertedLeads"
+      ).innerText =
         convertedCount;
+
+    }
+
+
+    /* DASHBOARD FILTER */
+
+    function filterDashboard(status) {
+
+      const statusBox =
+        document.getElementById(
+          "savedStatus"
+        );
+
+
+      statusBox.value = status;
+
+
+      displaySavedLeads();
+
+
+      document.getElementById(
+        "savedSection"
+      ).scrollIntoView({
+        behavior: "smooth"
+      });
 
     }
 
