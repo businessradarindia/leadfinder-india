@@ -271,6 +271,12 @@
   ⭐ Save Lead
 </button>
 
+<textarea id="note-${lead.name}" placeholder="📝 Add a note..." rows="2"></textarea>
+
+<button onclick="saveNote('${lead.name}')">
+  💾 Save Note
+</button>
+
 <select onchange="updateStatus('${lead.name}', this.value)">
   <option value="New">🆕 New</option>
   <option value="Contacted">📞 Contacted</option>
@@ -314,6 +320,21 @@ function saveLead(name, area, phone, rating) {
     "📌 Status Updated!\n\n" +
     "🏪 " + name + "\n" +
     "Status: " + status
+  );
+}
+    function saveNote(name) {
+  const noteBox = document.getElementById("note-" + name);
+  const note = noteBox.value;
+
+  if (note.trim() === "") {
+    alert("Please write a note first!");
+    return;
+  }
+
+  alert(
+    "📝 Note Saved!\n\n" +
+    "🏪 " + name + "\n" +
+    "Note: " + note
   );
 }
   </script>
