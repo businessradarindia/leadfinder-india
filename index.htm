@@ -351,12 +351,17 @@ displaySavedLeads();
 
 alert("⭐ Lead Saved!\n\n" + name);
 }
-function updateStatus(name, status) {
-  alert(
-    "📌 Status Updated!\n\n" +
-    "🏪 " + name + "\n" +
-    "Status: " + status
-  );
+function changeLeadStatus(name, status) {
+  const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
+
+  const lead = savedLeads.find(lead => lead.name === name);
+
+  if (lead) {
+    lead.status = status;
+    localStorage.setItem("savedLeads", JSON.stringify(savedLeads));
+  }
+
+  displaySavedLeads();
 }
     function saveNote(name) {
   const noteBox = document.getElementById("note-" + name);
@@ -410,8 +415,12 @@ function updateStatus(name, status) {
           <p>📍 ${lead.area}</p>
           <p>📞 ${lead.phone}</p>
           <p class="rating">⭐ ${lead.rating}</p>
-          <p>📌 Status: ${lead.status || "New"}</p>
-        </div>
+<select onchange="changeLeadStatus('${lead.name}', this.value)">
+  <option value="New" ${(!lead.status || lead.status === "New") ? "selected" : ""}>🆕 New</option>
+  <option value="Contacted" ${lead.status === "Contacted" ? "selected" : ""}>📞 Contacted</option>
+  <option value="Follow-up" ${lead.status === "Follow-up" ? "selected" : ""}>🔔 Follow-up</option>
+  <option value="Converted" ${lead.status === "Converted" ? "selected" : ""}>💰 Converted</option>
+</select>        </div>
       </div>
     `;
   });
