@@ -363,7 +363,7 @@ function changeLeadStatus(name, status) {
 
   displaySavedLeads();
 }
-    function saveNote(name) {
+   function saveNote(name) {
   const noteBox = document.getElementById("note-" + name);
   const note = noteBox.value;
 
@@ -372,11 +372,16 @@ function changeLeadStatus(name, status) {
     return;
   }
 
-  alert(
-    "📝 Note Saved!\n\n" +
-    "🏪 " + name + "\n" +
-    "Note: " + note
-  );
+  const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
+
+  const lead = savedLeads.find(lead => lead.name === name);
+
+  if (lead) {
+    lead.note = note;
+    localStorage.setItem("savedLeads", JSON.stringify(savedLeads));
+  }
+
+  alert("📝 Note Saved!\n\n" + name);
 }
    function displaySavedLeads() {
   const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
@@ -420,7 +425,15 @@ function changeLeadStatus(name, status) {
   <option value="Contacted" ${lead.status === "Contacted" ? "selected" : ""}>📞 Contacted</option>
   <option value="Follow-up" ${lead.status === "Follow-up" ? "selected" : ""}>🔔 Follow-up</option>
   <option value="Converted" ${lead.status === "Converted" ? "selected" : ""}>💰 Converted</option>
-</select>        </div>
+</select>
+
+<p>📝 Note: ${lead.note || "No note added yet"}</p>
+
+<textarea id="note-${lead.name}" placeholder="Write a note...">${lead.note || ""}</textarea>
+
+<button onclick="saveNote('${lead.name}')">
+  💾 Save Note
+</button>        </div>
       </div>
     `;
   });
