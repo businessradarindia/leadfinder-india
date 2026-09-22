@@ -26,6 +26,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 15px;
     }
 
     .logo {
@@ -40,7 +41,7 @@
 
     .hero {
       text-align: center;
-      padding: 70px 20px 45px;
+      padding: 65px 20px 40px;
     }
 
     .hero h1 {
@@ -51,38 +52,44 @@
     .hero p {
       font-size: 18px;
       color: #657085;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
     }
 
     .search-box {
       background: white;
       max-width: 850px;
       margin: auto;
-      padding: 28px;
+      padding: 25px;
       border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
       display: flex;
       gap: 15px;
       flex-wrap: wrap;
       justify-content: center;
     }
 
-    select {
-      padding: 15px;
+    select,
+    input,
+    textarea {
+      font-family: inherit;
+    }
+
+    .search-box select {
+      padding: 14px;
       border: 1px solid #d8dce5;
       border-radius: 10px;
       font-size: 16px;
-      min-width: 250px;
+      min-width: 230px;
       background: white;
     }
 
     button {
-      padding: 15px 25px;
+      padding: 13px 20px;
       border: none;
       border-radius: 10px;
       background: #4f46e5;
       color: white;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
       cursor: pointer;
     }
@@ -95,6 +102,9 @@
       max-width: 1000px;
       margin: 30px auto;
       padding: 20px;
+    }
+
+    #results {
       display: none;
     }
 
@@ -104,14 +114,10 @@
 
     .lead {
       background: white;
-      padding: 22px;
+      padding: 20px;
       margin-bottom: 15px;
       border-radius: 14px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     }
 
     .lead h3 {
@@ -120,91 +126,180 @@
 
     .lead p {
       color: #667085;
-      margin: 4px 0;
+      margin: 5px 0;
     }
 
     .rating {
       font-weight: bold;
     }
 
+    .lead-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .lead-actions button,
+    .lead-actions select {
+      width: auto;
+    }
+
+    .lead-actions select {
+      padding: 11px;
+      border: 1px solid #d8dce5;
+      border-radius: 9px;
+      background: white;
+    }
+
+    .note-box {
+      width: 100%;
+      min-height: 70px;
+      margin-top: 12px;
+      padding: 10px;
+      border: 1px solid #d8dce5;
+      border-radius: 9px;
+      resize: vertical;
+    }
+
     .demo {
       text-align: center;
       color: #8a93a3;
       font-size: 13px;
-      margin-top: 30px;
+      margin-top: 25px;
     }
 
-    @media (max-width: 650px) {
+    /* DASHBOARD */
+
+    .dashboard {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .dashboard h2 {
+      margin-bottom: 15px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .dashboard-card {
+      background: white;
+      padding: 18px 10px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .dashboard-card h3 {
+      font-size: 13px;
+      margin-bottom: 8px;
+      color: #667085;
+    }
+
+    .dashboard-card p {
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    /* SAVED LEADS */
+
+    #savedSection {
+      display: block;
+    }
+
+    .saved-controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    #savedSearch {
+      flex: 1;
+      min-width: 220px;
+      padding: 12px;
+      border: 1px solid #d8dce5;
+      border-radius: 9px;
+    }
+
+    #savedStatus {
+      padding: 12px;
+      border: 1px solid #d8dce5;
+      border-radius: 9px;
+      background: white;
+    }
+
+    #savedList {
+      display: grid;
+      gap: 15px;
+    }
+
+    #savedList .lead {
+      margin-bottom: 0;
+      border: 1px solid #e5e7eb;
+    }
+
+    #savedList .lead select {
+      margin-top: 12px;
+      padding: 9px;
+      border: 1px solid #d8dce5;
+      border-radius: 8px;
+      background: white;
+    }
+
+    #savedList .lead textarea {
+      margin-top: 10px;
+    }
+
+    .saved-note {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f8f9fc;
+      border-radius: 8px;
+      color: #4b5563;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 750px) {
+      .navbar {
+        flex-direction: column;
+        text-align: center;
+      }
+
       .hero h1 {
         font-size: 32px;
       }
 
-      .lead {
+      .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .search-box {
         flex-direction: column;
-        align-items: flex-start;
       }
 
-      select {
-        width: 100%;
-      }
-
-      button {
+      .search-box select,
+      .search-box button {
         width: 100%;
       }
     }
-    /* your existing CSS */
 
-.dashboard {
-  ...
-}
+    @media (max-width: 450px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
 
-#savedStatus {
-  ...
-}
-
-
-  #savedList {
-  display: grid;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-#savedList .lead {
-  background: white;
-  padding: 18px;
-  border-radius: 12px;
-  border: 1px solid #e5e5e5;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-
-#savedList .lead h3 {
-  margin-bottom: 8px;
-}
-
-#savedList .lead p {
-  margin: 6px 0;
-}
-
-#savedList textarea {
-  width: 100%;
-  min-height: 70px;
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  resize: vertical;
-}
-
-#savedList select {
-  margin-top: 10px;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-#savedList button {
-  margin-top: 8px;
-}
+      .results,
+      .dashboard {
+        padding: 15px;
+      }
+    }
   </style>
 </head>
 
@@ -216,6 +311,7 @@
   </nav>
 
   <section class="hero">
+
     <h1>Find Businesses. Find Opportunities.</h1>
 
     <p>
@@ -242,7 +338,10 @@
       </button>
 
     </div>
+
   </section>
+
+  <!-- SEARCH RESULTS -->
 
   <section class="results" id="results">
 
@@ -255,62 +354,76 @@
     </p>
 
   </section>
+
+  <!-- DASHBOARD -->
+
   <section class="dashboard">
 
-  <h2>📊 Lead Dashboard</h2>
+    <h2>📊 Lead Dashboard</h2>
 
-  <div class="dashboard-grid">
+    <div class="dashboard-grid">
 
-    <div class="dashboard-card">
-      <h3>⭐ Total Saved</h3>
-      <p id="totalLeads">0</p>
+      <div class="dashboard-card">
+        <h3>⭐ Total Saved</h3>
+        <p id="totalLeads">0</p>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>🆕 New</h3>
+        <p id="newLeads">0</p>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>📞 Contacted</h3>
+        <p id="contactedLeads">0</p>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>🔔 Follow-up</h3>
+        <p id="followupLeads">0</p>
+      </div>
+
+      <div class="dashboard-card">
+        <h3>💰 Converted</h3>
+        <p id="convertedLeads">0</p>
+      </div>
+
     </div>
 
-    <div class="dashboard-card">
-      <h3>🆕 New</h3>
-      <p id="newLeads">0</p>
+  </section>
+
+  <!-- SAVED LEADS -->
+
+  <section class="results" id="savedSection">
+
+    <h2>⭐ Saved Leads</h2>
+
+    <div class="saved-controls">
+
+      <input
+        type="text"
+        id="savedSearch"
+        placeholder="🔎 Search saved leads..."
+        oninput="displaySavedLeads()"
+      >
+
+      <select
+        id="savedStatus"
+        onchange="displaySavedLeads()"
+      >
+        <option value="All">All Statuses</option>
+        <option value="New">🆕 New</option>
+        <option value="Contacted">📞 Contacted</option>
+        <option value="Follow-up">🔔 Follow-up</option>
+        <option value="Converted">💰 Converted</option>
+      </select>
+
     </div>
 
-    <div class="dashboard-card">
-      <h3>📞 Contacted</h3>
-      <p id="contactedLeads">0</p>
-    </div>
+    <div id="savedList"></div>
 
-    <div class="dashboard-card">
-      <h3>🔔 Follow-up</h3>
-      <p id="followupLeads">0</p>
-    </div>
+  </section>
 
-    <div class="dashboard-card">
-      <h3>💰 Converted</h3>
-      <p id="convertedLeads">0</p>
-    </div>
-
-  </div>
-
-</section>
-<section class="results" id="savedSection" style="display: block;">
-
-  <h2>⭐ Saved Leads</h2>
-
-  <input
-    type="text"
-    id="savedSearch"
-    placeholder="🔎 Search saved leads..."
-    oninput="displaySavedLeads()"
-  >
-
-  <select id="savedStatus" onchange="displaySavedLeads()">
-    <option value="All">All Statuses</option>
-    <option value="New">🆕 New</option>
-    <option value="Contacted">📞 Contacted</option>
-    <option value="Follow-up">🔔 Follow-up</option>
-    <option value="Converted">💰 Converted</option>
-  </select>
-
-  <div id="savedList"></div>
-
-</section>
   <script>
 
     const demoLeads = [
@@ -340,6 +453,9 @@
       }
     ];
 
+
+    /* FIND LEADS */
+
     function findLeads() {
 
       const city = document.getElementById("city").value;
@@ -349,17 +465,18 @@
       const title = document.getElementById("resultTitle");
       const list = document.getElementById("leadList");
 
-      title.innerText =
-        `${city} → ${category}`;
+      title.innerText = `${city} → ${category}`;
 
       list.innerHTML = "";
 
       demoLeads.forEach(lead => {
 
         list.innerHTML += `
+
           <div class="lead">
 
             <div>
+
               <h3>${lead.name}</h3>
 
               <p>📍 ${lead.area}</p>
@@ -369,42 +486,50 @@
               <p class="rating">
                 ⭐ ${lead.rating}
               </p>
+
             </div>
 
-            <button onclick="showDetails('${lead.name}', '${lead.area}', '${lead.phone}', '${lead.rating}')">
-  View Details
-</button>
+            <div class="lead-actions">
 
-<button onclick="saveLead('${lead.name}', '${lead.area}', '${lead.phone}', '${lead.rating}')">
-  ⭐ Save Lead
-</button>
+              <button onclick="showDetails(
+                '${lead.name}',
+                '${lead.area}',
+                '${lead.phone}',
+                '${lead.rating}'
+              )">
+                View Details
+              </button>
 
-<textarea id="note-${lead.name}" placeholder="📝 Add a note..." rows="2"></textarea>
+              <button onclick="saveLead(
+                '${lead.name}',
+                '${lead.area}',
+                '${lead.phone}',
+                '${lead.rating}'
+              )">
+                ⭐ Save Lead
+              </button>
 
-<button onclick="saveNote('${lead.name}')">
-  💾 Save Note
-</button>
-
-<select onchange="updateStatus('${lead.name}', this.value)">
-  <option value="New">🆕 New</option>
-  <option value="Contacted">📞 Contacted</option>
-  <option value="Follow-up">🔔 Follow-up</option>
-  <option value="Converted">💰 Converted</option>
-</select>
+            </div>
 
           </div>
+
         `;
 
-      }
-                       );
+      });
 
       results.style.display = "block";
 
       results.scrollIntoView({
         behavior: "smooth"
       });
+
     }
+
+
+    /* VIEW DETAILS */
+
     function showDetails(name, area, phone, rating) {
+
       alert(
         "BUSINESS DETAILS\n\n" +
         "🏪 " + name + "\n" +
@@ -414,151 +539,333 @@
         "Status: Not contacted\n\n" +
         "This lead can be saved and managed here later."
       );
+
     }
-function saveLead(name, area, phone, rating) {
-  const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
 
-  const alreadySaved = savedLeads.some(lead => lead.name === name);
 
-  if (alreadySaved) {
-    alert("⭐ This lead is already saved!");
-    return;
-  }
+    /* SAVE LEAD */
 
-  savedLeads.push({
-    name: name,
-    area: area,
-    phone: phone,
-    rating: rating
-  });
+    function saveLead(name, area, phone, rating) {
 
-  localStorage.setItem("savedLeads", JSON.stringify(savedLeads));
+      const savedLeads =
+        JSON.parse(localStorage.getItem("savedLeads")) || [];
 
-updateDashboard();
-displaySavedLeads();
+      const alreadySaved =
+        savedLeads.some(lead => lead.name === name);
 
-alert("⭐ Lead Saved!\n\n" + name);
-}
-function changeLeadStatus(name, status) {
-  const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
+      if (alreadySaved) {
 
-  const lead = savedLeads.find(lead => lead.name === name);
+        alert("⭐ This lead is already saved!");
 
-  if (lead) {
-    lead.status = status;
-    localStorage.setItem("savedLeads", JSON.stringify(savedLeads));
-  }
+        return;
 
-  updateDashboard();
-displaySavedLeads();
-}
-   function saveNote(name) {
-  const noteBox = document.getElementById("note-" + name);
-  const note = noteBox.value;
+      }
 
-  if (note.trim() === "") {
-    alert("Please write a note first!");
-    return;
-  }
+      savedLeads.push({
+        name: name,
+        area: area,
+        phone: phone,
+        rating: rating,
+        status: "New",
+        note: ""
+      });
 
-  const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
+      localStorage.setItem(
+        "savedLeads",
+        JSON.stringify(savedLeads)
+      );
 
-  const lead = savedLeads.find(lead => lead.name === name);
+      updateDashboard();
 
-  if (lead) {
-    lead.note = note;
-    localStorage.setItem("savedLeads", JSON.stringify(savedLeads));
-  }
+      displaySavedLeads();
 
-  alert("📝 Note Saved!\n\n" + name);
-}
-   function displaySavedLeads() {
-  const savedLeads = JSON.parse(localStorage.getItem("savedLeads")) || [];
-  const savedList = document.getElementById("savedList");
+      alert(
+        "⭐ Lead Saved!\n\n" + name
+      );
 
-  const searchBox = document.getElementById("savedSearch");
-  const statusBox = document.getElementById("savedStatus");
-
-  const searchText = searchBox ? searchBox.value.toLowerCase() : "";
-  const selectedStatus = statusBox ? statusBox.value : "All";
-
-  savedList.innerHTML = "";
-
-  const filteredLeads = savedLeads.filter(lead => {
-    const matchesSearch =
-      lead.name.toLowerCase().includes(searchText) ||
-      lead.area.toLowerCase().includes(searchText);
-
-    const matchesStatus =
-      selectedStatus === "All" ||
-      (lead.status || "New") === selectedStatus;
-
-    return matchesSearch && matchesStatus;
-  });
-
-  if (filteredLeads.length === 0) {
-    savedList.innerHTML = "<p>No matching saved leads ⭐</p>";
-    return;
-  }
-
-  filteredLeads.forEach(lead => {
-    savedList.innerHTML += `
-      <div class="lead">
-        <div>
-          <h3>${lead.name}</h3>
-          <p>📍 ${lead.area}</p>
-          <p>📞 ${lead.phone}</p>
-          <p class="rating">⭐ ${lead.rating}</p>
-<select onchange="changeLeadStatus('${lead.name}', this.value)">
-  <option value="New" ${(!lead.status || lead.status === "New") ? "selected" : ""}>🆕 New</option>
-  <option value="Contacted" ${lead.status === "Contacted" ? "selected" : ""}>📞 Contacted</option>
-  <option value="Follow-up" ${lead.status === "Follow-up" ? "selected" : ""}>🔔 Follow-up</option>
-  <option value="Converted" ${lead.status === "Converted" ? "selected" : ""}>💰 Converted</option>
-</select>
-
-<p>📝 Note: ${lead.note || "No note added yet"}</p>
-
-<textarea id="note-${lead.name}" placeholder="Write a note...">${lead.note || ""}</textarea>
-
-<button onclick="saveNote('${lead.name}')">
-  💾 Save Note
-</button>        </div>
-      </div>
-    `;
-  });
-}
-
- function updateDashboard() {
-  const savedLeads =
-    JSON.parse(localStorage.getItem("savedLeads")) || [];
-
-  let newCount = 0;
-  let contactedCount = 0;
-  let followupCount = 0;
-  let convertedCount = 0;
-
-  savedLeads.forEach(lead => {
-    const status = lead.status || "New";
-
-    if (status === "New") {
-      newCount++;
-    } else if (status === "Contacted") {
-      contactedCount++;
-    } else if (status === "Follow-up") {
-      followupCount++;
-    } else if (status === "Converted") {
-      convertedCount++;
     }
-  });
 
-  document.getElementById("totalLeads").innerText = savedLeads.length;
-  document.getElementById("newLeads").innerText = newCount;
-  document.getElementById("contactedLeads").innerText = contactedCount;
-  document.getElementById("followupLeads").innerText = followupCount;
-  document.getElementById("convertedLeads").innerText = convertedCount;
-}
- updateDashboard();
-displaySavedLeads();
-</script>
+
+    /* CHANGE STATUS */
+
+    function changeLeadStatus(name, status) {
+
+      const savedLeads =
+        JSON.parse(localStorage.getItem("savedLeads")) || [];
+
+      const lead =
+        savedLeads.find(lead => lead.name === name);
+
+      if (lead) {
+
+        lead.status = status;
+
+        localStorage.setItem(
+          "savedLeads",
+          JSON.stringify(savedLeads)
+        );
+
+      }
+
+      updateDashboard();
+
+      displaySavedLeads();
+
+    }
+
+
+    /* SAVE NOTE */
+
+    function saveNote(name) {
+
+      const noteBox =
+        document.getElementById("note-" + name);
+
+      const note = noteBox.value;
+
+      if (note.trim() === "") {
+
+        alert("Please write a note first!");
+
+        return;
+
+      }
+
+      const savedLeads =
+        JSON.parse(localStorage.getItem("savedLeads")) || [];
+
+      const lead =
+        savedLeads.find(lead => lead.name === name);
+
+      if (lead) {
+
+        lead.note = note;
+
+        localStorage.setItem(
+          "savedLeads",
+          JSON.stringify(savedLeads)
+        );
+
+      }
+
+      alert(
+        "📝 Note Saved!\n\n" + name
+      );
+
+      displaySavedLeads();
+
+    }
+
+
+    /* DISPLAY SAVED LEADS */
+
+    function displaySavedLeads() {
+
+      const savedLeads =
+        JSON.parse(localStorage.getItem("savedLeads")) || [];
+
+      const savedList =
+        document.getElementById("savedList");
+
+      const searchBox =
+        document.getElementById("savedSearch");
+
+      const statusBox =
+        document.getElementById("savedStatus");
+
+      const searchText =
+        searchBox
+          ? searchBox.value.toLowerCase()
+          : "";
+
+      const selectedStatus =
+        statusBox
+          ? statusBox.value
+          : "All";
+
+      savedList.innerHTML = "";
+
+      const filteredLeads =
+        savedLeads.filter(lead => {
+
+          const matchesSearch =
+            lead.name.toLowerCase().includes(searchText) ||
+            lead.area.toLowerCase().includes(searchText);
+
+          const matchesStatus =
+            selectedStatus === "All" ||
+            (lead.status || "New") === selectedStatus;
+
+          return matchesSearch && matchesStatus;
+
+        });
+
+
+      if (filteredLeads.length === 0) {
+
+        savedList.innerHTML =
+          "<p>No matching saved leads ⭐</p>";
+
+        return;
+
+      }
+
+
+      filteredLeads.forEach(lead => {
+
+        const currentStatus =
+          lead.status || "New";
+
+        const currentNote =
+          lead.note || "";
+
+
+        savedList.innerHTML += `
+
+          <div class="lead">
+
+            <h3>${lead.name}</h3>
+
+            <p>📍 ${lead.area}</p>
+
+            <p>📞 ${lead.phone}</p>
+
+            <p class="rating">
+              ⭐ ${lead.rating}
+            </p>
+
+            <select
+              onchange="changeLeadStatus(
+                '${lead.name}',
+                this.value
+              )"
+            >
+
+              <option
+                value="New"
+                ${currentStatus === "New" ? "selected" : ""}
+              >
+                🆕 New
+              </option>
+
+              <option
+                value="Contacted"
+                ${currentStatus === "Contacted" ? "selected" : ""}
+              >
+                📞 Contacted
+              </option>
+
+              <option
+                value="Follow-up"
+                ${currentStatus === "Follow-up" ? "selected" : ""}
+              >
+                🔔 Follow-up
+              </option>
+
+              <option
+                value="Converted"
+                ${currentStatus === "Converted" ? "selected" : ""}
+              >
+                💰 Converted
+              </option>
+
+            </select>
+
+
+            <div class="saved-note">
+
+              📝 Note:
+              ${currentNote || "No note added yet"}
+
+            </div>
+
+
+            <textarea
+              class="note-box"
+              id="note-${lead.name}"
+              placeholder="Write a note..."
+            >${currentNote}</textarea>
+
+
+            <button
+              onclick="saveNote('${lead.name}')"
+            >
+              💾 Save Note
+            </button>
+
+          </div>
+
+        `;
+
+      });
+
+    }
+
+
+    /* DASHBOARD */
+
+    function updateDashboard() {
+
+      const savedLeads =
+        JSON.parse(localStorage.getItem("savedLeads")) || [];
+
+      let newCount = 0;
+      let contactedCount = 0;
+      let followupCount = 0;
+      let convertedCount = 0;
+
+
+      savedLeads.forEach(lead => {
+
+        const status =
+          lead.status || "New";
+
+        if (status === "New") {
+
+          newCount++;
+
+        } else if (status === "Contacted") {
+
+          contactedCount++;
+
+        } else if (status === "Follow-up") {
+
+          followupCount++;
+
+        } else if (status === "Converted") {
+
+          convertedCount++;
+
+        }
+
+      });
+
+
+      document.getElementById("totalLeads").innerText =
+        savedLeads.length;
+
+      document.getElementById("newLeads").innerText =
+        newCount;
+
+      document.getElementById("contactedLeads").innerText =
+        contactedCount;
+
+      document.getElementById("followupLeads").innerText =
+        followupCount;
+
+      document.getElementById("convertedLeads").innerText =
+        convertedCount;
+
+    }
+
+
+    /* START */
+
+    updateDashboard();
+
+    displaySavedLeads();
+
+  </script>
+
 </body>
 </html>
