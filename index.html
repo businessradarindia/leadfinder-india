@@ -2518,6 +2518,56 @@ displaySavedLeads();
     return;
   }
 
+  const { data, error } =
+    await supabaseClient.rpc(
+      "add_test_credits",
+      {
+        credits_to_add: searches
+      }
+    );
+
+  if (error) {
+    console.error(error);
+    alert(
+      "Could not add searches.\n\n" +
+      error.message
+    );
+    return;
+  }
+
+  if (data !== true) {
+    alert(
+      "Could not add searches to this account."
+    );
+    return;
+  }
+
+  await loadCredits();
+
+  alert(
+    "🎉 TEST SUCCESS!\n\n" +
+    searches +
+    " searches were added."
+  );
+}
+
+  if (!currentUser) {
+    alert("Please login first.");
+    openAuth("login");
+    return;
+  }
+
+  const confirmed = confirm(
+    "TEST MODE\n\n" +
+    "Package: " + searches + " searches\n" +
+    "Price: ₹" + price + "\n\n" +
+    "No real payment will be taken."
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
   const { data, error } = await supabaseClient
     .from("profiles")
     .select("paid_searches")
