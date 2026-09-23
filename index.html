@@ -14,7 +14,7 @@
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <!-- Razorpay -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -841,8 +841,8 @@
 
 
     <p class="demo">
-      Secure payment through Razorpay.
-    </p>
+  Secure payment powered by Razorpay.
+</p>
 
   </div>
 
@@ -1470,10 +1470,176 @@ async function loadCredits() {
    RAZORPAY PAYMENT
 ========================= */
 
-async function buyPackage(
-  searches,
-  price
-) {
+async function buyPackage(searches, price) {
+
+  if (!currentUser) {
+    alert("Please login first.");
+    openAuth("login");
+    return;
+  }
+
+  try {
+
+    const {
+      data: sessionData,
+      error: sessionError
+    } = await supabaseClient.auth.getSession();
+
+    if (sessionError) {
+      throw sessionError;
+    }
+
+    const session =
+      sessionData.session;
+
+    if (!session) {
+      alert("Your login session has expired. Please login again.");
+      openAuth("login");
+      return;
+    }
+
+    const response =
+      await fetch(
+        "https://nmlrygbmwzwihbautrjs.supabase.co/functions/v1/create-payment",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization":
+              "Bearer " + session.access_token
+          },
+
+          body: JSON.stringify({
+            price: price
+          })
+        }
+      );
+
+    const result =
+      await response.json();
+
+    if (!response.ok) {
+
+      console.error(
+        "Payment order error:",
+        result
+      );
+
+      throw new Error(
+        result.error ||
+        "Could not create payment order."
+      );
+    }
+
+    if (!result.order_id) {
+      throw new Error(
+        "Razorpay order was not created."
+      );
+    }
+
+    const options = {
+
+      key:
+        result.key_id,
+
+      amount:
+        result.amount,
+
+      currency:
+        result.currency || "INR",
+
+      name:
+        "BusinessRadar India",
+
+      description:
+        searches +
+        " business searches",
+
+      order_id:
+        result.order_id,
+
+      prefill: {
+        email:
+          currentUser.email || ""
+      },
+
+      theme: {
+        color: "#4f46e5"
+      },
+
+      handler:
+        function (paymentResponse) {
+
+          console.log(
+            "Razorpay payment response:",
+            paymentResponse
+          );
+
+          alert(
+            "✅ Payment completed!\n\n" +
+            "Payment ID: " +
+            paymentResponse.razorpay_payment_id +
+            "\n\n" +
+            "Your payment is being verified."
+          );
+
+        },
+
+      modal: {
+        ondismiss:
+          function () {
+            console.log(
+              "Payment window closed."
+            );
+          }
+      }
+
+    };
+
+    const razorpay =
+      new Razorpay(options);
+
+    razorpay.on(
+      "payment.failed",
+      function (response) {
+
+        console.error(
+          "Razorpay payment failed:",
+          response.error
+        );
+
+        alert(
+          "❌ Payment failed.\n\n" +
+          (
+            response.error.description ||
+            "Please try again."
+          )
+        );
+
+      }
+    );
+
+    razorpay.open();
+
+  } catch (error) {
+
+    console.error(
+      "buyPackage error:",
+      error
+    );
+
+    alert(
+      "❌ Could not start payment.\n\n" +
+      (
+        error.message ||
+        "Please try again."
+      )
+    );
+
+  }
+
+}
 
   if (!currentUser) {
 
