@@ -88,7 +88,6 @@
 
     .user-info {
       font-size: 13px;
-      margin-right: 5px;
     }
 
     .hero {
@@ -114,7 +113,6 @@
       padding: 25px;
       border-radius: 16px;
       box-shadow: 0 8px 30px rgba(0,0,0,.08);
-
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
@@ -130,12 +128,12 @@
       background: white;
     }
 
-    .business-name {
+    .business-name,
+    .search-button {
       grid-column: 1 / -1;
     }
 
     .search-button {
-      grid-column: 1 / -1;
       padding: 14px 20px;
       border: none;
       border-radius: 10px;
@@ -177,7 +175,9 @@
       margin-bottom: 20px;
     }
 
-    .status-message {
+    .status-message,
+    .empty-message,
+    .loading {
       background: white;
       padding: 20px;
       border-radius: 12px;
@@ -234,11 +234,6 @@
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
-    }
-
-    button:hover,
-    .map-btn:hover {
-      background: #3730a3;
     }
 
     .secondary-btn {
@@ -340,25 +335,6 @@
       margin-top: 10px !important;
     }
 
-    .empty-message {
-      background: white;
-      padding: 25px;
-      text-align: center;
-      border-radius: 12px;
-      color: #667085;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 30px;
-      background: white;
-      border-radius: 12px;
-      color: #4f46e5;
-      font-weight: bold;
-    }
-
-    /* AUTH MODAL */
-
     .modal {
       display: none;
       position: fixed;
@@ -400,7 +376,6 @@
     .close-btn {
       background: #f1f5f9 !important;
       color: #334155 !important;
-      margin-top: 8px;
     }
 
     .auth-message {
@@ -410,7 +385,6 @@
     }
 
     @media (max-width: 750px) {
-
       .navbar {
         flex-direction: column;
         text-align: center;
@@ -435,7 +409,6 @@
     }
 
     @media (max-width: 450px) {
-
       .dashboard-grid {
         grid-template-columns: 1fr;
       }
@@ -456,1016 +429,764 @@
 
 <body>
 
-  <!-- NAVBAR -->
+<nav class="navbar">
 
-  <nav class="navbar">
+  <div class="brand">
 
-    <div class="brand">
-
-      <!--
-        If you have uploaded your BusinessRadar logo,
-        replace this image URL with your logo URL.
-      -->
-
-      <img
-        src="https://via.placeholder.com/80"
-        alt="BusinessRadar logo"
-      >
-
-      <div>
-        <div class="logo">BusinessRadar India</div>
-        <div class="tag">B2B Lead Discovery</div>
-      </div>
-
-    </div>
-
-    <div class="auth-area">
-
-      <span
-        id="userInfo"
-        class="user-info"
-      >
-        Not logged in
-      </span>
-
-      <button
-        id="loginButton"
-        class="login-btn"
-        onclick="openAuth('login')"
-      >
-        Login
-      </button>
-
-      <button
-        id="signupButton"
-        class="signup-btn"
-        onclick="openAuth('signup')"
-      >
-        Sign Up
-      </button>
-
-      <button
-        id="logoutButton"
-        class="logout-btn"
-        onclick="logout()"
-        style="display:none;"
-      >
-        Logout
-      </button>
-
-    </div>
-
-  </nav>
-
-
-  <!-- HERO -->
-
-  <section class="hero">
-
-    <h1>
-      Find Businesses. Find Opportunities.
-    </h1>
-
-    <p>
-      Discover real businesses using OpenStreetMap data.
-    </p>
-
-    <div class="search-box">
-
-      <!-- CITY -->
-
-      <select id="city">
-
-        <option value="Pune">🏙️ Pune</option>
-        <option value="Mumbai">🏙️ Mumbai</option>
-        <option value="Delhi">🏙️ Delhi</option>
-        <option value="Bengaluru">🏙️ Bengaluru</option>
-        <option value="Hyderabad">🏙️ Hyderabad</option>
-        <option value="Chennai">🏙️ Chennai</option>
-        <option value="Kolkata">🏙️ Kolkata</option>
-        <option value="Ahmedabad">🏙️ Ahmedabad</option>
-        <option value="Jaipur">🏙️ Jaipur</option>
-        <option value="Surat">🏙️ Surat</option>
-        <option value="Nagpur">🏙️ Nagpur</option>
-        <option value="Nashik">🏙️ Nashik</option>
-        <option value="Thane">🏙️ Thane</option>
-        <option value="Navi Mumbai">🏙️ Navi Mumbai</option>
-        <option value="Indore">🏙️ Indore</option>
-        <option value="Bhopal">🏙️ Bhopal</option>
-        <option value="Lucknow">🏙️ Lucknow</option>
-        <option value="Kanpur">🏙️ Kanpur</option>
-        <option value="Patna">🏙️ Patna</option>
-        <option value="Vadodara">🏙️ Vadodara</option>
-        <option value="Goa">🏝️ Goa</option>
-
-      </select>
-
-
-      <!-- CATEGORY -->
-
-      <select id="category">
-
-        <option value="restaurant">🍽️ Restaurants</option>
-        <option value="cafe">☕ Cafes</option>
-        <option value="fast_food">🍔 Fast Food</option>
-        <option value="salon">💇 Salons</option>
-        <option value="medical">💊 Medical Stores / Pharmacies</option>
-        <option value="hospital">🏥 Hospitals</option>
-        <option value="clinic">🩺 Clinics</option>
-        <option value="veterinary">🐾 Vet Clinics</option>
-        <option value="dentist">🦷 Dentists</option>
-        <option value="garage">🚗 Garages / Car Repair</option>
-        <option value="school">🏫 Schools</option>
-        <option value="college">🎓 Colleges / Universities</option>
-        <option value="gym">🏋️ Gyms / Fitness</option>
-        <option value="hotel">🏨 Hotels</option>
-        <option value="bakery">🥐 Bakeries</option>
-        <option value="supermarket">🛒 Supermarkets</option>
-        <option value="clothing">👕 Clothing Stores</option>
-        <option value="electronics">💻 Electronics Stores</option>
-        <option value="bank">🏦 Banks</option>
-        <option value="car_dealer">🚘 Car Dealers</option>
-        <option value="beauty">💄 Beauty Stores</option>
-        <option value="all">🔎 All Businesses</option>
-
-      </select>
-
-
-      <input
-        class="business-name"
-        id="businessName"
-        type="text"
-        placeholder="🔎 Optional business name — e.g. Apollo, McDonald's, cafe"
-      >
-
-
-      <button
-        class="search-button"
-        onclick="findLeads()"
-      >
-        🔎 FIND REAL LEADS
-      </button>
-
-    </div>
-
-
-    <div
-      id="creditBox"
-      class="credit-box"
+    <img
+      src="https://via.placeholder.com/80"
+      alt="BusinessRadar logo"
     >
-      🆓 Free searches remaining: <span id="creditCount">5</span>
-    </div>
 
-  </section>
-
-
-  <!-- RESULTS -->
-
-  <section
-    class="results"
-    id="results"
-  >
-
-    <h2 id="resultTitle"></h2>
-
-    <div id="leadList"></div>
-
-    <p class="demo">
-
-      Data source:
-      <strong>OpenStreetMap</strong> /
-      Overpass API.
-
-      <br>
-
-      Contact numbers and websites are shown only when publicly mapped.
-
-      <br>
-
-      © OpenStreetMap contributors
-
-    </p>
-
-  </section>
-
-
-  <!-- DASHBOARD -->
-
-  <section class="dashboard">
-
-    <h2>
-      📊 Lead Dashboard
-    </h2>
-
-    <div class="dashboard-grid">
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('All')"
-      >
-        <h3>⭐ Total Saved</h3>
-        <p id="totalLeads">0</p>
-      </div>
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('New')"
-      >
-        <h3>🆕 New</h3>
-        <p id="newLeads">0</p>
-      </div>
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('Contacted')"
-      >
-        <h3>📞 Contacted</h3>
-        <p id="contactedLeads">0</p>
-      </div>
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('Follow-up')"
-      >
-        <h3>🔔 Follow-up</h3>
-        <p id="followupLeads">0</p>
-      </div>
-
-      <div
-        class="dashboard-card"
-        onclick="filterDashboard('Converted')"
-      >
-        <h3>💰 Converted</h3>
-        <p id="convertedLeads">0</p>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- SAVED LEADS -->
-
-  <section
-    class="results"
-    id="savedSection"
-  >
-
-    <h2>
-      ⭐ Saved Leads
-    </h2>
-
-    <div class="saved-controls">
-
-      <input
-        type="text"
-        id="savedSearch"
-        placeholder="🔎 Search saved leads..."
-        oninput="displaySavedLeads()"
-      >
-
-      <select
-        id="savedStatus"
-        onchange="displaySavedLeads()"
-      >
-
-        <option value="All">All Statuses</option>
-        <option value="New">🆕 New</option>
-        <option value="Contacted">📞 Contacted</option>
-        <option value="Follow-up">🔔 Follow-up</option>
-        <option value="Converted">💰 Converted</option>
-
-      </select>
-
-    </div>
-
-    <div id="savedList"></div>
-
-  </section>
-
-
-  <!-- AUTH MODAL -->
-
-  <div
-    class="modal"
-    id="authModal"
-  >
-
-    <div class="modal-box">
-
-      <h2 id="authTitle">
-        Login to BusinessRadar
-      </h2>
-
-      <input
-        id="authEmail"
-        type="email"
-        placeholder="Email address"
-      >
-
-      <input
-        id="authPassword"
-        type="password"
-        placeholder="Password"
-      >
-
-      <button
-        onclick="submitAuth()"
-      >
-        Continue
-      </button>
-
-      <button
-        class="close-btn"
-        onclick="closeAuth()"
-      >
-        Cancel
-      </button>
-
-      <div
-        id="authMessage"
-        class="auth-message"
-      ></div>
-
+    <div>
+      <div class="logo">BusinessRadar India</div>
+      <div class="tag">B2B Lead Discovery</div>
     </div>
 
   </div>
 
+  <div class="auth-area">
+
+    <span id="userInfo" class="user-info">
+      Not logged in
+    </span>
+
+    <button
+      id="loginButton"
+      class="login-btn"
+      onclick="openAuth('login')"
+    >
+      Login
+    </button>
+
+    <button
+      id="signupButton"
+      class="signup-btn"
+      onclick="openAuth('signup')"
+    >
+      Sign Up
+    </button>
+
+    <button
+      id="logoutButton"
+      class="logout-btn"
+      onclick="logout()"
+      style="display:none;"
+    >
+      Logout
+    </button>
+
+  </div>
+
+</nav>
+
+
+<section class="hero">
+
+  <h1>Find Businesses. Find Opportunities.</h1>
+
+  <p>
+    Discover real businesses using OpenStreetMap data.
+  </p>
+
+  <div class="search-box">
+
+    <select id="city">
+      <option value="Pune">🏙️ Pune</option>
+      <option value="Mumbai">🏙️ Mumbai</option>
+      <option value="Delhi">🏙️ Delhi</option>
+      <option value="Bengaluru">🏙️ Bengaluru</option>
+      <option value="Hyderabad">🏙️ Hyderabad</option>
+      <option value="Chennai">🏙️ Chennai</option>
+      <option value="Kolkata">🏙️ Kolkata</option>
+      <option value="Ahmedabad">🏙️ Ahmedabad</option>
+      <option value="Jaipur">🏙️ Jaipur</option>
+      <option value="Surat">🏙️ Surat</option>
+      <option value="Nagpur">🏙️ Nagpur</option>
+      <option value="Nashik">🏙️ Nashik</option>
+      <option value="Thane">🏙️ Thane</option>
+      <option value="Navi Mumbai">🏙️ Navi Mumbai</option>
+      <option value="Indore">🏙️ Indore</option>
+      <option value="Lucknow">🏙️ Lucknow</option>
+      <option value="Goa">🏝️ Goa</option>
+    </select>
+
+    <select id="category">
+      <option value="restaurant">🍽️ Restaurants</option>
+      <option value="cafe">☕ Cafes</option>
+      <option value="fast_food">🍔 Fast Food</option>
+      <option value="salon">💇 Salons</option>
+      <option value="medical">💊 Medical Stores</option>
+      <option value="hospital">🏥 Hospitals</option>
+      <option value="clinic">🩺 Clinics</option>
+      <option value="veterinary">🐾 Vet Clinics</option>
+      <option value="dentist">🦷 Dentists</option>
+      <option value="garage">🚗 Garages</option>
+      <option value="school">🏫 Schools</option>
+      <option value="college">🎓 Colleges</option>
+      <option value="gym">🏋️ Gyms</option>
+      <option value="hotel">🏨 Hotels</option>
+      <option value="bakery">🥐 Bakeries</option>
+      <option value="supermarket">🛒 Supermarkets</option>
+      <option value="clothing">👕 Clothing Stores</option>
+      <option value="electronics">💻 Electronics Stores</option>
+      <option value="bank">🏦 Banks</option>
+      <option value="car_dealer">🚘 Car Dealers</option>
+      <option value="beauty">💄 Beauty Stores</option>
+      <option value="all">🔎 All Businesses</option>
+    </select>
+
+    <input
+      id="businessName"
+      class="business-name"
+      type="text"
+      placeholder="🔎 Optional business name"
+    >
+
+    <button
+      class="search-button"
+      onclick="findLeads()"
+    >
+      🔎 FIND REAL LEADS
+    </button>
+
+  </div>
+
+  <div id="creditBox" class="credit-box">
+    🆓 Searches remaining:
+    <span id="creditCount">0</span>
+  </div>
+
+</section>
+
+
+<section class="results" id="results">
+
+  <h2 id="resultTitle"></h2>
+
+  <div id="leadList"></div>
+
+  <p class="demo">
+    Data source:
+    <strong>OpenStreetMap</strong> /
+    Overpass API.
+    <br>
+    © OpenStreetMap contributors
+  </p>
+
+</section>
+
+
+<section class="dashboard">
+
+  <h2>📊 Lead Dashboard</h2>
+
+  <div class="dashboard-grid">
+
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('All')"
+    >
+      <h3>⭐ Total Saved</h3>
+      <p id="totalLeads">0</p>
+    </div>
+
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('New')"
+    >
+      <h3>🆕 New</h3>
+      <p id="newLeads">0</p>
+    </div>
+
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('Contacted')"
+    >
+      <h3>📞 Contacted</h3>
+      <p id="contactedLeads">0</p>
+    </div>
+
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('Follow-up')"
+    >
+      <h3>🔔 Follow-up</h3>
+      <p id="followupLeads">0</p>
+    </div>
+
+    <div
+      class="dashboard-card"
+      onclick="filterDashboard('Converted')"
+    >
+      <h3>💰 Converted</h3>
+      <p id="convertedLeads">0</p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="results">
+
+  <h2>⭐ Saved Leads</h2>
+
+  <div class="saved-controls">
+
+    <input
+      id="savedSearch"
+      type="text"
+      placeholder="🔎 Search saved leads..."
+      oninput="displaySavedLeads()"
+    >
+
+    <select
+      id="savedStatus"
+      onchange="displaySavedLeads()"
+    >
+      <option value="All">All Statuses</option>
+      <option value="New">🆕 New</option>
+      <option value="Contacted">📞 Contacted</option>
+      <option value="Follow-up">🔔 Follow-up</option>
+      <option value="Converted">💰 Converted</option>
+    </select>
+
+  </div>
+
+  <div id="savedList"></div>
+
+</section>
+
+
+<div class="modal" id="authModal">
+
+  <div class="modal-box">
+
+    <h2 id="authTitle">
+      Login to BusinessRadar
+    </h2>
+
+    <input
+      id="authEmail"
+      type="email"
+      placeholder="Email address"
+    >
+
+    <input
+      id="authPassword"
+      type="password"
+      placeholder="Password"
+    >
+
+    <button onclick="submitAuth()">
+      Continue
+    </button>
+
+    <button
+      class="close-btn"
+      onclick="closeAuth()"
+    >
+      Cancel
+    </button>
+
+    <div
+      id="authMessage"
+      class="auth-message"
+    ></div>
+
+  </div>
+
+</div>
+
 
 <script>
 
-  /*
-  =====================================================
-  BUSINESSRADAR + SUPABASE
-  =====================================================
-  */
+const SUPABASE_URL =
+  "https://nmlrygbmwzwihbautrjs.supabase.co";
 
-  const SUPABASE_URL =
-    "https://nmlrygbmwzwihbautrjs.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_-WuvhZ-tww_xIegy39Iuqw_WHHBGmb0";
 
-  const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_-WuvhZ-tww_xIegy39Iuqw_WHHBGmb0";
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
-  const supabaseClient =
-    window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
+
+let currentUser = null;
+let authMode = "login";
+
+
+const NOMINATIM_URL =
+  "https://nominatim.openstreetmap.org/search";
+
+const OVERPASS_URL =
+  "https://overpass-api.de/api/interpreter";
+
+
+function escapeHTML(text) {
+
+  if (
+    text === null ||
+    text === undefined
+  ) {
+    return "";
+  }
+
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================
+   AUTH
+========================= */
+
+function openAuth(mode) {
+
+  authMode = mode;
+
+  document.getElementById(
+    "authModal"
+  ).style.display = "flex";
+
+  document.getElementById(
+    "authTitle"
+  ).innerText =
+    mode === "login"
+      ? "Login to BusinessRadar"
+      : "Create your BusinessRadar account";
+
+  document.getElementById(
+    "authMessage"
+  ).innerText = "";
+
+}
+
+
+function closeAuth() {
+
+  document.getElementById(
+    "authModal"
+  ).style.display = "none";
+
+}
+
+
+async function submitAuth() {
+
+  const email =
+    document.getElementById(
+      "authEmail"
+    ).value.trim();
+
+  const password =
+    document.getElementById(
+      "authPassword"
+    ).value;
+
+  const message =
+    document.getElementById(
+      "authMessage"
     );
 
 
-  let currentUser = null;
-
-  let authMode = "login";
-
-
-  /*
-  =====================================================
-  API
-  =====================================================
-  */
-
-  const NOMINATIM_URL =
-    "https://nominatim.openstreetmap.org/search";
-
-  const OVERPASS_URL =
-    "https://overpass-api.de/api/interpreter";
-
-
-  /*
-  =====================================================
-  CATEGORY TAGS
-  =====================================================
-  */
-
-  const categoryQueries = {
-
-    restaurant:
-      '["amenity"="restaurant"]',
-
-    cafe:
-      '["amenity"="cafe"]',
-
-    fast_food:
-      '["amenity"="fast_food"]',
-
-    salon:
-      '["shop"~"hairdresser|beauty"]',
-
-    medical:
-      '["amenity"="pharmacy"]',
-
-    hospital:
-      '["amenity"="hospital"]',
-
-    clinic:
-      '["amenity"~"clinic|doctors"]',
-
-    veterinary:
-      '["amenity"="veterinary"]',
-
-    dentist:
-      '["amenity"="dentist"]',
-
-    garage:
-      '["shop"="car_repair"]',
-
-    school:
-      '["amenity"="school"]',
-
-    college:
-      '["amenity"~"college|university"]',
-
-    gym:
-      '["leisure"="fitness_centre"]',
-
-    hotel:
-      '["tourism"="hotel"]',
-
-    bakery:
-      '["shop"="bakery"]',
-
-    supermarket:
-      '["shop"="supermarket"]',
-
-    clothing:
-      '["shop"="clothes"]',
-
-    electronics:
-      '["shop"="electronics"]',
-
-    bank:
-      '["amenity"="bank"]',
-
-    car_dealer:
-      '["shop"="car"]',
-
-    beauty:
-      '["shop"="beauty"]'
-
-  };
-
-
-  /*
-  =====================================================
-  ESCAPE HTML
-  =====================================================
-  */
-
-  function escapeHTML(text) {
-
-    if (
-      text === null ||
-      text === undefined
-    ) {
-
-      return "";
-
-    }
-
-    return String(text)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-
-  }
-
-
-  /*
-  =====================================================
-  AUTH MODAL
-  =====================================================
-  */
-
-  function openAuth(mode) {
-
-    authMode = mode;
-
-    document.getElementById(
-      "authModal"
-    ).style.display = "flex";
-
-    document.getElementById(
-      "authTitle"
-    ).innerText =
-      mode === "login"
-        ? "Login to BusinessRadar"
-        : "Create your BusinessRadar account";
-
-    document.getElementById(
-      "authMessage"
-    ).innerText = "";
-
-  }
-
-
-  function closeAuth() {
-
-    document.getElementById(
-      "authModal"
-    ).style.display = "none";
-
-    document.getElementById(
-      "authEmail"
-    ).value = "";
-
-    document.getElementById(
-      "authPassword"
-    ).value = "";
-
-  }
-
-
-  /*
-  =====================================================
-  SIGN UP / LOGIN
-  =====================================================
-  */
-
-  async function submitAuth() {
-
-    const email =
-      document.getElementById(
-        "authEmail"
-      ).value.trim();
-
-    const password =
-      document.getElementById(
-        "authPassword"
-      ).value;
-
-    const message =
-      document.getElementById(
-        "authMessage"
-      );
-
-
-    if (!email || !password) {
-
-      message.innerText =
-        "Please enter your email and password.";
-
-      return;
-
-    }
-
-
-    if (password.length < 6) {
-
-      message.innerText =
-        "Password should be at least 6 characters.";
-
-      return;
-
-    }
-
+  if (!email || !password) {
 
     message.innerText =
-      "Please wait...";
+      "Please enter email and password.";
+
+    return;
+
+  }
 
 
-    try {
-
-      if (authMode === "signup") {
-
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.signUp({
-
-            email:
-              email,
-
-            password:
-              password
-
-          });
+  message.innerText =
+    "Please wait...";
 
 
-        if (error) {
-          throw error;
-        }
+  try {
 
+    if (authMode === "signup") {
 
-        if (
-          data.user &&
-          !data.session
-        ) {
+      const { error } =
+        await supabaseClient.auth.signUp({
+          email,
+          password
+        });
 
-          message.innerText =
-            "Account created! Check your email to verify your account.";
-
-          return;
-
-        }
-
-
-        message.innerText =
-          "Account created successfully!";
-
+      if (error) {
+        throw error;
       }
-
-      else {
-
-        const {
-          error
-        } =
-          await supabaseClient.auth.signInWithPassword({
-
-            email:
-              email,
-
-            password:
-              password
-
-          });
-
-
-        if (error) {
-          throw error;
-        }
-
-
-        message.innerText =
-          "Login successful!";
-
-        setTimeout(
-          closeAuth,
-          700
-        );
-
-      }
-
-    }
-
-    catch (error) {
 
       message.innerText =
-        error.message ||
-        "Something went wrong.";
+        "Account created! Check your email if verification is required.";
+
+    } else {
+
+      const { error } =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      closeAuth();
 
     }
 
-  }
+  } catch (error) {
 
-
-  /*
-  =====================================================
-  LOGOUT
-  =====================================================
-  */
-
-  async function logout() {
-
-    await supabaseClient.auth.signOut();
-
-    currentUser = null;
-
-    updateAuthUI();
+    message.innerText =
+      error.message ||
+      "Authentication failed.";
 
   }
 
+}
 
-  /*
-  =====================================================
-  AUTH STATE
-  =====================================================
-  */
 
-  async function loadUser() {
+async function logout() {
 
-    const {
-      data
-    } =
-      await supabaseClient.auth.getUser();
+  await supabaseClient.auth.signOut();
 
-    currentUser =
-      data.user || null;
+  currentUser = null;
 
-    updateAuthUI();
+  updateAuthUI();
+
+}
+
+
+async function loadUser() {
+
+  const { data } =
+    await supabaseClient.auth.getUser();
+
+  currentUser =
+    data.user || null;
+
+  updateAuthUI();
+
+}
+
+
+function updateAuthUI() {
+
+  const userInfo =
+    document.getElementById(
+      "userInfo"
+    );
+
+  const loginButton =
+    document.getElementById(
+      "loginButton"
+    );
+
+  const signupButton =
+    document.getElementById(
+      "signupButton"
+    );
+
+  const logoutButton =
+    document.getElementById(
+      "logoutButton"
+    );
+
+  const creditBox =
+    document.getElementById(
+      "creditBox"
+    );
+
+
+  if (currentUser) {
+
+    userInfo.innerText =
+      currentUser.email;
+
+    loginButton.style.display =
+      "none";
+
+    signupButton.style.display =
+      "none";
+
+    logoutButton.style.display =
+      "inline-block";
+
+    creditBox.style.display =
+      "block";
+
+    loadCredits();
+
+  } else {
+
+    userInfo.innerText =
+      "Not logged in";
+
+    loginButton.style.display =
+      "inline-block";
+
+    signupButton.style.display =
+      "inline-block";
+
+    logoutButton.style.display =
+      "none";
+
+    creditBox.style.display =
+      "none";
 
   }
 
-
-  function updateAuthUI() {
-
-    const userInfo =
-      document.getElementById(
-        "userInfo"
-      );
-
-    const loginButton =
-      document.getElementById(
-        "loginButton"
-      );
-
-    const signupButton =
-      document.getElementById(
-        "signupButton"
-      );
-
-    const logoutButton =
-      document.getElementById(
-        "logoutButton"
-      );
-
-    const creditBox =
-      document.getElementById(
-        "creditBox"
-      );
+}
 
 
-    if (currentUser) {
+/* =========================
+   CREDITS
+========================= */
 
-      userInfo.innerText =
-        currentUser.email;
-
-      loginButton.style.display =
-        "none";
-
-      signupButton.style.display =
-        "none";
-
-      logoutButton.style.display =
-        "inline-block";
-
-      creditBox.style.display =
-        "block";
-
-      loadCredits();
-
-    }
-
-    else {
-
-      userInfo.innerText =
-        "Not logged in";
-
-      loginButton.style.display =
-        "inline-block";
-
-      signupButton.style.display =
-        "inline-block";
-
-      logoutButton.style.display =
-        "none";
-
-      creditBox.style.display =
-        "none";
-
-    }
-
-  }
-
-
-  /*
-  =====================================================
-  LOAD USER CREDITS
-  =====================================================
-  */
-
-  async function loadCredits() {
+async function loadCredits() {
 
   if (!currentUser) {
     return;
   }
 
-  const { data, error } = await supabaseClient
-    .from("profiles")
-    .select("free_searches, paid_searches")
-    .eq("id", currentUser.id)
-    .single();
+
+  const { data, error } =
+    await supabaseClient
+      .from("profiles")
+      .select(
+        "free_searches, paid_searches"
+      )
+      .eq(
+        "id",
+        currentUser.id
+      )
+      .single();
+
 
   if (error) {
-    console.error("Credit loading error:", error);
+
+    console.error(
+      "Credit loading error:",
+      error
+    );
+
     return;
+
   }
 
-  const free = Number(data.free_searches || 0);
-  const paid = Number(data.paid_searches || 0);
 
-  document.getElementById("creditCount").innerText =
+  const free =
+    Number(
+      data.free_searches || 0
+    );
+
+  const paid =
+    Number(
+      data.paid_searches || 0
+    );
+
+
+  document.getElementById(
+    "creditCount"
+  ).innerText =
     free + paid;
+
 }
 
-    if (!currentUser) {
-      return;
-    }
+
+/* =========================
+   LOCATION SEARCH
+========================= */
+
+async function getCityLocation(city) {
+
+  const params =
+    new URLSearchParams({
+
+      q:
+        city + ", India",
+
+      format:
+        "json",
+
+      limit:
+        "1",
+
+      countrycodes:
+        "in"
+
+    });
 
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-
-        .from("profiles")
-
-        .select(
-          "free_searches, paid_searches"
-        )
-
-        .eq(
-          "id",
-          currentUser.id
-        )
-
-        .single();
+  const response =
+    await fetch(
+      NOMINATIM_URL +
+      "?" +
+      params.toString()
+    );
 
 
-    if (error) {
+  if (!response.ok) {
+    throw new Error(
+      "City search failed."
+    );
+  }
 
-      console.error(
-        "Credit loading error:",
-        error
+
+  const data =
+    await response.json();
+
+
+  if (!data.length) {
+    throw new Error(
+      "City not found."
+    );
+  }
+
+
+  return data[0];
+
+}
+
+
+/* =========================
+   OVERPASS
+========================= */
+
+const categoryQueries = {
+
+  restaurant:
+    '["amenity"="restaurant"]',
+
+  cafe:
+    '["amenity"="cafe"]',
+
+  fast_food:
+    '["amenity"="fast_food"]',
+
+  salon:
+    '["shop"~"hairdresser|beauty"]',
+
+  medical:
+    '["amenity"="pharmacy"]',
+
+  hospital:
+    '["amenity"="hospital"]',
+
+  clinic:
+    '["amenity"~"clinic|doctors"]',
+
+  veterinary:
+    '["amenity"="veterinary"]',
+
+  dentist:
+    '["amenity"="dentist"]',
+
+  garage:
+    '["shop"="car_repair"]',
+
+  school:
+    '["amenity"="school"]',
+
+  college:
+    '["amenity"~"college|university"]',
+
+  gym:
+    '["leisure"="fitness_centre"]',
+
+  hotel:
+    '["tourism"="hotel"]',
+
+  bakery:
+    '["shop"="bakery"]',
+
+  supermarket:
+    '["shop"="supermarket"]',
+
+  clothing:
+    '["shop"="clothes"]',
+
+  electronics:
+    '["shop"="electronics"]',
+
+  bank:
+    '["amenity"="bank"]',
+
+  car_dealer:
+    '["shop"="car"]',
+
+  beauty:
+    '["shop"="beauty"]'
+
+};
+
+
+function buildOverpassQuery(
+  bbox,
+  category,
+  businessName
+) {
+
+  const south =
+    bbox[0];
+
+  const north =
+    bbox[1];
+
+  const west =
+    bbox[2];
+
+  const east =
+    bbox[3];
+
+
+  let nameFilter = "";
+
+
+  if (businessName) {
+
+    const safeName =
+      businessName.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
       );
 
-      return;
-
-    }
-
-
-    const totalCredits =
-      (data.free_searches || 0) +
-      (data.paid_searches || 0);
-
-
-    document.getElementById(
-      "creditCount"
-    ).innerText =
-      totalCredits;
+    nameFilter =
+      `[name~"${safeName}",i]`;
 
   }
 
 
-  /*
-  =====================================================
-  GET CITY
-  =====================================================
-  */
-
-  async function getCityLocation(city) {
-
-    const params =
-      new URLSearchParams({
-
-        q:
-          city + ", India",
-
-        format:
-          "json",
-
-        limit:
-          "1",
-
-        countrycodes:
-          "in",
-
-        addressdetails:
-          "1"
-
-      });
-
-
-    const response =
-      await fetch(
-
-        NOMINATIM_URL +
-        "?" +
-        params.toString(),
-
-        {
-
-          headers: {
-
-            "Accept":
-              "application/json",
-
-            "Accept-Language":
-              "en"
-
-          }
-
-        }
-
-      );
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        "City search failed."
-      );
-
-    }
-
-
-    const data =
-      await response.json();
-
-
-    if (
-      !data ||
-      data.length === 0
-    ) {
-
-      throw new Error(
-        "City not found."
-      );
-
-    }
-
-
-    return data[0];
-
-  }
-
-
-  /*
-  =====================================================
-  BUILD OVERPASS QUERY
-  =====================================================
-  */
-
-  function buildOverpassQuery(
-    bbox,
-    category,
-    businessName
-  ) {
-
-    const south =
-      parseFloat(bbox[0]);
-
-    const north =
-      parseFloat(bbox[1]);
-
-    const west =
-      parseFloat(bbox[2]);
-
-    const east =
-      parseFloat(bbox[3]);
-
-
-    let nameFilter = "";
-
-
-    if (businessName) {
-
-      const safeName =
-        businessName
-          .replace(
-            /[.*+?^${}()|[\]\\]/g,
-            "\\$&"
-          );
-
-      nameFilter =
-        `[name~"${safeName}",i]`;
-
-    }
-
-
-    if (category === "all") {
-
-      return `
-
-        [out:json][timeout:60];
-
-        (
-
-          nwr["shop"]["name"]
-          (${south},${west},${north},${east});
-
-          nwr["amenity"]["name"]
-          (${south},${west},${north},${east});
-
-          nwr["tourism"]["name"]
-          (${south},${west},${north},${east});
-
-          nwr["leisure"]["name"]
-          (${south},${west},${north},${east});
-
-          nwr["office"]["name"]
-          (${south},${west},${north},${east});
-
-        );
-
-        out center tags;
-
-      `;
-
-    }
-
+  if (category === "all") {
 
     return `
 
       [out:json][timeout:60];
 
-      nwr
-      ${categoryQueries[category]}
-      ${nameFilter}
-      (${south},${west},${north},${east});
+      (
+        nwr["shop"]["name"]
+        (${south},${west},${north},${east});
+
+        nwr["amenity"]["name"]
+        (${south},${west},${north},${east});
+
+        nwr["tourism"]["name"]
+        (${south},${west},${north},${east});
+
+        nwr["leisure"]["name"]
+        (${south},${west},${north},${east});
+
+      );
 
       out center tags;
 
@@ -1474,1366 +1195,480 @@
   }
 
 
-  /*
-  =====================================================
-  OVERPASS
-  =====================================================
-  */
+  return `
 
-  async function searchOverpass(query) {
+    [out:json][timeout:60];
 
-    const response =
-      await fetch(
+    nwr
+    ${categoryQueries[category]}
+    ${nameFilter}
+    (${south},${west},${north},${east});
 
-        OVERPASS_URL,
+    out center tags;
 
-        {
+  `;
 
-          method:
-            "POST",
+}
 
-          headers: {
 
-            "Content-Type":
-              "application/x-www-form-urlencoded"
+async function searchOverpass(query) {
 
-          },
+  const response =
+    await fetch(
+      OVERPASS_URL,
+      {
+        method: "POST",
 
-          body:
-            "data=" +
-            encodeURIComponent(query)
+        headers: {
+          "Content-Type":
+            "application/x-www-form-urlencoded"
+        },
 
-        }
+        body:
+          "data=" +
+          encodeURIComponent(query)
+      }
+    );
 
+
+  if (!response.ok) {
+
+    throw new Error(
+      "Business data server is busy. Try again."
+    );
+
+  }
+
+
+  return await response.json();
+
+}
+
+
+/* =========================
+   HELPERS
+========================= */
+
+function getCoordinates(element) {
+
+  if (
+    element.type === "node" &&
+    element.lat &&
+    element.lon
+  ) {
+
+    return {
+      lat: element.lat,
+      lon: element.lon
+    };
+
+  }
+
+
+  if (
+    element.center &&
+    element.center.lat &&
+    element.center.lon
+  ) {
+
+    return {
+      lat: element.center.lat,
+      lon: element.center.lon
+    };
+
+  }
+
+
+  return null;
+
+}
+
+
+function getPhone(tags) {
+
+  return (
+    tags.phone ||
+    tags["contact:phone"] ||
+    tags["contact:mobile"] ||
+    null
+  );
+
+}
+
+
+function getWebsite(tags) {
+
+  return (
+    tags.website ||
+    tags["contact:website"] ||
+    null
+  );
+
+}
+
+
+function getAddress(tags) {
+
+  const parts = [];
+
+
+  if (tags["addr:housenumber"])
+    parts.push(tags["addr:housenumber"]);
+
+  if (tags["addr:street"])
+    parts.push(tags["addr:street"]);
+
+  if (tags["addr:suburb"])
+    parts.push(tags["addr:suburb"]);
+
+  if (tags["addr:city"])
+    parts.push(tags["addr:city"]);
+
+  if (tags["addr:postcode"])
+    parts.push(tags["addr:postcode"]);
+
+
+  return parts.length
+    ? parts.join(", ")
+    : "Location available on map";
+
+}
+
+
+function getCategoryLabel(tags) {
+
+  if (tags.amenity) {
+
+    const map = {
+
+      restaurant: "Restaurant",
+      cafe: "Cafe",
+      fast_food: "Fast Food",
+      pharmacy: "Medical / Pharmacy",
+      hospital: "Hospital",
+      clinic: "Clinic",
+      doctors: "Doctors",
+      veterinary: "Veterinary Clinic",
+      dentist: "Dentist",
+      school: "School",
+      college: "College / University",
+      university: "College / University",
+      bank: "Bank"
+
+    };
+
+    if (map[tags.amenity]) {
+      return map[tags.amenity];
+    }
+
+  }
+
+
+  if (tags.shop) {
+
+    const map = {
+
+      hairdresser: "Hair Salon",
+      beauty: "Beauty",
+      car_repair: "Garage / Car Repair",
+      bakery: "Bakery",
+      supermarket: "Supermarket",
+      clothes: "Clothing Store",
+      electronics: "Electronics",
+      car: "Car Dealer"
+
+    };
+
+    if (map[tags.shop]) {
+      return map[tags.shop];
+    }
+
+  }
+
+
+  if (
+    tags.tourism === "hotel"
+  ) {
+    return "Hotel";
+  }
+
+
+  if (
+    tags.leisure ===
+    "fitness_centre"
+  ) {
+    return "Gym / Fitness";
+  }
+
+
+  return "Business";
+
+}
+
+
+function getMapURL(
+  lat,
+  lon
+) {
+
+  return (
+    "https://www.openstreetmap.org/" +
+    "?mlat=" + lat +
+    "&mlon=" + lon +
+    "#map=19/" +
+    lat +
+    "/" +
+    lon
+  );
+
+}
+
+
+function getDirectionsURL(
+  lat,
+  lon
+) {
+
+  return (
+    "https://www.google.com/maps/dir/?api=1" +
+    "&destination=" +
+    encodeURIComponent(
+      lat + "," + lon
+    )
+  );
+
+}
+
+
+/* =========================
+   MAIN SEARCH
+========================= */
+
+async function findLeads() {
+
+  if (!currentUser) {
+
+    alert(
+      "Please log in before searching."
+    );
+
+    openAuth("login");
+
+    return;
+
+  }
+
+
+  const city =
+    document.getElementById(
+      "city"
+    ).value;
+
+  const category =
+    document.getElementById(
+      "category"
+    ).value;
+
+  const businessName =
+    document.getElementById(
+      "businessName"
+    ).value.trim();
+
+
+  const results =
+    document.getElementById(
+      "results"
+    );
+
+  const title =
+    document.getElementById(
+      "resultTitle"
+    );
+
+  const list =
+    document.getElementById(
+      "leadList"
+    );
+
+
+  results.style.display =
+    "block";
+
+
+  results.scrollIntoView({
+    behavior: "smooth"
+  });
+
+
+  title.innerText =
+    "🔎 Checking search credits...";
+
+
+  list.innerHTML = `
+    <div class="loading">
+      Please wait...
+    </div>
+  `;
+
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.rpc(
+        "use_search_credit"
       );
 
 
-    if (!response.ok) {
+    if (error) {
+
+      console.error(
+        error
+      );
 
       throw new Error(
-        "Business data server is busy. Please try again."
+        "Could not check your search credits."
       );
 
     }
 
 
-    return await response.json();
-
-  }
-
-
-  /*
-  =====================================================
-  COORDINATES
-  =====================================================
-  */
-
-  function getCoordinates(element) {
-
-    if (
-      element.type === "node" &&
-      element.lat &&
-      element.lon
-    ) {
-
-      return {
-
-        lat:
-          element.lat,
-
-        lon:
-          element.lon
-
-      };
-
-    }
-
-
-    if (
-      element.center &&
-      element.center.lat &&
-      element.center.lon
-    ) {
-
-      return {
-
-        lat:
-          element.center.lat,
-
-        lon:
-          element.center.lon
-
-      };
-
-    }
-
-
-    return null;
-
-  }
-
-
-  /*
-  =====================================================
-  CATEGORY LABEL
-  =====================================================
-  */
-
-  function getCategoryLabel(tags) {
-
-    if (!tags) {
-      return "Business";
-    }
-
-
-    const amenityMap = {
-
-      restaurant:
-        "Restaurant",
-
-      cafe:
-        "Cafe",
-
-      fast_food:
-        "Fast Food",
-
-      pharmacy:
-        "Medical / Pharmacy",
-
-      hospital:
-        "Hospital",
-
-      clinic:
-        "Clinic",
-
-      doctors:
-        "Doctors",
-
-      veterinary:
-        "Veterinary Clinic",
-
-      dentist:
-        "Dentist",
-
-      school:
-        "School",
-
-      college:
-        "College / University",
-
-      bank:
-        "Bank"
-
-    };
-
-
-    if (
-      tags.amenity &&
-      amenityMap[tags.amenity]
-    ) {
-
-      return amenityMap[
-        tags.amenity
-      ];
-
-    }
-
-
-    const shopMap = {
-
-      hairdresser:
-        "Hair Salon",
-
-      beauty:
-        "Beauty",
-
-      car_repair:
-        "Garage / Car Repair",
-
-      bakery:
-        "Bakery",
-
-      supermarket:
-        "Supermarket",
-
-      clothes:
-        "Clothing Store",
-
-      electronics:
-        "Electronics",
-
-      car:
-        "Car Dealer"
-
-    };
-
-
-    if (
-      tags.shop &&
-      shopMap[tags.shop]
-    ) {
-
-      return shopMap[
-        tags.shop
-      ];
-
-    }
-
-
-    if (
-      tags.tourism ===
-      "hotel"
-    ) {
-
-      return "Hotel";
-
-    }
-
-
-    if (
-      tags.leisure ===
-      "fitness_centre"
-    ) {
-
-      return "Gym / Fitness";
-
-    }
-
-
-    return "Business";
-
-  }
-
-
-  /*
-  =====================================================
-  PHONE
-  =====================================================
-  */
-
-  function getPhone(tags) {
-
-    if (!tags) {
-      return null;
-    }
-
-
-    return (
-
-      tags.phone ||
-
-      tags["contact:phone"] ||
-
-      tags["contact:mobile"] ||
-
-      null
-
-    );
-
-  }
-
-
-  /*
-  =====================================================
-  WEBSITE
-  =====================================================
-  */
-
-  function getWebsite(tags) {
-
-    if (!tags) {
-      return null;
-    }
-
-
-    return (
-
-      tags.website ||
-
-      tags["contact:website"] ||
-
-      null
-
-    );
-
-  }
-
-
-  /*
-  =====================================================
-  ADDRESS
-  =====================================================
-  */
-
-  function getAddress(tags) {
-
-    if (!tags) {
-
-      return "Location available on map";
-
-    }
-
-
-    const parts = [];
-
-
-    if (tags["addr:housenumber"]) {
-
-      parts.push(
-        tags["addr:housenumber"]
-      );
-
-    }
-
-
-    if (tags["addr:street"]) {
-
-      parts.push(
-        tags["addr:street"]
-      );
-
-    }
-
-
-    if (tags["addr:suburb"]) {
-
-      parts.push(
-        tags["addr:suburb"]
-      );
-
-    }
-
-
-    if (tags["addr:city"]) {
-
-      parts.push(
-        tags["addr:city"]
-      );
-
-    }
-
-
-    if (tags["addr:postcode"]) {
-
-      parts.push(
-        tags["addr:postcode"]
-      );
-
-    }
-
-
-    return parts.length
-      ? parts.join(", ")
-      : "Location available on map";
-
-  }
-
-
-  /*
-  =====================================================
-  MAP
-  =====================================================
-  */
-
-  function getMapURL(
-    lat,
-    lon
-  ) {
-
-    return (
-
-      "https://www.openstreetmap.org/" +
-
-      "?mlat=" +
-      encodeURIComponent(lat) +
-
-      "&mlon=" +
-      encodeURIComponent(lon) +
-
-      "#map=19/" +
-      encodeURIComponent(lat) +
-
-      "/" +
-      encodeURIComponent(lon)
-
-    );
-
-  }
-
-
-  function getDirectionsURL(
-    lat,
-    lon
-  ) {
-
-    return (
-
-      "https://www.google.com/maps/dir/?api=1" +
-
-      "&destination=" +
-
-      encodeURIComponent(
-        lat + "," + lon
-      )
-
-    );
-
-  }
-
-
-  /*
-  =====================================================
-  SEARCH
-  =====================================================
-  */
-
-  async function findLeads() {
-
-    if (!currentUser) {
-
-      alert(
-        "Please create a free BusinessRadar account or log in before searching."
-      );
-
-      openAuth("login");
-
-      return;
-
-    }
-
-
-    const city =
-      document.getElementById(
-        "city"
-      ).value;
-
-
-    const category =
-      document.getElementById(
-        "category"
-      ).value;
-
-
-    const businessName =
-      document.getElementById(
-        "businessName"
-      ).value.trim();
-
-
-    const results =
-      document.getElementById(
-        "results"
-      );
-
-
-    const title =
-      document.getElementById(
-        "resultTitle"
-      );
-
-
-    const list =
-      document.getElementById(
-        "leadList"
-      );
-
-
-    results.style.display =
-      "block";
-
-
-    results.scrollIntoView({
-      behavior:
-        "smooth"
-    });
-
-
-    title.innerText =
-      "🔎 Searching...";
-
-
-    list.innerHTML = `
-
-      <div class="loading">
-
-        🌍 Finding businesses in
-        ${escapeHTML(city)}...
-
-      </div>
-
-    `;
-
-
-    try {
-
-      /*
-        IMPORTANT:
-        The secure search-credit deduction
-        will be connected through Supabase RPC.
-      */
-
-      const creditResult =
-        await supabaseClient.rpc(
-          "use_search_credit"
-        );
-
-
-      if (
-        creditResult.error
-      ) {
-
-        console.error(
-          creditResult.error
-        );
-
-        throw new Error(
-          "Search-credit system is not configured yet. Please complete the Supabase credit function before using searches."
-        );
-
-      }
-
-
-      if (
-        creditResult.data === false
-      ) {
-
-        list.innerHTML = `
-
-          <div class="empty-message">
-
-            <h3>🔒 Search credits finished</h3>
-
-            <br>
-
-            You have used all available searches.
-
-            <br><br>
-
-            Paid search packages will be available here soon.
-
-          </div>
-
-        `;
-
-        title.innerText =
-          "Search limit reached";
-
-        return;
-
-      }
-
+    if (data !== true) {
 
       await loadCredits();
 
-
-      const location =
-        await getCityLocation(
-          city
-        );
-
-
-      const bbox =
-        location.boundingbox;
-
-
-      if (
-        !bbox ||
-        bbox.length !== 4
-      ) {
-
-        throw new Error(
-          "Could not determine the city area."
-        );
-
-      }
-
-
-      const query =
-        buildOverpassQuery(
-          bbox,
-          category,
-          businessName
-        );
-
-
-      const data =
-        await searchOverpass(
-          query
-        );
-
-
       title.innerText =
-
-        `${city} → ` +
-
-        `${
-          document
-            .getElementById("category")
-            .selectedOptions[0]
-            .text
-        }` +
-
-        (
-          businessName
-            ? ` → "${businessName}"`
-            : ""
-        );
-
-
-      list.innerHTML = "";
-
-
-      if (
-        !data.elements ||
-        data.elements.length === 0
-      ) {
-
-        list.innerHTML = `
-
-          <div class="empty-message">
-
-            😕 No matching businesses found.
-
-            <br><br>
-
-            Try another category,
-            city, or business name.
-
-          </div>
-
-        `;
-
-        return;
-
-      }
-
-
-      const unique = [];
-
-      const seen = new Set();
-
-
-      data.elements.forEach(
-        element => {
-
-          const tags =
-            element.tags || {};
-
-          const name =
-            tags.name;
-
-
-          if (!name) {
-            return;
-          }
-
-
-          const coordinates =
-            getCoordinates(
-              element
-            );
-
-
-          if (!coordinates) {
-            return;
-          }
-
-
-          const key =
-            name.toLowerCase() +
-            "|" +
-            coordinates.lat +
-            "|" +
-            coordinates.lon;
-
-
-          if (
-            seen.has(key)
-          ) {
-            return;
-          }
-
-
-          seen.add(key);
-
-
-          unique.push({
-
-            tags,
-            coordinates
-
-          });
-
-        }
-      );
-
-
-      const resultsToShow =
-        unique.slice(
-          0,
-          100
-        );
-
-
-      resultsToShow.forEach(
-        item => {
-
-          const tags =
-            item.tags;
-
-          const coords =
-            item.coordinates;
-
-          const name =
-            tags.name ||
-            "Unnamed Business";
-
-          const phone =
-            getPhone(tags);
-
-          const website =
-            getWebsite(tags);
-
-          const address =
-            getAddress(tags);
-
-          const categoryLabel =
-            getCategoryLabel(
-              tags
-            );
-
-          const mapURL =
-            getMapURL(
-              coords.lat,
-              coords.lon
-            );
-
-          const directionsURL =
-            getDirectionsURL(
-              coords.lat,
-              coords.lon
-            );
-
-
-          const phoneHTML =
-            phone
-
-              ? `
-
-                <p>
-                  📞
-                  <a
-                    href="tel:${escapeHTML(phone)}"
-                    style="color:#4f46e5;font-weight:bold;"
-                  >
-                    ${escapeHTML(phone)}
-                  </a>
-                </p>
-
-              `
-
-              : `
-
-                <p>
-                  📞 Not available
-                </p>
-
-              `;
-
-
-          const websiteHTML =
-            website
-
-              ? `
-
-                <p>
-                  🌐
-
-                  <a
-                    href="${escapeHTML(website)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style="color:#4f46e5;"
-                  >
-                    Website
-                  </a>
-                </p>
-
-              `
-
-              : "";
-
-
-          list.innerHTML += `
-
-            <div class="lead">
-
-              <h3>
-                ${escapeHTML(name)}
-              </h3>
-
-              <span class="category-label">
-                ${escapeHTML(categoryLabel)}
-              </span>
-
-              <p>
-                📍 ${escapeHTML(address)}
-              </p>
-
-              ${phoneHTML}
-
-              ${websiteHTML}
-
-              <p>
-                🗺️ Exact location:
-                ${coords.lat.toFixed(6)},
-                ${coords.lon.toFixed(6)}
-              </p>
-
-              <p>
-                🗺️ Source:
-                OpenStreetMap
-              </p>
-
-              <div class="lead-actions">
-
-                <button
-                  onclick='showDetails(${JSON.stringify({
-                    name,
-                    address,
-                    phone,
-                    website,
-                    categoryLabel,
-                    lat: coords.lat,
-                    lon: coords.lon
-                  })})'
-                >
-                  👀 View Details
-                </button>
-
-
-                <button
-                  onclick='saveRealLead(${JSON.stringify({
-                    name,
-                    address,
-                    phone,
-                    website,
-                    category: categoryLabel,
-                    lat: coords.lat,
-                    lon: coords.lon
-                  })})'
-                >
-                  ⭐ Save Lead
-                </button>
-
-
-                <a
-                  class="map-btn secondary-btn"
-                  href="${mapURL}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  🗺️ Open Exact Map
-                </a>
-
-
-                <a
-                  class="map-btn direction-btn"
-                  href="${directionsURL}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  🧭 Get Directions
-                </a>
-
-              </div>
-
-            </div>
-
-          `;
-
-        }
-      );
-
-
-      if (
-        unique.length > 100
-      ) {
-
-        list.innerHTML += `
-
-          <div class="status-message">
-
-            Showing the first 100 matching
-            businesses to keep the prototype fast.
-
-          </div>
-
-        `;
-
-      }
-
-    }
-
-    catch (error) {
-
-      console.error(error);
-
-
-      title.innerText =
-        "⚠️ Search problem";
-
+        "🔒 No searches remaining";
 
       list.innerHTML = `
 
         <div class="empty-message">
 
-          <strong>
-            ${escapeHTML(
-              error.message
-            )}
-          </strong>
+          <h3>
+            You've used all your searches.
+          </h3>
 
-          <br><br>
+          <br>
 
-          If this is the first search after
-          connecting Supabase, the secure
-          credit function still needs to be
-          created.
+          Paid search packages will be available soon.
 
         </div>
 
       `;
 
-    }
-
-  }
-
-
-  /*
-  =====================================================
-  DETAILS
-  =====================================================
-  */
-
-  function showDetails(
-    lead
-  ) {
-
-    alert(
-
-      "BUSINESS DETAILS\n\n" +
-
-      "🏪 " +
-      lead.name +
-
-      "\n\n🏷️ " +
-      lead.categoryLabel +
-
-      "\n\n📍 " +
-      lead.address +
-
-      "\n\n📞 " +
-      (
-        lead.phone ||
-        "Not available"
-      ) +
-
-      "\n\n🌐 " +
-      (
-        lead.website ||
-        "Not available"
-      ) +
-
-      "\n\n🗺️ Coordinates\n" +
-
-      lead.lat +
-      ", " +
-      lead.lon
-
-    );
-
-  }
-
-
-  /*
-  =====================================================
-  SAVED LEADS
-  =====================================================
-  */
-
-  function saveRealLead(
-    lead
-  ) {
-
-    const savedLeads =
-      JSON.parse(
-        localStorage.getItem(
-          "savedLeads"
-        )
-      ) || [];
-
-
-    const alreadySaved =
-      savedLeads.some(
-        item =>
-
-          item.name ===
-            lead.name &&
-
-          item.lat ===
-            lead.lat &&
-
-          item.lon ===
-            lead.lon
-
-      );
-
-
-    if (alreadySaved) {
-
-      alert(
-        "⭐ This lead is already saved!"
-      );
-
       return;
 
     }
 
 
-    savedLeads.push({
-
-      name:
-        lead.name,
-
-      area:
-        lead.address,
-
-      phone:
-        lead.phone || "",
-
-      website:
-        lead.website || "",
-
-      category:
-        lead.category || "Business",
-
-      lat:
-        lead.lat,
-
-      lon:
-        lead.lon,
-
-      status:
-        "New",
-
-      note:
-        "",
-
-      updated:
-        new Date()
-          .toLocaleString()
-
-    });
+    await loadCredits();
 
 
-    localStorage.setItem(
-      "savedLeads",
-      JSON.stringify(
-        savedLeads
-      )
-    );
+    title.innerText =
+      "🌍 Finding businesses...";
 
 
-    updateDashboard();
-
-    displaySavedLeads();
-
-
-    alert(
-      "⭐ Lead Saved!\n\n" +
-      lead.name
-    );
-
-  }
-
-
-  function changeLeadStatus(
-    index,
-    status
-  ) {
-
-    const savedLeads =
-      JSON.parse(
-        localStorage.getItem(
-          "savedLeads"
-        )
-      ) || [];
-
-
-    if (
-      savedLeads[index]
-    ) {
-
-      savedLeads[index].status =
-        status;
-
-      savedLeads[index].updated =
-        new Date()
-          .toLocaleString();
-
-      localStorage.setItem(
-        "savedLeads",
-        JSON.stringify(
-          savedLeads
-        )
-      );
-
-    }
-
-
-    updateDashboard();
-
-    displaySavedLeads();
-
-  }
-
-
-  function saveNote(
-    index
-  ) {
-
-    const noteBox =
-      document.getElementById(
-        "note-" + index
+    const location =
+      await getCityLocation(
+        city
       );
 
 
-    if (!noteBox) {
-      return;
-    }
-
-
-    const note =
-      noteBox.value.trim();
-
-
-    if (!note) {
-
-      alert(
-        "Please write a note first!"
-      );
-
-      return;
-
-    }
-
-
-    const savedLeads =
-      JSON.parse(
-        localStorage.getItem(
-          "savedLeads"
-        )
-      ) || [];
-
-
-    if (
-      savedLeads[index]
-    ) {
-
-      savedLeads[index].note =
-        note;
-
-      savedLeads[index].updated =
-        new Date()
-          .toLocaleString();
-
-
-      localStorage.setItem(
-        "savedLeads",
-        JSON.stringify(
-          savedLeads
-        )
-      );
-
-    }
-
-
-    alert(
-      "📝 Note Saved!"
-    );
-
-
-    displaySavedLeads();
-
-  }
-
-
-  function deleteLead(
-    index
-  ) {
-
-    const savedLeads =
-      JSON.parse(
-        localStorage.getItem(
-          "savedLeads"
-        )
-      ) || [];
-
-
-    if (
-      !savedLeads[index]
-    ) {
-      return;
-    }
-
-
-    if (
-      !confirm(
-        "Remove this saved lead?\n\n" +
-        savedLeads[index].name
-      )
-    ) {
-      return;
-    }
-
-
-    savedLeads.splice(
-      index,
-      1
-    );
-
-
-    localStorage.setItem(
-      "savedLeads",
-      JSON.stringify(
-        savedLeads
-      )
-    );
-
-
-    updateDashboard();
-
-    displaySavedLeads();
-
-  }
-
-
-  /*
-  =====================================================
-  DISPLAY SAVED
-  =====================================================
-  */
-
-  function displaySavedLeads() {
-
-    const savedLeads =
-      JSON.parse(
-        localStorage.getItem(
-          "savedLeads"
-        )
-      ) || [];
-
-
-    const savedList =
-      document.getElementById(
-        "savedList"
+    const query =
+      buildOverpassQuery(
+        location.boundingbox,
+        category,
+        businessName
       );
 
 
-    const searchText =
-      document.getElementById(
-        "savedSearch"
-      ).value
-        .toLowerCase();
+    const dataResults =
+      await searchOverpass(
+        query
+      );
 
 
-    const selectedStatus =
-      document.getElementById(
-        "savedStatus"
-      ).value;
+    title.innerText =
+      `${city} → ${
+        document
+          .getElementById(
+            "category"
+          )
+          .selectedOptions[0]
+          .text
+      }`;
 
 
-    const filtered =
-      savedLeads
-        .map(
-          (
-            lead,
-            originalIndex
-          ) => ({
-            lead,
-            originalIndex
-          })
-        )
-        .filter(
-          item => {
-
-            const lead =
-              item.lead;
+    list.innerHTML = "";
 
 
-            const searchable =
-
-              (
-                lead.name ||
-                ""
-              ).toLowerCase() +
-
-              " " +
-
-              (
-                lead.area ||
-                ""
-              ).toLowerCase() +
-
-              " " +
-
-              (
-                lead.category ||
-                ""
-              ).toLowerCase();
+    const seen =
+      new Set();
 
 
-            return (
-
-              searchable.includes(
-                searchText
-              )
-
-              &&
-
-              (
-                selectedStatus ===
-                "All"
-
-                ||
-
-                (
-                  lead.status ||
-                  "New"
-                ) ===
-                selectedStatus
-
-              )
-
-            );
-
-          }
-        );
+    const businesses = [];
 
 
-    savedList.innerHTML = "";
+    dataResults.elements.forEach(
+      element => {
+
+        const tags =
+          element.tags || {};
+
+        const name =
+          tags.name;
 
 
-    if (
-      filtered.length === 0
-    ) {
+        const coordinates =
+          getCoordinates(
+            element
+          );
 
-      savedList.innerHTML = `
+
+        if (
+          !name ||
+          !coordinates
+        ) {
+          return;
+        }
+
+
+        const key =
+          name.toLowerCase() +
+          "|" +
+          coordinates.lat +
+          "|" +
+          coordinates.lon;
+
+
+        if (
+          seen.has(key)
+        ) {
+          return;
+        }
+
+
+        seen.add(key);
+
+
+        businesses.push({
+          tags,
+          coordinates
+        });
+
+      }
+    );
+
+
+    if (!businesses.length) {
+
+      list.innerHTML = `
 
         <div class="empty-message">
 
-          No matching saved leads ⭐
+          😕 No matching businesses found.
 
         </div>
 
@@ -2844,448 +1679,738 @@
     }
 
 
-    filtered.forEach(
-      item => {
+    businesses
+      .slice(0, 100)
+      .forEach(item => {
 
-        const lead =
-          item.lead;
+        const tags =
+          item.tags;
 
-        const index =
-          item.originalIndex;
+        const coords =
+          item.coordinates;
 
-        const currentStatus =
-          lead.status ||
-          "New";
+        const name =
+          tags.name;
 
-        const currentNote =
-          lead.note ||
-          "";
+        const phone =
+          getPhone(tags);
 
+        const website =
+          getWebsite(tags);
+
+        const address =
+          getAddress(tags);
+
+        const categoryLabel =
+          getCategoryLabel(tags);
 
         const mapURL =
-          lead.lat &&
-          lead.lon
-
-            ? getMapURL(
-                lead.lat,
-                lead.lon
-              )
-
-            : "#";
-
+          getMapURL(
+            coords.lat,
+            coords.lon
+          );
 
         const directionsURL =
-          lead.lat &&
-          lead.lon
-
-            ? getDirectionsURL(
-                lead.lat,
-                lead.lon
-              )
-
-            : "#";
+          getDirectionsURL(
+            coords.lat,
+            coords.lon
+          );
 
 
-        savedList.innerHTML += `
+        const card =
+          document.createElement(
+            "div"
+          );
 
-          <div class="lead">
+        card.className =
+          "lead";
 
-            <h3>
-              ${escapeHTML(
-                lead.name
-              )}
-            </h3>
 
-            <span class="category-label">
-              ${escapeHTML(
-                lead.category ||
-                "Business"
-              )}
-            </span>
+        card.innerHTML = `
 
-            <p>
-              📍
-              ${escapeHTML(
-                lead.area ||
-                "Location available"
-              )}
-            </p>
+          <h3>
+            ${escapeHTML(name)}
+          </h3>
 
-            <p>
-              📞
-              ${
-                lead.phone
-                  ? escapeHTML(
-                      lead.phone
-                    )
-                  : "Not available"
-              }
-            </p>
+          <span class="category-label">
+            ${escapeHTML(categoryLabel)}
+          </span>
 
-            ${
-              lead.website
+          <p>
+            📍 ${escapeHTML(address)}
+          </p>
 
+          <p>
+            📞 ${
+              phone
+                ? escapeHTML(phone)
+                : "Not available"
+            }
+          </p>
+
+          ${
+            website
               ? `
-
                 <p>
                   🌐
-
                   <a
-                    href="${escapeHTML(
-                      lead.website
-                    )}"
+                    href="${escapeHTML(website)}"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style="color:#4f46e5;"
                   >
                     Website
                   </a>
                 </p>
-
               `
-
               : ""
+          }
 
-            }
+          <div class="lead-actions">
 
-
-            <select
-              onchange="changeLeadStatus(
-                ${index},
-                this.value
-              )"
+            <button
+              class="details-btn"
             >
+              👀 View Details
+            </button>
 
-              <option
-                value="New"
-                ${
-                  currentStatus ===
-                  "New"
-                    ? "selected"
-                    : ""
-                }
-              >
-                🆕 New
-              </option>
+            <button
+              class="save-btn"
+            >
+              ⭐ Save Lead
+            </button>
 
-              <option
-                value="Contacted"
-                ${
-                  currentStatus ===
-                  "Contacted"
-                    ? "selected"
-                    : ""
-                }
-              >
-                📞 Contacted
-              </option>
+            <a
+              class="map-btn secondary-btn"
+              href="${mapURL}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              🗺️ Open Map
+            </a>
 
-              <option
-                value="Follow-up"
-                ${
-                  currentStatus ===
-                  "Follow-up"
-                    ? "selected"
-                    : ""
-                }
-              >
-                🔔 Follow-up
-              </option>
-
-              <option
-                value="Converted"
-                ${
-                  currentStatus ===
-                  "Converted"
-                    ? "selected"
-                    : ""
-                }
-              >
-                💰 Converted
-              </option>
-
-            </select>
-
-
-            <div class="saved-note">
-
-              📝 Note:
-
-              ${
-                currentNote
-                  ? escapeHTML(
-                      currentNote
-                    )
-                  : "No note added yet"
-              }
-
-            </div>
-
-
-            <textarea
-              class="note-box"
-              id="note-${index}"
-              placeholder="Write a note..."
-            >${escapeHTML(
-              currentNote
-            )}</textarea>
-
-
-            <div class="lead-actions">
-
-              <button
-                onclick="saveNote(${index})"
-              >
-                💾 Save Note
-              </button>
-
-              ${
-                lead.lat &&
-                lead.lon
-
-                ? `
-
-                  <a
-                    class="map-btn secondary-btn"
-                    href="${mapURL}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    🗺️ Open Map
-                  </a>
-
-                  <a
-                    class="map-btn direction-btn"
-                    href="${directionsURL}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    🧭 Directions
-                  </a>
-
-                `
-
-                : ""
-
-              }
-
-
-              <button
-                class="danger-btn"
-                onclick="deleteLead(${index})"
-              >
-                🗑️ Remove Lead
-              </button>
-
-            </div>
-
-
-            <p class="updated">
-
-              🕐 Last updated:
-
-              ${escapeHTML(
-                lead.updated ||
-                "Not available"
-              )}
-
-            </p>
+            <a
+              class="map-btn direction-btn"
+              href="${directionsURL}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              🧭 Directions
+            </a>
 
           </div>
 
         `;
 
-      }
+
+        card
+          .querySelector(
+            ".details-btn"
+          )
+          .onclick =
+            () => {
+
+              alert(
+
+                "BUSINESS DETAILS\n\n" +
+
+                "🏪 " +
+                name +
+
+                "\n\n🏷️ " +
+                categoryLabel +
+
+                "\n\n📍 " +
+                address +
+
+                "\n\n📞 " +
+                (
+                  phone ||
+                  "Not available"
+                )
+
+              );
+
+            };
+
+
+        card
+          .querySelector(
+            ".save-btn"
+          )
+          .onclick =
+            () => {
+
+              saveRealLead({
+
+                name,
+                area: address,
+                phone,
+                website,
+                category:
+                  categoryLabel,
+                lat:
+                  coords.lat,
+                lon:
+                  coords.lon
+
+              });
+
+            };
+
+
+        list.appendChild(
+          card
+        );
+
+      });
+
+
+  } catch (error) {
+
+    console.error(
+      error
     );
 
+
+    title.innerText =
+      "⚠️ Search problem";
+
+
+    list.innerHTML = `
+
+      <div class="empty-message">
+
+        ${escapeHTML(
+          error.message
+        )}
+
+      </div>
+
+    `;
+
   }
 
-
-  /*
-  =====================================================
-  DASHBOARD
-  =====================================================
-  */
-
-  function updateDashboard() {
-
-    const savedLeads =
-      JSON.parse(
-        localStorage.getItem(
-          "savedLeads"
-        )
-      ) || [];
+}
 
 
-    let newCount = 0;
+/* =========================
+   SAVED LEADS
+========================= */
 
-    let contactedCount = 0;
+function saveRealLead(lead) {
 
-    let followupCount = 0;
-
-    let convertedCount = 0;
-
-
-    savedLeads.forEach(
-      lead => {
-
-        const status =
-          lead.status ||
-          "New";
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
 
 
-        if (
-          status === "New"
-        ) {
-          newCount++;
-        }
-
-        else if (
-          status === "Contacted"
-        ) {
-          contactedCount++;
-        }
-
-        else if (
-          status === "Follow-up"
-        ) {
-          followupCount++;
-        }
-
-        else if (
-          status === "Converted"
-        ) {
-          convertedCount++;
-        }
-
-      }
+  const exists =
+    saved.some(
+      item =>
+        item.name === lead.name &&
+        item.lat === lead.lat &&
+        item.lon === lead.lon
     );
 
 
-    document.getElementById(
-      "totalLeads"
-    ).innerText =
-      savedLeads.length;
+  if (exists) {
 
+    alert(
+      "⭐ This lead is already saved!"
+    );
 
-    document.getElementById(
-      "newLeads"
-    ).innerText =
-      newCount;
-
-
-    document.getElementById(
-      "contactedLeads"
-    ).innerText =
-      contactedCount;
-
-
-    document.getElementById(
-      "followupLeads"
-    ).innerText =
-      followupCount;
-
-
-    document.getElementById(
-      "convertedLeads"
-    ).innerText =
-      convertedCount;
+    return;
 
   }
 
 
-  /*
-  =====================================================
-  DASHBOARD FILTER
-  =====================================================
-  */
+  saved.push({
 
-  function filterDashboard(
-    status
-  ) {
+    ...lead,
 
-    const statusBox =
-      document.getElementById(
-        "savedStatus"
-      );
+    status:
+      "New",
 
+    note:
+      "",
 
-    statusBox.value =
-      status;
+    updated:
+      new Date().toLocaleString()
+
+  });
 
 
-    displaySavedLeads();
-
-
-    document.getElementById(
-      "savedSection"
-    ).scrollIntoView({
-      behavior:
-        "smooth"
-    });
-
-  }
-
-
-  /*
-  =====================================================
-  ENTER SEARCH
-  =====================================================
-  */
-
-  document.getElementById(
-    "businessName"
-  ).addEventListener(
-    "keydown",
-    event => {
-
-      if (
-        event.key ===
-        "Enter"
-      ) {
-
-        findLeads();
-
-      }
-
-    }
+  localStorage.setItem(
+    "savedLeads",
+    JSON.stringify(saved)
   );
 
-
-  /*
-  =====================================================
-  SUPABASE AUTH LISTENER
-  =====================================================
-  */
-
-  supabaseClient.auth.onAuthStateChange(
-    (
-      event,
-      session
-    ) => {
-
-      currentUser =
-        session
-          ? session.user
-          : null;
-
-      updateAuthUI();
-
-    }
-  );
-
-
-  /*
-  =====================================================
-  START
-  =====================================================
-  */
-
-  loadUser();
 
   updateDashboard();
 
   displaySavedLeads();
+
+
+  alert(
+    "⭐ Lead Saved!"
+  );
+
+}
+
+
+function changeLeadStatus(
+  index,
+  status
+) {
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  if (saved[index]) {
+
+    saved[index].status =
+      status;
+
+    saved[index].updated =
+      new Date().toLocaleString();
+
+  }
+
+
+  localStorage.setItem(
+    "savedLeads",
+    JSON.stringify(saved)
+  );
+
+
+  updateDashboard();
+
+  displaySavedLeads();
+
+}
+
+
+function saveNote(index) {
+
+  const textarea =
+    document.getElementById(
+      "note-" + index
+    );
+
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  if (
+    saved[index] &&
+    textarea
+  ) {
+
+    saved[index].note =
+      textarea.value;
+
+    saved[index].updated =
+      new Date().toLocaleString();
+
+  }
+
+
+  localStorage.setItem(
+    "savedLeads",
+    JSON.stringify(saved)
+  );
+
+
+  displaySavedLeads();
+
+}
+
+
+function deleteLead(index) {
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  saved.splice(
+    index,
+    1
+  );
+
+
+  localStorage.setItem(
+    "savedLeads",
+    JSON.stringify(saved)
+  );
+
+
+  updateDashboard();
+
+  displaySavedLeads();
+
+}
+
+
+function displaySavedLeads() {
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  const list =
+    document.getElementById(
+      "savedList"
+    );
+
+
+  const search =
+    document.getElementById(
+      "savedSearch"
+    ).value
+      .toLowerCase();
+
+
+  const status =
+    document.getElementById(
+      "savedStatus"
+    ).value;
+
+
+  const filtered =
+    saved
+      .map(
+        (
+          lead,
+          index
+        ) => ({
+          lead,
+          index
+        })
+      )
+      .filter(
+        item => {
+
+          const lead =
+            item.lead;
+
+
+          const text =
+            (
+              lead.name || ""
+            ).toLowerCase() +
+            " " +
+            (
+              lead.area || ""
+            ).toLowerCase();
+
+
+          return (
+
+            text.includes(
+              search
+            )
+
+            &&
+
+            (
+              status === "All" ||
+              (
+                lead.status ||
+                "New"
+              ) === status
+            )
+
+          );
+
+        }
+      );
+
+
+  list.innerHTML = "";
+
+
+  if (!filtered.length) {
+
+    list.innerHTML = `
+      <div class="empty-message">
+        No saved leads ⭐
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  filtered.forEach(
+    item => {
+
+      const lead =
+        item.lead;
+
+      const index =
+        item.index;
+
+
+      list.innerHTML += `
+
+        <div class="lead">
+
+          <h3>
+            ${escapeHTML(lead.name)}
+          </h3>
+
+          <span class="category-label">
+            ${escapeHTML(
+              lead.category ||
+              "Business"
+            )}
+          </span>
+
+          <p>
+            📍 ${escapeHTML(
+              lead.area ||
+              ""
+            )}
+          </p>
+
+          <p>
+            📞 ${
+              lead.phone
+                ? escapeHTML(
+                    lead.phone
+                  )
+                : "Not available"
+            }
+          </p>
+
+          <select
+            onchange="
+              changeLeadStatus(
+                ${index},
+                this.value
+              )
+            "
+          >
+
+            <option
+              value="New"
+              ${
+                lead.status === "New"
+                  ? "selected"
+                  : ""
+              }
+            >
+              🆕 New
+            </option>
+
+            <option
+              value="Contacted"
+              ${
+                lead.status === "Contacted"
+                  ? "selected"
+                  : ""
+              }
+            >
+              📞 Contacted
+            </option>
+
+            <option
+              value="Follow-up"
+              ${
+                lead.status === "Follow-up"
+                  ? "selected"
+                  : ""
+              }
+            >
+              🔔 Follow-up
+            </option>
+
+            <option
+              value="Converted"
+              ${
+                lead.status === "Converted"
+                  ? "selected"
+                  : ""
+              }
+            >
+              💰 Converted
+            </option>
+
+          </select>
+
+          <textarea
+            class="note-box"
+            id="note-${index}"
+            placeholder="Write a note..."
+          >${escapeHTML(
+            lead.note || ""
+          )}</textarea>
+
+          <div class="lead-actions">
+
+            <button
+              onclick="
+                saveNote(${index})
+              "
+            >
+              💾 Save Note
+            </button>
+
+            <button
+              class="danger-btn"
+              onclick="
+                deleteLead(${index})
+              "
+            >
+              🗑️ Remove
+            </button>
+
+          </div>
+
+          <p class="updated">
+            🕐 ${
+              escapeHTML(
+                lead.updated ||
+                ""
+              )
+            }
+          </p>
+
+        </div>
+
+      `;
+
+    }
+  );
+
+}
+
+
+function updateDashboard() {
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "savedLeads"
+      )
+    ) || [];
+
+
+  const count =
+    status =>
+      saved.filter(
+        lead =>
+          (
+            lead.status ||
+            "New"
+          ) === status
+      ).length;
+
+
+  document.getElementById(
+    "totalLeads"
+  ).innerText =
+    saved.length;
+
+
+  document.getElementById(
+    "newLeads"
+  ).innerText =
+    count("New");
+
+
+  document.getElementById(
+    "contactedLeads"
+  ).innerText =
+    count("Contacted");
+
+
+  document.getElementById(
+    "followupLeads"
+  ).innerText =
+    count("Follow-up");
+
+
+  document.getElementById(
+    "convertedLeads"
+  ).innerText =
+    count("Converted");
+
+}
+
+
+function filterDashboard(
+  status
+) {
+
+  document.getElementById(
+    "savedStatus"
+  ).value =
+    status;
+
+
+  displaySavedLeads();
+
+
+  document
+    .getElementById(
+      "savedList"
+    )
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+supabaseClient.auth.onAuthStateChange(
+  (
+    event,
+    session
+  ) => {
+
+    currentUser =
+      session
+        ? session.user
+        : null;
+
+    updateAuthUI();
+
+  }
+);
+
+
+loadUser();
+
+updateDashboard();
+
+displaySavedLeads();
 
 </script>
 
