@@ -1228,6 +1228,28 @@
 
   async function loadCredits() {
 
+  if (!currentUser) {
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("free_searches, paid_searches")
+    .eq("id", currentUser.id)
+    .single();
+
+  if (error) {
+    console.error("Credit loading error:", error);
+    return;
+  }
+
+  const free = Number(data.free_searches || 0);
+  const paid = Number(data.paid_searches || 0);
+
+  document.getElementById("creditCount").innerText =
+    free + paid;
+}
+
     if (!currentUser) {
       return;
     }
