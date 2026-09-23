@@ -1174,21 +1174,265 @@ async function loadCredits() {
    TEST PACKAGE SYSTEM
 ========================= */
 
-async function buyPackage(
-  searches,
-  price
-) {
+async function buyPackage(searches, price) {
 
   if (!currentUser) {
 
-    alert(
-      "Please login first."
-    );
+    alert("Please login first.");
 
     openAuth("login");
 
     return;
   }
+
+  try {
+
+    // Create Razorpay order through Supabase
+    const {
+      data,
+      error
+    } = await supabaseClient.functions.invoke(
+      "create-payment",
+      {
+        body: {
+          searches: searches,
+          price: price
+        }
+      }
+    );
+
+    if (error) {
+      console.error(
+        "Create payment error:",
+        error
+      );
+
+      alert(
+        "Could not start payment.\n\n" +
+        error.message
+      );
+
+      return;
+    }
+
+    if (
+      !data ||
+      !data.order_id
+    ) {
+
+      console.error(
+        "Invalid payment response:",
+        data
+      );
+
+      alert(
+        "Could not create payment order."
+      );
+
+      return;
+    }
+
+
+    // Open Razorpay Checkout
+    const options = {
+
+      key: data.key_id,
+
+      amount: data.amount,
+
+      currency:
+        data.currency || "INR",
+
+      name: "BusinessRadar",
+
+      description:
+        searches +
+        " Business Searches",
+
+      order_id:
+        data.order_id,
+
+
+      handler:
+        async function(response) {
+
+          try {
+
+            // Verify payment on Supabase
+            const {
+              data: verifyData,
+              error: verifyError
+            } =
+              await supabaseClient
+                .functions
+                .invoke(
+                  "verify-payment",
+                  {
+                    body: {
+
+                      razorpay_order_id:
+                        response
+                          .razorpay_order_id,
+
+                      razorpay_payment_id:
+                        response
+                          .razorpay_payment_id,
+
+                      razorpay_signature:
+                        response
+                          .razorpay_signature
+
+                    }
+                  }
+                );
+
+
+            if (verifyError) {
+
+              console.error(
+                "Payment verification error:",
+                verifyError
+              );
+
+              alert(
+                "Payment was completed, but verification failed.\n\n" +
+                "Please contact support before trying again."
+              );
+
+              return;
+            }
+
+
+            if (
+              !verifyData ||
+              !verifyData.success
+            ) {
+
+              alert(
+                "Payment could not be verified."
+              );
+
+              return;
+            }
+
+
+            // Refresh search credits
+            await loadCredits();
+
+
+            alert(
+              "🎉 Payment successful!\n\n" +
+              searches +
+              " searches have been added to your account."
+            );
+
+
+          } catch (error) {
+
+            console.error(
+              "Payment verification error:",
+              error
+            );
+
+            alert(
+              "Payment was completed, but something went wrong while confirming your searches.\n\n" +
+              "Please contact support."
+            );
+
+          }
+
+        },
+
+
+      modal: {
+
+        ondismiss:
+          function() {
+
+            console.log(
+              "Razorpay checkout closed."
+            );
+
+          }
+
+      },
+
+
+      prefill: {
+
+        email:
+          currentUser.email || ""
+
+      },
+
+
+      theme: {
+
+        color: "#3399cc"
+
+      }
+
+    };
+
+
+    // Make sure Razorpay Checkout exists
+    if (
+      typeof Razorpay ===
+      "undefined"
+    ) {
+
+      alert(
+        "Razorpay Checkout has not loaded."
+      );
+
+      return;
+    }
+
+
+    const razorpay =
+      new Razorpay(options);
+
+
+    razorpay.on(
+      "payment.failed",
+      function(response) {
+
+        console.error(
+          "Payment failed:",
+          response.error
+        );
+
+        alert(
+          "Payment failed.\n\n" +
+          (
+            response.error
+              ?.description ||
+            "Please try again."
+          )
+        );
+
+      }
+    );
+
+
+    razorpay.open();
+
+
+  } catch (error) {
+
+    console.error(
+      "Buy package error:",
+      error
+    );
+
+    alert(
+      "Could not start payment.\n\n" +
+      error.message
+    );
+
+  }
+
+}
 
 
   const confirmed =
