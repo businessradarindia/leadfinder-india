@@ -2,14 +2,24 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>BusinessRadar India</title>
 
+  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+  <!-- Razorpay -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -167,10 +177,6 @@
       text-align: center;
     }
 
-    .packages h2 {
-      margin-bottom: 10px;
-    }
-
     .package-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -206,17 +212,6 @@
 
     .package-card button {
       width: 100%;
-      padding: 11px 15px;
-      border: none;
-      border-radius: 9px;
-      background: #4f46e5;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .package-card button:hover {
-      background: #3730a3;
     }
 
     .results,
@@ -437,6 +432,7 @@
     }
 
     @media (max-width: 750px) {
+
       .navbar {
         flex-direction: column;
         text-align: center;
@@ -462,9 +458,11 @@
       .package-grid {
         grid-template-columns: 1fr;
       }
+
     }
 
     @media (max-width: 450px) {
+
       .dashboard-grid {
         grid-template-columns: 1fr;
       }
@@ -479,11 +477,16 @@
         width: 100%;
         text-align: center;
       }
+
     }
+
   </style>
+
 </head>
 
+
 <body>
+
 
 <nav class="navbar">
 
@@ -495,17 +498,29 @@
     >
 
     <div>
-      <div class="logo">BusinessRadar India</div>
-      <div class="tag">B2B Lead Discovery</div>
+
+      <div class="logo">
+        BusinessRadar India
+      </div>
+
+      <div class="tag">
+        B2B Lead Discovery
+      </div>
+
     </div>
 
   </div>
 
+
   <div class="auth-area">
 
-    <span id="userInfo" class="user-info">
+    <span
+      id="userInfo"
+      class="user-info"
+    >
       Not logged in
     </span>
+
 
     <button
       id="loginButton"
@@ -515,6 +530,7 @@
       Login
     </button>
 
+
     <button
       id="signupButton"
       class="signup-btn"
@@ -522,6 +538,7 @@
     >
       Sign Up
     </button>
+
 
     <button
       id="logoutButton"
@@ -537,61 +554,182 @@
 </nav>
 
 
+
 <section class="hero">
 
-  <h1>Find Businesses. Find Opportunities.</h1>
+  <h1>
+    Find Businesses. Find Opportunities.
+  </h1>
 
   <p>
     Discover real businesses using OpenStreetMap data.
   </p>
 
+
   <div class="search-box">
 
     <select id="city">
-      <option value="Pune">🏙️ Pune</option>
-      <option value="Mumbai">🏙️ Mumbai</option>
-      <option value="Delhi">🏙️ Delhi</option>
-      <option value="Bengaluru">🏙️ Bengaluru</option>
-      <option value="Hyderabad">🏙️ Hyderabad</option>
-      <option value="Chennai">🏙️ Chennai</option>
-      <option value="Kolkata">🏙️ Kolkata</option>
-      <option value="Ahmedabad">🏙️ Ahmedabad</option>
-      <option value="Jaipur">🏙️ Jaipur</option>
-      <option value="Surat">🏙️ Surat</option>
-      <option value="Nagpur">🏙️ Nagpur</option>
-      <option value="Nashik">🏙️ Nashik</option>
-      <option value="Thane">🏙️ Thane</option>
-      <option value="Navi Mumbai">🏙️ Navi Mumbai</option>
-      <option value="Indore">🏙️ Indore</option>
-      <option value="Lucknow">🏙️ Lucknow</option>
-      <option value="Goa">🏝️ Goa</option>
+
+      <option value="Pune">
+        🏙️ Pune
+      </option>
+
+      <option value="Mumbai">
+        🏙️ Mumbai
+      </option>
+
+      <option value="Delhi">
+        🏙️ Delhi
+      </option>
+
+      <option value="Bengaluru">
+        🏙️ Bengaluru
+      </option>
+
+      <option value="Hyderabad">
+        🏙️ Hyderabad
+      </option>
+
+      <option value="Chennai">
+        🏙️ Chennai
+      </option>
+
+      <option value="Kolkata">
+        🏙️ Kolkata
+      </option>
+
+      <option value="Ahmedabad">
+        🏙️ Ahmedabad
+      </option>
+
+      <option value="Jaipur">
+        🏙️ Jaipur
+      </option>
+
+      <option value="Surat">
+        🏙️ Surat
+      </option>
+
+      <option value="Nagpur">
+        🏙️ Nagpur
+      </option>
+
+      <option value="Nashik">
+        🏙️ Nashik
+      </option>
+
+      <option value="Thane">
+        🏙️ Thane
+      </option>
+
+      <option value="Navi Mumbai">
+        🏙️ Navi Mumbai
+      </option>
+
+      <option value="Indore">
+        🏙️ Indore
+      </option>
+
+      <option value="Lucknow">
+        🏙️ Lucknow
+      </option>
+
+      <option value="Goa">
+        🏝️ Goa
+      </option>
+
     </select>
 
 
     <select id="category">
 
-      <option value="restaurant">🍽️ Restaurants</option>
-      <option value="cafe">☕ Cafes</option>
-      <option value="fast_food">🍔 Fast Food</option>
-      <option value="salon">💇 Salons</option>
-      <option value="medical">💊 Medical Stores</option>
-      <option value="hospital">🏥 Hospitals</option>
-      <option value="clinic">🩺 Clinics</option>
-      <option value="veterinary">🐾 Vet Clinics</option>
-      <option value="dentist">🦷 Dentists</option>
-      <option value="garage">🚗 Garages</option>
-      <option value="school">🏫 Schools</option>
-      <option value="college">🎓 Colleges</option>
-      <option value="gym">🏋️ Gyms</option>
-      <option value="hotel">🏨 Hotels</option>
-      <option value="bakery">🥐 Bakeries</option>
-      <option value="supermarket">🛒 Supermarkets</option>
-      <option value="clothing">👕 Clothing Stores</option>
-      <option value="electronics">💻 Electronics Stores</option>
-      <option value="bank">🏦 Banks</option>
-      <option value="car_dealer">🚘 Car Dealers</option>
-      <option value="beauty">💄 Beauty Stores</option>
-      <option value="all">🔎 All Businesses</option>
+      <option value="restaurant">
+        🍽️ Restaurants
+      </option>
+
+      <option value="cafe">
+        ☕ Cafes
+      </option>
+
+      <option value="fast_food">
+        🍔 Fast Food
+      </option>
+
+      <option value="salon">
+        💇 Salons
+      </option>
+
+      <option value="medical">
+        💊 Medical Stores
+      </option>
+
+      <option value="hospital">
+        🏥 Hospitals
+      </option>
+
+      <option value="clinic">
+        🩺 Clinics
+      </option>
+
+      <option value="veterinary">
+        🐾 Vet Clinics
+      </option>
+
+      <option value="dentist">
+        🦷 Dentists
+      </option>
+
+      <option value="garage">
+        🚗 Garages
+      </option>
+
+      <option value="school">
+        🏫 Schools
+      </option>
+
+      <option value="college">
+        🎓 Colleges
+      </option>
+
+      <option value="gym">
+        🏋️ Gyms
+      </option>
+
+      <option value="hotel">
+        🏨 Hotels
+      </option>
+
+      <option value="bakery">
+        🥐 Bakeries
+      </option>
+
+      <option value="supermarket">
+        🛒 Supermarkets
+      </option>
+
+      <option value="clothing">
+        👕 Clothing Stores
+      </option>
+
+      <option value="electronics">
+        💻 Electronics Stores
+      </option>
+
+      <option value="bank">
+        🏦 Banks
+      </option>
+
+      <option value="car_dealer">
+        🚘 Car Dealers
+      </option>
+
+      <option value="beauty">
+        💄 Beauty Stores
+      </option>
+
+      <option value="all">
+        🔎 All Businesses
+      </option>
 
     </select>
 
@@ -614,76 +752,123 @@
   </div>
 
 
-  <div id="creditBox" class="credit-box">
 
-    🆓 Searches remaining:
-    <span id="creditCount">0</span>
+  <div
+    class="packages"
+    id="packages"
+  >
 
-  </div>
+    <h2>
+      🚀 Get More Searches
+    </h2>
 
-
-  <div class="packages" id="packages">
-
-    <h2>🚀 Get More Searches</h2>
 
     <div class="package-grid">
 
+
       <div class="package-card">
 
-        <h3>Starter</h3>
+        <h3>
+          Starter
+        </h3>
 
-        <div class="price">₹49</div>
+        <div class="price">
+          ₹49
+        </div>
 
-        <p>15 searches</p>
+        <p>
+          15 searches
+        </p>
 
-        <button onclick="buyPackage(15,49)">
+        <button
+          onclick="buyPackage(15,49)"
+        >
           Get 15 Searches
         </button>
 
       </div>
 
 
+
       <div class="package-card featured">
 
-        <h3>Popular</h3>
+        <h3>
+          Popular
+        </h3>
 
-        <div class="price">₹99</div>
+        <div class="price">
+          ₹99
+        </div>
 
-        <p>25 searches</p>
+        <p>
+          25 searches
+        </p>
 
-        <button onclick="buyPackage(25,99)">
+        <button
+          onclick="buyPackage(25,99)"
+        >
           Get 25 Searches
         </button>
 
       </div>
 
 
+
       <div class="package-card">
 
-        <h3>Business</h3>
+        <h3>
+          Business
+        </h3>
 
-        <div class="price">₹200</div>
+        <div class="price">
+          ₹200
+        </div>
 
-        <p>100 searches</p>
+        <p>
+          100 searches
+        </p>
 
-        <button onclick="buyPackage(100,200)">
+        <button
+          onclick="buyPackage(100,200)"
+        >
           Get 100 Searches
         </button>
 
       </div>
 
+
     </div>
 
+
     <p class="demo">
-      Test mode — no real payment is taken yet.
+      Secure payment through Razorpay.
     </p>
+
+  </div>
+
+
+
+  <div
+    id="creditBox"
+    class="credit-box"
+  >
+
+    🆓 Searches remaining:
+
+    <span id="creditCount">
+      0
+    </span>
 
   </div>
 
 </section>
 
 
-<section class="results" id="results">
+
+<section
+  class="results"
+  id="results"
+>
 
   <h2 id="resultTitle"></h2>
 
@@ -692,7 +877,8 @@
   <p class="demo">
 
     Data source:
-    <strong>OpenStreetMap</strong> /
+    <strong>OpenStreetMap</strong>
+    /
     Overpass API.
 
     <br>
@@ -704,64 +890,113 @@
 </section>
 
 
+
 <section class="dashboard">
 
-  <h2>📊 Lead Dashboard</h2>
+  <h2>
+    📊 Lead Dashboard
+  </h2>
+
 
   <div class="dashboard-grid">
+
 
     <div
       class="dashboard-card"
       onclick="filterDashboard('All')"
     >
-      <h3>⭐ Total Saved</h3>
-      <p id="totalLeads">0</p>
+
+      <h3>
+        ⭐ Total Saved
+      </h3>
+
+      <p id="totalLeads">
+        0
+      </p>
+
     </div>
+
 
 
     <div
       class="dashboard-card"
       onclick="filterDashboard('New')"
     >
-      <h3>🆕 New</h3>
-      <p id="newLeads">0</p>
+
+      <h3>
+        🆕 New
+      </h3>
+
+      <p id="newLeads">
+        0
+      </p>
+
     </div>
+
 
 
     <div
       class="dashboard-card"
       onclick="filterDashboard('Contacted')"
     >
-      <h3>📞 Contacted</h3>
-      <p id="contactedLeads">0</p>
+
+      <h3>
+        📞 Contacted
+      </h3>
+
+      <p id="contactedLeads">
+        0
+      </p>
+
     </div>
+
 
 
     <div
       class="dashboard-card"
       onclick="filterDashboard('Follow-up')"
     >
-      <h3>🔔 Follow-up</h3>
-      <p id="followupLeads">0</p>
+
+      <h3>
+        🔔 Follow-up
+      </h3>
+
+      <p id="followupLeads">
+        0
+      </p>
+
     </div>
+
 
 
     <div
       class="dashboard-card"
       onclick="filterDashboard('Converted')"
     >
-      <h3>💰 Converted</h3>
-      <p id="convertedLeads">0</p>
+
+      <h3>
+        💰 Converted
+      </h3>
+
+      <p id="convertedLeads">
+        0
+      </p>
+
     </div>
+
 
   </div>
 
 </section>
 
 
+
 <section class="results">
 
-  <h2>⭐ Saved Leads</h2>
+  <h2>
+    ⭐ Saved Leads
+  </h2>
+
 
   <div class="saved-controls">
 
@@ -771,6 +1006,7 @@
       placeholder="🔎 Search saved leads..."
       oninput="displaySavedLeads()"
     >
+
 
     <select
       id="savedStatus"
@@ -807,7 +1043,11 @@
 </section>
 
 
-<div class="modal" id="authModal">
+
+<div
+  class="modal"
+  id="authModal"
+>
 
   <div class="modal-box">
 
@@ -830,7 +1070,9 @@
     >
 
 
-    <button onclick="submitAuth()">
+    <button
+      onclick="submitAuth()"
+    >
       Continue
     </button>
 
@@ -853,13 +1095,20 @@
 </div>
 
 
+
 <script>
+
+
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
   "https://nmlrygbmwzwihbautrjs.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_-WuvhZ-tww_xIegy39Iuqw_WHHBGmb0";
+  "sb_publishable_-WuvZ-tww_xIegy39Iuqw_WHHBGmb0";
 
 
 const supabaseClient =
@@ -870,15 +1119,22 @@ const supabaseClient =
 
 
 let currentUser = null;
+
 let authMode = "login";
 
 
 const NOMINATIM_URL =
   "https://nominatim.openstreetmap.org/search";
 
+
 const OVERPASS_URL =
   "https://overpass-api.de/api/interpreter";
 
+
+
+/* =========================
+   HELPERS
+========================= */
 
 function escapeHTML(text) {
 
@@ -890,12 +1146,14 @@ function escapeHTML(text) {
   }
 
   return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
 }
+
 
 
 /* =========================
@@ -910,6 +1168,7 @@ function openAuth(mode) {
     "authModal"
   ).style.display = "flex";
 
+
   document.getElementById(
     "authTitle"
   ).innerText =
@@ -917,11 +1176,13 @@ function openAuth(mode) {
       ? "Login to BusinessRadar"
       : "Create your BusinessRadar account";
 
+
   document.getElementById(
     "authMessage"
   ).innerText = "";
 
 }
+
 
 
 function closeAuth() {
@@ -933,6 +1194,7 @@ function closeAuth() {
 }
 
 
+
 async function submitAuth() {
 
   const email =
@@ -940,10 +1202,12 @@ async function submitAuth() {
       "authEmail"
     ).value.trim();
 
+
   const password =
     document.getElementById(
       "authPassword"
     ).value;
+
 
   const message =
     document.getElementById(
@@ -951,12 +1215,16 @@ async function submitAuth() {
     );
 
 
-  if (!email || !password) {
+  if (
+    !email ||
+    !password
+  ) {
 
     message.innerText =
       "Please enter email and password.";
 
     return;
+
   }
 
 
@@ -966,24 +1234,23 @@ async function submitAuth() {
 
   try {
 
-    if (authMode === "signup") {
+    if (
+      authMode === "signup"
+    ) {
 
-      const { data, error } =
+      const {
+        error
+      } =
         await supabaseClient.auth.signUp({
           email,
           password
         });
 
+
       if (error) {
         throw error;
       }
 
-
-      /*
-        If your Supabase setup uses email
-        confirmation, the user must verify
-        their email before logging in.
-      */
 
       message.innerText =
         "Account created! Check your email if verification is required.";
@@ -992,15 +1259,19 @@ async function submitAuth() {
 
     else {
 
-      const { error } =
+      const {
+        error
+      } =
         await supabaseClient.auth.signInWithPassword({
           email,
           password
         });
 
+
       if (error) {
         throw error;
       }
+
 
       closeAuth();
 
@@ -1010,8 +1281,6 @@ async function submitAuth() {
 
   catch (error) {
 
-    console.error(error);
-
     message.innerText =
       error.message ||
       "Authentication failed.";
@@ -1019,6 +1288,7 @@ async function submitAuth() {
   }
 
 }
+
 
 
 async function logout() {
@@ -1032,17 +1302,23 @@ async function logout() {
 }
 
 
+
 async function loadUser() {
 
-  const { data } =
+  const {
+    data
+  } =
     await supabaseClient.auth.getUser();
+
 
   currentUser =
     data.user || null;
 
+
   updateAuthUI();
 
 }
+
 
 
 function updateAuthUI() {
@@ -1052,20 +1328,24 @@ function updateAuthUI() {
       "userInfo"
     );
 
+
   const loginButton =
     document.getElementById(
       "loginButton"
     );
+
 
   const signupButton =
     document.getElementById(
       "signupButton"
     );
 
+
   const logoutButton =
     document.getElementById(
       "logoutButton"
     );
+
 
   const creditBox =
     document.getElementById(
@@ -1078,17 +1358,22 @@ function updateAuthUI() {
     userInfo.innerText =
       currentUser.email;
 
+
     loginButton.style.display =
       "none";
+
 
     signupButton.style.display =
       "none";
 
+
     logoutButton.style.display =
       "inline-block";
 
+
     creditBox.style.display =
       "block";
+
 
     loadCredits();
 
@@ -1099,14 +1384,18 @@ function updateAuthUI() {
     userInfo.innerText =
       "Not logged in";
 
+
     loginButton.style.display =
       "inline-block";
+
 
     signupButton.style.display =
       "inline-block";
 
+
     logoutButton.style.display =
       "none";
+
 
     creditBox.style.display =
       "none";
@@ -1114,6 +1403,7 @@ function updateAuthUI() {
   }
 
 }
+
 
 
 /* =========================
@@ -1127,7 +1417,10 @@ async function loadCredits() {
   }
 
 
-  const { data, error } =
+  const {
+    data,
+    error
+  } =
     await supabaseClient
       .from("profiles")
       .select(
@@ -1148,6 +1441,7 @@ async function loadCredits() {
     );
 
     return;
+
   }
 
 
@@ -1155,6 +1449,7 @@ async function loadCredits() {
     Number(
       data.free_searches || 0
     );
+
 
   const paid =
     Number(
@@ -1170,38 +1465,48 @@ async function loadCredits() {
 }
 
 
+
 /* =========================
-   TEST PACKAGE SYSTEM
+   RAZORPAY PAYMENT
 ========================= */
 
-async function buyPackage(searches, price) {
+async function buyPackage(
+  searches,
+  price
+) {
 
   if (!currentUser) {
 
-    alert("Please login first.");
+    alert(
+      "Please login first."
+    );
 
     openAuth("login");
 
     return;
+
   }
+
 
   try {
 
-    // Create Razorpay order through Supabase
     const {
       data,
       error
-    } = await supabaseClient.functions.invoke(
-      "create-payment",
-      {
-        body: {
-          searches: searches,
-          price: price
+    } =
+      await supabaseClient.functions.invoke(
+        "create-payment",
+        {
+          body: {
+            searches: searches,
+            price: price
+          }
         }
-      }
-    );
+      );
+
 
     if (error) {
+
       console.error(
         "Create payment error:",
         error
@@ -1213,7 +1518,9 @@ async function buyPackage(searches, price) {
       );
 
       return;
+
     }
+
 
     if (
       !data ||
@@ -1230,20 +1537,23 @@ async function buyPackage(searches, price) {
       );
 
       return;
+
     }
 
 
-    // Open Razorpay Checkout
     const options = {
 
-      key: data.key_id,
+      key:
+        data.key_id,
 
-      amount: data.amount,
+      amount:
+        data.amount,
 
       currency:
         data.currency || "INR",
 
-      name: "BusinessRadar",
+      name:
+        "BusinessRadar India",
 
       description:
         searches +
@@ -1258,7 +1568,6 @@ async function buyPackage(searches, price) {
 
           try {
 
-            // Verify payment on Supabase
             const {
               data: verifyData,
               error: verifyError
@@ -1271,16 +1580,13 @@ async function buyPackage(searches, price) {
                     body: {
 
                       razorpay_order_id:
-                        response
-                          .razorpay_order_id,
+                        response.razorpay_order_id,
 
                       razorpay_payment_id:
-                        response
-                          .razorpay_payment_id,
+                        response.razorpay_payment_id,
 
                       razorpay_signature:
-                        response
-                          .razorpay_signature
+                        response.razorpay_signature
 
                     }
                   }
@@ -1295,11 +1601,11 @@ async function buyPackage(searches, price) {
               );
 
               alert(
-                "Payment was completed, but verification failed.\n\n" +
-                "Please contact support before trying again."
+                "Payment was completed, but verification failed.\n\nPlease contact support before trying again."
               );
 
               return;
+
             }
 
 
@@ -1313,10 +1619,10 @@ async function buyPackage(searches, price) {
               );
 
               return;
+
             }
 
 
-            // Refresh search credits
             await loadCredits();
 
 
@@ -1326,8 +1632,9 @@ async function buyPackage(searches, price) {
               " searches have been added to your account."
             );
 
+          }
 
-          } catch (error) {
+          catch (error) {
 
             console.error(
               "Payment verification error:",
@@ -1335,8 +1642,7 @@ async function buyPackage(searches, price) {
             );
 
             alert(
-              "Payment was completed, but something went wrong while confirming your searches.\n\n" +
-              "Please contact support."
+              "Payment was completed, but something went wrong while confirming your searches.\n\nPlease contact support."
             );
 
           }
@@ -1368,14 +1674,14 @@ async function buyPackage(searches, price) {
 
       theme: {
 
-        color: "#3399cc"
+        color:
+          "#4f46e5"
 
       }
 
     };
 
 
-    // Make sure Razorpay Checkout exists
     if (
       typeof Razorpay ===
       "undefined"
@@ -1386,11 +1692,14 @@ async function buyPackage(searches, price) {
       );
 
       return;
+
     }
 
 
     const razorpay =
-      new Razorpay(options);
+      new Razorpay(
+        options
+      );
 
 
     razorpay.on(
@@ -1402,11 +1711,11 @@ async function buyPackage(searches, price) {
           response.error
         );
 
+
         alert(
           "Payment failed.\n\n" +
           (
-            response.error
-              ?.description ||
+            response.error?.description ||
             "Please try again."
           )
         );
@@ -1417,13 +1726,15 @@ async function buyPackage(searches, price) {
 
     razorpay.open();
 
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
       "Buy package error:",
       error
     );
+
 
     alert(
       "Could not start payment.\n\n" +
@@ -1435,76 +1746,12 @@ async function buyPackage(searches, price) {
 }
 
 
-  const confirmed =
-    confirm(
-      "TEST MODE\n\n" +
-      "Package: " +
-      searches +
-      " searches\n" +
-      "Price: ₹" +
-      price +
-      "\n\n" +
-      "No real payment will be taken."
-    );
-
-
-  if (!confirmed) {
-    return;
-  }
-
-
-  const { data, error } =
-    await supabaseClient.rpc(
-      "add_test_credits",
-      {
-        credits_to_add:
-          searches
-      }
-    );
-
-
-  if (error) {
-
-    console.error(error);
-
-    alert(
-      "Could not add searches.\n\n" +
-      error.message
-    );
-
-    return;
-  }
-
-
-  if (data !== true) {
-
-    alert(
-      "Could not add searches to this account."
-    );
-
-    return;
-  }
-
-
-  await loadCredits();
-
-
-  alert(
-    "🎉 TEST SUCCESS!\n\n" +
-    searches +
-    " searches were added."
-  );
-
-}
-
 
 /* =========================
    LOCATION
 ========================= */
 
-async function getCityLocation(
-  city
-) {
+async function getCityLocation(city) {
 
   const params =
     new URLSearchParams({
@@ -1557,6 +1804,7 @@ async function getCityLocation(
   return data[0];
 
 }
+
 
 
 /* =========================
@@ -1631,6 +1879,7 @@ const categoryQueries = {
 };
 
 
+
 function buildOverpassQuery(
   bbox,
   category,
@@ -1661,18 +1910,23 @@ function buildOverpassQuery(
         "\\$&"
       );
 
+
     nameFilter =
       `[name~"${safeName}",i]`;
 
   }
 
 
-  if (category === "all") {
+  if (
+    category === "all"
+  ) {
 
     return `
+
       [out:json][timeout:60];
 
       (
+
         nwr["shop"]["name"]
         (${south},${west},${north},${east});
 
@@ -1684,15 +1938,18 @@ function buildOverpassQuery(
 
         nwr["leisure"]["name"]
         (${south},${west},${north},${east});
+
       );
 
       out center tags;
+
     `;
 
   }
 
 
   return `
+
     [out:json][timeout:60];
 
     nwr
@@ -1701,9 +1958,11 @@ function buildOverpassQuery(
     (${south},${west},${north},${east});
 
     out center tags;
+
   `;
 
 }
+
 
 
 async function searchOverpass(
@@ -1714,17 +1973,23 @@ async function searchOverpass(
     await fetch(
       OVERPASS_URL,
       {
+
         method:
           "POST",
 
         headers: {
+
           "Content-Type":
             "application/x-www-form-urlencoded"
+
         },
 
         body:
           "data=" +
-          encodeURIComponent(query)
+          encodeURIComponent(
+            query
+          )
+
       }
     );
 
@@ -1743,6 +2008,7 @@ async function searchOverpass(
 }
 
 
+
 /* =========================
    HELPERS
 ========================= */
@@ -1758,8 +2024,11 @@ function getCoordinates(
   ) {
 
     return {
-      lat: element.lat,
-      lon: element.lon
+      lat:
+        element.lat,
+
+      lon:
+        element.lon
     };
 
   }
@@ -1787,6 +2056,7 @@ function getCoordinates(
 }
 
 
+
 function getPhone(tags) {
 
   return (
@@ -1797,6 +2067,7 @@ function getPhone(tags) {
   );
 
 }
+
 
 
 function getWebsite(tags) {
@@ -1810,39 +2081,55 @@ function getWebsite(tags) {
 }
 
 
+
 function getAddress(tags) {
 
   const parts = [];
 
 
-  if (tags["addr:housenumber"])
+  if (
+    tags["addr:housenumber"]
+  ) {
     parts.push(
       tags["addr:housenumber"]
     );
+  }
 
 
-  if (tags["addr:street"])
+  if (
+    tags["addr:street"]
+  ) {
     parts.push(
       tags["addr:street"]
     );
+  }
 
 
-  if (tags["addr:suburb"])
+  if (
+    tags["addr:suburb"]
+  ) {
     parts.push(
       tags["addr:suburb"]
     );
+  }
 
 
-  if (tags["addr:city"])
+  if (
+    tags["addr:city"]
+  ) {
     parts.push(
       tags["addr:city"]
     );
+  }
 
 
-  if (tags["addr:postcode"])
+  if (
+    tags["addr:postcode"]
+  ) {
     parts.push(
       tags["addr:postcode"]
     );
+  }
 
 
   return parts.length
@@ -1852,7 +2139,10 @@ function getAddress(tags) {
 }
 
 
-function getCategoryLabel(tags) {
+
+function getCategoryLabel(
+  tags
+) {
 
   if (tags.amenity) {
 
@@ -1900,7 +2190,9 @@ function getCategoryLabel(tags) {
     };
 
 
-    if (map[tags.amenity]) {
+    if (
+      map[tags.amenity]
+    ) {
 
       return map[
         tags.amenity
@@ -1942,7 +2234,9 @@ function getCategoryLabel(tags) {
     };
 
 
-    if (map[tags.shop]) {
+    if (
+      map[tags.shop]
+    ) {
 
       return map[
         tags.shop
@@ -1977,6 +2271,7 @@ function getCategoryLabel(tags) {
 }
 
 
+
 function getMapURL(
   lat,
   lon
@@ -1997,6 +2292,7 @@ function getMapURL(
 }
 
 
+
 function getDirectionsURL(
   lat,
   lon
@@ -2013,8 +2309,9 @@ function getDirectionsURL(
 }
 
 
+
 /* =========================
-   MAIN SEARCH
+   SEARCH
 ========================= */
 
 async function findLeads() {
@@ -2028,6 +2325,7 @@ async function findLeads() {
     openAuth("login");
 
     return;
+
   }
 
 
@@ -2082,9 +2380,11 @@ async function findLeads() {
 
 
   list.innerHTML = `
+
     <div class="loading">
       Please wait...
     </div>
+
   `;
 
 
@@ -2101,7 +2401,9 @@ async function findLeads() {
 
     if (error) {
 
-      console.error(error);
+      console.error(
+        error
+      );
 
       throw new Error(
         "Could not check your search credits."
@@ -2110,9 +2412,12 @@ async function findLeads() {
     }
 
 
-    if (data !== true) {
+    if (
+      data !== true
+    ) {
 
       await loadCredits();
+
 
       title.innerText =
         "🔒 No searches remaining";
@@ -2129,12 +2434,13 @@ async function findLeads() {
           <br>
 
           <p>
-            Choose a search package above to continue.
+            Purchase a search package above to continue.
           </p>
 
         </div>
 
       `;
+
 
       return;
 
@@ -2179,7 +2485,8 @@ async function findLeads() {
       }`;
 
 
-    list.innerHTML = "";
+    list.innerHTML =
+      "";
 
 
     const seen =
@@ -2238,23 +2545,31 @@ async function findLeads() {
 
 
         businesses.push({
+
           tags,
+
           coordinates
+
         });
 
       }
     );
 
 
-    if (!businesses.length) {
+    if (
+      !businesses.length
+    ) {
 
       list.innerHTML = `
 
         <div class="empty-message">
+
           😕 No matching businesses found.
+
         </div>
 
       `;
+
 
       return;
 
@@ -2291,7 +2606,9 @@ async function findLeads() {
 
 
           const categoryLabel =
-            getCategoryLabel(tags);
+            getCategoryLabel(
+              tags
+            );
 
 
           const mapURL =
@@ -2343,8 +2660,11 @@ async function findLeads() {
             ${
               website
                 ? `
+
                   <p>
+
                     🌐
+
                     <a
                       href="${escapeHTML(website)}"
                       target="_blank"
@@ -2352,20 +2672,29 @@ async function findLeads() {
                     >
                       Website
                     </a>
+
                   </p>
+
                 `
                 : ""
             }
 
+
             <div class="lead-actions">
 
-              <button class="details-btn">
+              <button
+                class="details-btn"
+              >
                 👀 View Details
               </button>
 
-              <button class="save-btn">
+
+              <button
+                class="save-btn"
+              >
                 ⭐ Save Lead
               </button>
+
 
               <a
                 class="map-btn secondary-btn"
@@ -2375,6 +2704,7 @@ async function findLeads() {
               >
                 🗺️ Open Map
               </a>
+
 
               <a
                 class="map-btn direction-btn"
@@ -2395,28 +2725,30 @@ async function findLeads() {
               ".details-btn"
             )
             .onclick =
-            () => {
+              () => {
 
-              alert(
-                "BUSINESS DETAILS\n\n" +
+                alert(
 
-                "🏪 " +
-                name +
+                  "BUSINESS DETAILS\n\n" +
 
-                "\n\n🏷️ " +
-                categoryLabel +
+                  "🏪 " +
+                  name +
 
-                "\n\n📍 " +
-                address +
+                  "\n\n🏷️ " +
+                  categoryLabel +
 
-                "\n\n📞 " +
-                (
-                  phone ||
-                  "Not available"
-                )
-              );
+                  "\n\n📍 " +
+                  address +
 
-            };
+                  "\n\n📞 " +
+                  (
+                    phone ||
+                    "Not available"
+                  )
+
+                );
+
+              };
 
 
           card
@@ -2424,31 +2756,31 @@ async function findLeads() {
               ".save-btn"
             )
             .onclick =
-            () => {
+              () => {
 
-              saveRealLead({
+                saveRealLead({
 
-                name,
+                  name,
 
-                area:
-                  address,
+                  area:
+                    address,
 
-                phone,
+                  phone,
 
-                website,
+                  website,
 
-                category:
-                  categoryLabel,
+                  category:
+                    categoryLabel,
 
-                lat:
-                  coords.lat,
+                  lat:
+                    coords.lat,
 
-                lon:
-                  coords.lon
+                  lon:
+                    coords.lon
 
-              });
+                });
 
-            };
+              };
 
 
           list.appendChild(
@@ -2458,12 +2790,13 @@ async function findLeads() {
         }
       );
 
-
   }
 
   catch (error) {
 
-    console.error(error);
+    console.error(
+      error
+    );
 
 
     title.innerText =
@@ -2487,6 +2820,7 @@ async function findLeads() {
 }
 
 
+
 /* =========================
    SAVED LEADS
 ========================= */
@@ -2506,9 +2840,12 @@ function saveRealLead(
   const exists =
     saved.some(
       item =>
-        item.name === lead.name &&
-        item.lat === lead.lat &&
-        item.lon === lead.lon
+        item.name ===
+          lead.name &&
+        item.lat ===
+          lead.lat &&
+        item.lon ===
+          lead.lon
     );
 
 
@@ -2534,7 +2871,8 @@ function saveRealLead(
       "",
 
     updated:
-      new Date().toLocaleString()
+      new Date()
+        .toLocaleString()
 
   });
 
@@ -2557,6 +2895,7 @@ function saveRealLead(
 }
 
 
+
 function changeLeadStatus(
   index,
   status
@@ -2570,13 +2909,17 @@ function changeLeadStatus(
     ) || [];
 
 
-  if (saved[index]) {
+  if (
+    saved[index]
+  ) {
 
     saved[index].status =
       status;
 
+
     saved[index].updated =
-      new Date().toLocaleString();
+      new Date()
+        .toLocaleString();
 
   }
 
@@ -2594,13 +2937,15 @@ function changeLeadStatus(
 }
 
 
+
 function saveNote(
   index
 ) {
 
   const textarea =
     document.getElementById(
-      "note-" + index
+      "note-" +
+      index
     );
 
 
@@ -2620,8 +2965,10 @@ function saveNote(
     saved[index].note =
       textarea.value;
 
+
     saved[index].updated =
-      new Date().toLocaleString();
+      new Date()
+        .toLocaleString();
 
   }
 
@@ -2635,6 +2982,7 @@ function saveNote(
   displaySavedLeads();
 
 }
+
 
 
 function deleteLead(
@@ -2668,6 +3016,7 @@ function deleteLead(
 }
 
 
+
 function displaySavedLeads() {
 
   const saved =
@@ -2685,11 +3034,10 @@ function displaySavedLeads() {
 
 
   const search =
-    (
-      document.getElementById(
-        "savedSearch"
-      ).value || ""
+    document.getElementById(
+      "savedSearch"
     )
+    .value
     .toLowerCase();
 
 
@@ -2706,8 +3054,11 @@ function displaySavedLeads() {
           lead,
           index
         ) => ({
+
           lead,
+
           index
+
         })
       )
       .filter(
@@ -2719,19 +3070,24 @@ function displaySavedLeads() {
 
           const text =
             (
-              lead.name || ""
+              lead.name ||
+              ""
             ).toLowerCase() +
             " " +
             (
-              lead.area || ""
+              lead.area ||
+              ""
             ).toLowerCase();
 
 
           return (
+
             text.includes(
               search
             )
+
             &&
+
             (
               status === "All" ||
               (
@@ -2739,24 +3095,31 @@ function displaySavedLeads() {
                 "New"
               ) === status
             )
+
           );
 
         }
       );
 
 
-  list.innerHTML = "";
+  list.innerHTML =
+    "";
 
 
-  if (!filtered.length) {
+  if (
+    !filtered.length
+  ) {
 
     list.innerHTML = `
 
       <div class="empty-message">
+
         No saved leads ⭐
+
       </div>
 
     `;
+
 
     return;
 
@@ -2784,28 +3147,41 @@ function displaySavedLeads() {
             )}
           </h3>
 
+
           <span class="category-label">
+
             ${escapeHTML(
               lead.category ||
               "Business"
             )}
+
           </span>
 
+
           <p>
-            📍 ${escapeHTML(
+
+            📍
+
+            ${escapeHTML(
               lead.area ||
               ""
             )}
+
           </p>
 
+
           <p>
-            📞 ${
+
+            📞
+
+            ${
               lead.phone
                 ? escapeHTML(
                     lead.phone
                   )
                 : "Not available"
             }
+
           </p>
 
 
@@ -2821,7 +3197,8 @@ function displaySavedLeads() {
             <option
               value="New"
               ${
-                lead.status === "New"
+                lead.status ===
+                "New"
                   ? "selected"
                   : ""
               }
@@ -2833,7 +3210,8 @@ function displaySavedLeads() {
             <option
               value="Contacted"
               ${
-                lead.status === "Contacted"
+                lead.status ===
+                "Contacted"
                   ? "selected"
                   : ""
               }
@@ -2845,7 +3223,8 @@ function displaySavedLeads() {
             <option
               value="Follow-up"
               ${
-                lead.status === "Follow-up"
+                lead.status ===
+                "Follow-up"
                   ? "selected"
                   : ""
               }
@@ -2857,7 +3236,8 @@ function displaySavedLeads() {
             <option
               value="Converted"
               ${
-                lead.status === "Converted"
+                lead.status ===
+                "Converted"
                   ? "selected"
                   : ""
               }
@@ -2902,12 +3282,12 @@ function displaySavedLeads() {
 
           <p class="updated">
 
-            🕐 ${
-              escapeHTML(
-                lead.updated ||
-                ""
-              )
-            }
+            🕐
+
+            ${escapeHTML(
+              lead.updated ||
+              ""
+            )}
 
           </p>
 
@@ -2919,6 +3299,7 @@ function displaySavedLeads() {
   );
 
 }
+
 
 
 function updateDashboard() {
@@ -2974,6 +3355,7 @@ function updateDashboard() {
 }
 
 
+
 function filterDashboard(
   status
 ) {
@@ -2999,6 +3381,7 @@ function filterDashboard(
 }
 
 
+
 /* =========================
    AUTH STATE
 ========================= */
@@ -3021,6 +3404,7 @@ supabaseClient.auth.onAuthStateChange(
 );
 
 
+
 /* =========================
    START
 ========================= */
@@ -3031,7 +3415,10 @@ updateDashboard();
 
 displaySavedLeads();
 
+
 </script>
 
+
 </body>
+
 </html>
