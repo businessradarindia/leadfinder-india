@@ -424,6 +424,55 @@
         text-align: center;
       }
     }
+    .packages {
+  max-width: 950px;
+  margin: 25px auto;
+  padding: 25px;
+  text-align: center;
+}
+
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.package-card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.07);
+}
+
+.package-card.featured {
+  border: 2px solid #4f46e5;
+}
+
+.package-card h3 {
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.package-card p {
+  color: #667085;
+  margin-bottom: 18px;
+}
+
+.package-card button {
+  width: 100%;
+}
+
+@media (max-width: 700px) {
+  .package-grid {
+    grid-template-columns: 1fr;
+  }
+}
   </style>
 </head>
 
@@ -551,7 +600,46 @@
     </button>
 
   </div>
+<div class="packages" id="packages">
 
+  <h2>🚀 Get More Searches</h2>
+
+  <div class="package-grid">
+
+    <div class="package-card">
+      <h3>Starter</h3>
+      <div class="price">₹49</div>
+      <p>15 searches</p>
+      <button onclick="buyPackage(15, 49)">
+        Get 15 Searches
+      </button>
+    </div>
+
+    <div class="package-card featured">
+      <h3>Popular</h3>
+      <div class="price">₹99</div>
+      <p>25 searches</p>
+      <button onclick="buyPackage(25, 99)">
+        Get 25 Searches
+      </button>
+    </div>
+
+    <div class="package-card">
+      <h3>Business</h3>
+      <div class="price">₹200</div>
+      <p>100 searches</p>
+      <button onclick="buyPackage(100, 200)">
+        Get 100 Searches
+      </button>
+    </div>
+
+  </div>
+
+  <p class="demo">
+    Payments are not enabled yet. These are test buttons.
+  </p>
+
+</div>
   <div id="creditBox" class="credit-box">
     🆓 Searches remaining:
     <span id="creditCount">0</span>
@@ -2411,6 +2499,63 @@ loadUser();
 updateDashboard();
 
 displaySavedLeads();
+  async function buyPackage(searches, price) {
+
+  if (!currentUser) {
+    alert("Please login first.");
+    openAuth("login");
+    return;
+  }
+
+  const confirmed = confirm(
+    "TEST MODE\n\n" +
+    "Package: " + searches + " searches\n" +
+    "Price: ₹" + price + "\n\n" +
+    "No real payment will be taken."
+  );
+
+  if (!confirmed) {
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("paid_searches")
+    .eq("id", currentUser.id)
+    .single();
+
+  if (error) {
+    console.error(error);
+    alert("Could not load your account.");
+    return;
+  }
+
+  const currentPaid =
+    Number(data.paid_searches || 0);
+
+  const { error: updateError } =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        paid_searches:
+          currentPaid + searches
+      })
+      .eq("id", currentUser.id);
+
+  if (updateError) {
+    console.error(updateError);
+    alert("Could not add searches.");
+    return;
+  }
+
+  await loadCredits();
+
+  alert(
+    "🎉 TEST SUCCESS!\n\n" +
+    searches +
+    " searches were added."
+  );
+}
 
 </script>
 
