@@ -118,16 +118,17 @@
     }
 
     .search-box {
-      background: white;
-      max-width: 950px;
-      margin: auto;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.08);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
+  background: white;
+  max-width: 950px;
+  margin: auto;
+  padding: 28px;
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.09);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  border: 1px solid #eef0f5;
+}
 
     .search-box input,
     .search-box select {
@@ -138,7 +139,12 @@
       font-size: 16px;
       background: white;
     }
-
+.search-box input:focus,
+.search-box select:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
     .business-name,
     .search-button {
       grid-column: 1 / -1;
@@ -155,9 +161,16 @@
       cursor: pointer;
     }
 
-    .search-button:hover {
-      background: #3730a3;
-    }
+.search-button:hover {
+  background: #3730a3;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25);
+}
+
+.search-button {
+  transition: 0.2s ease;
+}
+    
 
     .credit-box {
       max-width: 950px;
