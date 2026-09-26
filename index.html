@@ -392,7 +392,67 @@
       justify-content: center;
       padding: 20px;
     }
+.business-details-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
 
+.business-details-box {
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 18px;
+  padding: 28px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.business-details-box h2 {
+  margin: 0 40px 12px 0;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.business-details-info {
+  margin-top: 20px;
+}
+
+.business-details-info p {
+  margin: 12px 0;
+  color: #475467;
+  line-height: 1.5;
+}
+
+.business-details-info a {
+  color: #4f46e5;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.business-details-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 18px;
+}
+
+.business-details-close:hover {
+  background: #e2e8f0;
+}
     .modal-box {
       width: 100%;
       max-width: 420px;
@@ -2893,27 +2953,15 @@ async function findLeads() {
             .onclick =
               () => {
 
-                alert(
-
-                  "BUSINESS DETAILS\n\n" +
-
-                  "🏪 " +
-                  name +
-
-                  "\n\n🏷️ " +
-                  categoryLabel +
-
-                  "\n\n📍 " +
-                  address +
-
-                  "\n\n📞 " +
-                  (
-                    phone ||
-                    "Not available"
-                  )
-
-                );
-
+              showBusinessDetails({
+  name: name,
+  category: categoryLabel,
+  address: address,
+  phone: phone,
+  website: website,
+  lat: coords.lat,
+  lon: coords.lon
+});
               };
 
 
@@ -2990,7 +3038,108 @@ async function findLeads() {
 /* =========================
    SAVED LEADS
 ========================= */
+function showBusinessDetails(business) {
 
+  const websiteHTML =
+    business.website
+      ? `
+        <p>
+          🌐
+          <a
+            href="${escapeHTML(business.website)}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit Website
+          </a>
+        </p>
+      `
+      : "";
+
+  const mapURL =
+    getMapURL(
+      business.lat,
+      business.lon
+    );
+
+  const directionsURL =
+    getDirectionsURL(
+      business.lat,
+      business.lon
+    );
+
+  const details =
+    document.createElement("div");
+
+  details.className =
+    "business-details-overlay";
+
+  details.innerHTML = `
+
+    <div class="business-details-box">
+
+      <button
+        class="business-details-close"
+        onclick="this.closest('.business-details-overlay').remove()"
+      >
+        ✕
+      </button>
+
+      <h2>
+        🏪 ${escapeHTML(business.name)}
+      </h2>
+
+      <span class="category-label">
+        ${escapeHTML(business.category)}
+      </span>
+
+      <div class="business-details-info">
+
+        <p>
+          📍 ${escapeHTML(business.address)}
+        </p>
+
+        <p>
+          📞 ${
+            business.phone
+              ? escapeHTML(business.phone)
+              : "Not available"
+          }
+        </p>
+
+        ${websiteHTML}
+
+      </div>
+
+      <div class="lead-actions">
+
+        <a
+          class="map-btn secondary-btn"
+          href="${mapURL}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          🗺️ Open Map
+        </a>
+
+        <a
+          class="map-btn direction-btn"
+          href="${directionsURL}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          🧭 Directions
+        </a>
+
+      </div>
+
+    </div>
+
+  `;
+
+  document.body.appendChild(details);
+
+}
 function saveRealLead(
   lead
 ) {
