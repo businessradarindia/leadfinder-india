@@ -3361,17 +3361,7 @@ async function changeLeadStatus(
 
 }
 
-  localStorage.setItem(
-    "savedLeads",
-    JSON.stringify(saved)
-  );
-
-
-  updateDashboard();
-
-  displaySavedLeads();
-
-}
+  
 
 
 
@@ -3433,16 +3423,7 @@ async function saveNote(leadId) {
 }
 
 
-  localStorage.setItem(
-    "savedLeads",
-    JSON.stringify(saved)
-  );
-
-
-  displaySavedLeads();
-
-}
-
+ 
 
 
 async function deleteLead(leadId) {
