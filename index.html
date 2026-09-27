@@ -3224,39 +3224,75 @@ function showBusinessDetails(business) {
   document.body.appendChild(details);
 
 }
-function saveRealLead(
-  lead
-) {
+async function saveRealLead(lead) {
 
-  const saved =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
+  if (!currentUser) {
+    alert("Please login first.");
+    openAuth("login");
+    return;
+  }
 
+  try {
 
-  const exists =
-    saved.some(
-      item =>
-        item.name ===
-          lead.name &&
-        item.lat ===
-          lead.lat &&
-        item.lon ===
-          lead.lon
+    const {
+      data: existingLead,
+      error: existingError
+    } = await supabaseClient
+      .from("saved_leads")
+      .select("id")
+      .eq("user_id", currentUser.id)
+      .eq("business_name", lead.name)
+      .eq("latitude", lead.lat)
+      .eq("longitude", lead.lon)
+      .maybeSingle();
+
+    if (existingError) {
+      throw existingError;
+    }
+
+    if (existingLead) {
+      alert("⭐ This lead is already saved!");
+      return;
+    }
+
+    const {
+      error
+    } = await supabaseClient
+      .from("saved_leads")
+      .insert({
+        user_id: currentUser.id,
+        business_name: lead.name,
+        category: lead.category || "Business",
+        address: lead.area || "",
+        phone: lead.phone || null,
+        website: lead.website || null,
+        latitude: lead.lat,
+        longitude: lead.lon,
+        status: "New",
+        note: ""
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    alert("⭐ Lead Saved!");
+
+  } catch (error) {
+
+    console.error(
+      "Save lead error:",
+      error
     );
-
-
-  if (exists) {
 
     alert(
-      "⭐ This lead is already saved!"
+      "Could not save this lead.\n\n" +
+      (error.message || "Please try again.")
     );
 
-    return;
-
   }
+
+}
 
 
   saved.push({
@@ -3295,33 +3331,50 @@ function saveRealLead(
 
 
 
-function changeLeadStatus(
-  index,
+async function changeLeadStatus(
+  leadId,
   status
 ) {
 
-  const saved =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
+  if (!currentUser) {
+    alert("Please login first.");
+    return;
+  }
 
+  try {
 
-  if (
-    saved[index]
-  ) {
+    const {
+      error
+    } = await supabaseClient
+      .from("saved_leads")
+      .update({
+        status: status,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", leadId)
+      .eq("user_id", currentUser.id);
 
-    saved[index].status =
-      status;
+    if (error) {
+      throw error;
+    }
 
+    await displaySavedLeads();
 
-    saved[index].updated =
-      new Date()
-        .toLocaleString();
+  } catch (error) {
+
+    console.error(
+      "Update status error:",
+      error
+    );
+
+    alert(
+      "Could not update status.\n\n" +
+      (error.message || "Please try again.")
+    );
 
   }
 
+}
 
   localStorage.setItem(
     "savedLeads",
@@ -3337,40 +3390,63 @@ function changeLeadStatus(
 
 
 
-function saveNote(
-  index
-) {
+async function saveNote(leadId) {
+
+  if (!currentUser) {
+    alert("Please login first.");
+    return;
+  }
 
   const textarea =
     document.getElementById(
-      "note-" +
-      index
+      "note-" + leadId
     );
 
+  if (!textarea) {
+    return;
+  }
 
-  const saved =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
+  try {
+
+    const {
+      error
+    } = await supabaseClient
+      .from("saved_leads")
+      .update({
+        note: textarea.value,
+        updated_at:
+          new Date().toISOString()
+      })
+      .eq("id", leadId)
+      .eq("user_id", currentUser.id);
+
+    if (error) {
+      throw error;
+    }
+
+    alert("💾 Note Saved!");
+
+    await displaySavedLeads();
+
+  } catch (error) {
+
+    console.error(
+      "Save note error:",
+      error
+    );
+
+    alert(
+      "Could not save note.\n\n" +
+      (
+        error.message ||
+        "Please try again."
       )
-    ) || [];
-
-
-  if (
-    saved[index] &&
-    textarea
-  ) {
-
-    saved[index].note =
-      textarea.value;
-
-
-    saved[index].updated =
-      new Date()
-        .toLocaleString();
+    );
 
   }
 
+}
+
 
   localStorage.setItem(
     "savedLeads",
@@ -3384,210 +3460,190 @@ function saveNote(
 
 
 
-function deleteLead(
-  index
-) {
+async function deleteLead(leadId) {
 
-  const saved =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
+  if (!currentUser) {
+    alert("Please login first.");
+    return;
+  }
 
-
-  saved.splice(
-    index,
-    1
-  );
-
-
-  localStorage.setItem(
-    "savedLeads",
-    JSON.stringify(saved)
-  );
-
-
-  updateDashboard();
-
-  displaySavedLeads();
-
-}
-
-
-
-function displaySavedLeads() {
-
-  const saved =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
-
-
-  const list =
-    document.getElementById(
-      "savedList"
+  const confirmed =
+    confirm(
+      "Are you sure you want to remove this lead?"
     );
 
+  if (!confirmed) {
+    return;
+  }
+
+  try {
+
+    const {
+      error
+    } = await supabaseClient
+      .from("saved_leads")
+      .delete()
+      .eq("id", leadId)
+      .eq("user_id", currentUser.id);
+
+    if (error) {
+      throw error;
+    }
+
+    await updateDashboard();
+    await displaySavedLeads();
+
+  } catch (error) {
+
+    console.error(
+      "Delete lead error:",
+      error
+    );
+
+    alert(
+      "Could not delete lead.\n\n" +
+      (
+        error.message ||
+        "Please try again."
+      )
+    );
+
+  }
+
+}
+
+
+
+async function displaySavedLeads() {
+
+  const list =
+    document.getElementById("savedList");
 
   const search =
-    document.getElementById(
-      "savedSearch"
-    )
-    .value
-    .toLowerCase();
-
+    document.getElementById("savedSearch")
+      .value
+      .toLowerCase();
 
   const status =
-    document.getElementById(
-      "savedStatus"
-    ).value;
+    document.getElementById("savedStatus")
+      .value;
 
+  if (!currentUser) {
 
-  const filtered =
-    saved
-      .map(
-        (
-          lead,
-          index
-        ) => ({
+    list.innerHTML = `
+      <div class="empty-message">
+        Please login to view saved leads 🔐
+      </div>
+    `;
 
-          lead,
+    return;
+  }
 
-          index
+  try {
 
-        })
-      )
-      .filter(
-        item => {
+    const {
+      data: saved,
+      error
+    } = await supabaseClient
+      .from("saved_leads")
+      .select("*")
+      .eq("user_id", currentUser.id)
+      .order("created_at", {
+        ascending: false
+      });
+
+    if (error) {
+      throw error;
+    }
+
+    const filtered =
+      (saved || [])
+        .map(
+          (lead, index) => ({
+            lead,
+            index
+          })
+        )
+        .filter(item => {
 
           const lead =
             item.lead;
 
-
           const text =
             (
-              lead.name ||
+              lead.business_name ||
               ""
             ).toLowerCase() +
             " " +
             (
-              lead.area ||
+              lead.address ||
               ""
             ).toLowerCase();
 
-
           return (
-
-            text.includes(
-              search
-            )
-
-            &&
-
+            text.includes(search) &&
             (
               status === "All" ||
-              (
-                lead.status ||
-                "New"
-              ) === status
+              (lead.status || "New") === status
             )
-
           );
 
-        }
-      );
+        });
 
+    list.innerHTML = "";
 
-  list.innerHTML =
-    "";
+    if (!filtered.length) {
 
+      list.innerHTML = `
+        <div class="empty-message">
+          No saved leads ⭐
+        </div>
+      `;
 
-  if (
-    !filtered.length
-  ) {
+      return;
+    }
 
-    list.innerHTML = `
-
-      <div class="empty-message">
-
-        No saved leads ⭐
-
-      </div>
-
-    `;
-
-
-    return;
-
-  }
-
-
-  filtered.forEach(
-    item => {
+    filtered.forEach(item => {
 
       const lead =
         item.lead;
 
-
       const index =
         item.index;
 
-
       list.innerHTML += `
-
         <div class="lead">
 
           <h3>
             ${escapeHTML(
-              lead.name
+              lead.business_name || ""
             )}
           </h3>
 
-
           <span class="category-label">
-
             ${escapeHTML(
-              lead.category ||
-              "Business"
+              lead.category || "Business"
             )}
-
           </span>
 
-
           <p>
-
-            📍
-
-            ${escapeHTML(
-              lead.area ||
-              ""
+            📍 ${escapeHTML(
+              lead.address || ""
             )}
-
           </p>
 
-
           <p>
-
-            📞
-
-            ${
+            📞 ${
               lead.phone
-                ? escapeHTML(
-                    lead.phone
-                  )
+                ? escapeHTML(lead.phone)
                 : "Not available"
             }
-
           </p>
-
 
           <select
             onchange="
               changeLeadStatus(
-                ${index},
+                '${lead.id}',
                 this.value
               )
             "
@@ -3596,8 +3652,7 @@ function displaySavedLeads() {
             <option
               value="New"
               ${
-                lead.status ===
-                "New"
+                lead.status === "New"
                   ? "selected"
                   : ""
               }
@@ -3605,12 +3660,10 @@ function displaySavedLeads() {
               🆕 New
             </option>
 
-
             <option
               value="Contacted"
               ${
-                lead.status ===
-                "Contacted"
+                lead.status === "Contacted"
                   ? "selected"
                   : ""
               }
@@ -3618,12 +3671,10 @@ function displaySavedLeads() {
               📞 Contacted
             </option>
 
-
             <option
               value="Follow-up"
               ${
-                lead.status ===
-                "Follow-up"
+                lead.status === "Follow-up"
                   ? "selected"
                   : ""
               }
@@ -3631,12 +3682,10 @@ function displaySavedLeads() {
               🔔 Follow-up
             </option>
 
-
             <option
               value="Converted"
               ${
-                lead.status ===
-                "Converted"
+                lead.status === "Converted"
                   ? "selected"
                   : ""
               }
@@ -3646,31 +3695,28 @@ function displaySavedLeads() {
 
           </select>
 
-
           <textarea
             class="note-box"
-            id="note-${index}"
+            id="note-${lead.id}"
             placeholder="Write a note..."
           >${escapeHTML(
             lead.note || ""
           )}</textarea>
 
-
           <div class="lead-actions">
 
             <button
               onclick="
-                saveNote(${index})
+                saveNote('${lead.id}')
               "
             >
               💾 Save Note
             </button>
 
-
             <button
               class="danger-btn"
               onclick="
-                deleteLead(${index})
+                deleteLead('${lead.id}')
               "
             >
               🗑️ Remove
@@ -3678,78 +3724,96 @@ function displaySavedLeads() {
 
           </div>
 
-
           <p class="updated">
-
-            🕐
-
-            ${escapeHTML(
-              lead.updated ||
-              ""
-            )}
-
+            🕐 ${
+              escapeHTML(
+                lead.updated_at || ""
+              )
+            }
           </p>
 
         </div>
-
       `;
 
-    }
-  );
+    });
 
+  } catch (error) {
+
+    console.error(
+      "Display saved leads error:",
+      error
+    );
+
+    list.innerHTML = `
+      <div class="empty-message">
+        Could not load saved leads.
+      </div>
+    `;
+
+  }
 }
 
 
+async function updateDashboard() {
 
-function updateDashboard() {
+  if (!currentUser) {
+    return;
+  }
 
-  const saved =
-    JSON.parse(
-      localStorage.getItem(
-        "savedLeads"
-      )
-    ) || [];
+  try {
 
+    const {
+      data: saved,
+      error
+    } = await supabaseClient
+      .from("saved_leads")
+      .select("status")
+      .eq("user_id", currentUser.id);
 
-  const count =
-    status =>
-      saved.filter(
+    if (error) {
+      throw error;
+    }
+
+    const leads = saved || [];
+
+    const count = status =>
+      leads.filter(
         lead =>
-          (
-            lead.status ||
-            "New"
-          ) === status
+          (lead.status || "New") === status
       ).length;
 
+    document.getElementById(
+      "totalLeads"
+    ).innerText = leads.length;
 
-  document.getElementById(
-    "totalLeads"
-  ).innerText =
-    saved.length;
+    document.getElementById(
+      "newLeads"
+    ).innerText =
+      count("New");
 
+    document.getElementById(
+      "contactedLeads"
+    ).innerText =
+      count("Contacted");
 
-  document.getElementById(
-    "newLeads"
-  ).innerText =
-    count("New");
+    document.getElementById(
+      "followupLeads"
+    ).innerText =
+      count("Follow-up");
 
+    document.getElementById(
+      "convertedLeads"
+    ).innerText =
+      count("Converted");
 
-  document.getElementById(
-    "contactedLeads"
-  ).innerText =
-    count("Contacted");
+  } catch (error) {
 
+    console.error(
+      "Dashboard error:",
+      error
+    );
 
-  document.getElementById(
-    "followupLeads"
-  ).innerText =
-    count("Follow-up");
-
-
-  document.getElementById(
-    "convertedLeads"
-  ).innerText =
-    count("Converted");
+  }
 
 }
 
