@@ -3816,6 +3816,20 @@ supabaseClient.auth.onAuthStateChange(
 
   }
 );
+  supabaseClient.auth.getSession().then(
+  ({ data: { session } }) => {
+
+    currentUser =
+      session
+        ? session.user
+        : null;
+
+    updateAuthUI();
+    updateDashboard();
+    displaySavedLeads();
+
+  }
+);
 
 
 
