@@ -14,7 +14,7 @@
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
   <!-- Razorpay -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -118,17 +118,17 @@
     }
 
     .search-box {
-  background: white;
-  max-width: 950px;
-  margin: auto;
-  padding: 28px;
-  border-radius: 18px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.09);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  border: 1px solid #eef0f5;
-}
+      background: white;
+      max-width: 950px;
+      margin: auto;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.09);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      border: 1px solid #eef0f5;
+    }
 
     .search-box input,
     .search-box select {
@@ -139,12 +139,14 @@
       font-size: 16px;
       background: white;
     }
-.search-box input:focus,
-.search-box select:focus {
-  outline: none;
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
-}
+
+    .search-box input:focus,
+    .search-box select:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+    }
+
     .business-name,
     .search-button {
       grid-column: 1 / -1;
@@ -159,18 +161,14 @@
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
+      transition: 0.2s ease;
     }
 
-.search-button:hover {
-  background: #3730a3;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25);
-}
-
-.search-button {
-  transition: 0.2s ease;
-}
-    
+    .search-button:hover {
+      background: #3730a3;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.25);
+    }
 
     .credit-box {
       max-width: 950px;
@@ -182,40 +180,34 @@
       font-weight: bold;
       display: none;
     }
-.trust-strip {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-  margin: 28px auto 10px;
-  max-width: 1000px;
-  padding: 16px 20px;
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-}
 
-.trust-strip div {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #475467;
-  font-size: 14px;
-}
+    .trust-strip {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin: 28px auto 10px;
+      max-width: 1000px;
+      padding: 16px 20px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    }
 
-.trust-strip strong {
-  color: #172554;
-  font-weight: 600;
-}
+    .trust-strip div {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #475467;
+      font-size: 14px;
+    }
 
-@media (max-width: 700px) {
-  .trust-strip {
-    flex-direction: column;
-    gap: 12px;
-    text-align: center;
-  }
-}
+    .trust-strip strong {
+      color: #172554;
+      font-weight: 600;
+    }
+
     .packages {
       max-width: 950px;
       margin: 25px auto;
@@ -287,63 +279,64 @@
       margin-bottom: 20px;
     }
 
-   .lead {
-  background: white;
-  padding: 24px;
-  margin-bottom: 16px;
-  border-radius: 16px;
-  border: 1px solid #eef0f5;
-  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+    .lead {
+      background: white;
+      padding: 24px;
+      margin-bottom: 16px;
+      border-radius: 16px;
+      border: 1px solid #eef0f5;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-.lead:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.09);
-}
+    .lead:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.09);
+    }
 
     .lead h3 {
-  margin-bottom: 10px;
-  font-size: 21px;
-  line-height: 1.3;
-  color: #172033;
-}
+      margin-bottom: 10px;
+      font-size: 21px;
+      line-height: 1.3;
+      color: #172033;
+    }
 
     .lead p {
-  color: #667085;
-  margin: 8px 0;
-  line-height: 1.5;
-}
+      color: #667085;
+      margin: 8px 0;
+      line-height: 1.5;
+    }
 
-   .category-label {
-  display: inline-block;
-  margin-top: 5px;
-  padding: 6px 10px;
-  background: #eef0ff;
-  color: #3730a3;
-  border-radius: 7px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-}
+    .category-label {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 6px 10px;
+      background: #eef0ff;
+      color: #3730a3;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
 
-   .lead-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
-}
+    .lead-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
 
-.lead-actions button,
-.lead-actions .map-btn {
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
+    .lead-actions button,
+    .lead-actions .map-btn {
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
 
-.lead-actions button:hover,
-.lead-actions .map-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
-}
+    .lead-actions button:hover,
+    .lead-actions .map-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.12);
+    }
+
     button,
     .map-btn {
       padding: 11px 15px;
@@ -459,67 +452,69 @@
       justify-content: center;
       padding: 20px;
     }
-.business-details-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
 
-.business-details-box {
-  width: 100%;
-  max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background: white;
-  border-radius: 18px;
-  padding: 28px;
-  position: relative;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-}
+    .business-details-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-.business-details-box h2 {
-  margin: 0 40px 12px 0;
-  font-size: 24px;
-  line-height: 1.3;
-}
+    .business-details-box {
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: white;
+      border-radius: 18px;
+      padding: 28px;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    }
 
-.business-details-info {
-  margin-top: 20px;
-}
+    .business-details-box h2 {
+      margin: 0 40px 12px 0;
+      font-size: 24px;
+      line-height: 1.3;
+    }
 
-.business-details-info p {
-  margin: 12px 0;
-  color: #475467;
-  line-height: 1.5;
-}
+    .business-details-info {
+      margin-top: 20px;
+    }
 
-.business-details-info a {
-  color: #4f46e5;
-  font-weight: bold;
-  text-decoration: none;
-}
+    .business-details-info p {
+      margin: 12px 0;
+      color: #475467;
+      line-height: 1.5;
+    }
 
-.business-details-close {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 38px;
-  height: 38px;
-  padding: 0;
-  border-radius: 50%;
-  background: #f1f5f9;
-  color: #334155;
-  font-size: 18px;
-}
+    .business-details-info a {
+      color: #4f46e5;
+      font-weight: bold;
+      text-decoration: none;
+    }
 
-.business-details-close:hover {
-  background: #e2e8f0;
-}
+    .business-details-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: #334155;
+      font-size: 18px;
+    }
+
+    .business-details-close:hover {
+      background: #e2e8f0;
+    }
+
     .modal-box {
       width: 100%;
       max-width: 420px;
@@ -584,6 +579,12 @@
 
       .package-grid {
         grid-template-columns: 1fr;
+      }
+
+      .trust-strip {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
       }
 
     }
@@ -684,13 +685,13 @@
 
 <section class="hero">
 
- <h1>
-  Find Businesses. Find Opportunities.
-</h1>
+  <h1>
+    Find Businesses. Find Opportunities.
+  </h1>
 
-<p>
-  Discover real businesses across India and turn local data into valuable leads.
-</p>
+  <p>
+    Discover real businesses across India and turn local data into valuable leads.
+  </p>
 
 
   <div class="search-box">
@@ -879,7 +880,6 @@
   </div>
 
 
-
   <div
     class="packages"
     id="packages"
@@ -968,8 +968,8 @@
 
 
     <p class="demo">
-  Secure payment powered by Razorpay.
-</p>
+      Secure payment powered by Razorpay.
+    </p>
 
   </div>
 
@@ -987,24 +987,27 @@
     </span>
 
   </div>
-<div class="trust-strip">
 
-  <div>
-    🇮🇳
-    <strong>Multiple Indian Cities</strong>
+
+  <div class="trust-strip">
+
+    <div>
+      🇮🇳
+      <strong>Multiple Indian Cities</strong>
+    </div>
+
+    <div>
+      📍
+      <strong>Real OpenStreetMap Data</strong>
+    </div>
+
+    <div>
+      ⚡
+      <strong>Fast Lead Discovery</strong>
+    </div>
+
   </div>
 
-  <div>
-    📍
-    <strong>Real OpenStreetMap Data</strong>
-  </div>
-
-  <div>
-    ⚡
-    <strong>Fast Lead Discovery</strong>
-  </div>
-
-</div>
 </section>
 
 
@@ -1242,7 +1245,6 @@
 
 <script>
 
-
 /* =========================
    SUPABASE
 ========================= */
@@ -1271,9 +1273,19 @@ const NOMINATIM_URL =
   "https://nominatim.openstreetmap.org/search";
 
 
-const OVERPASS_URL =
-  "https://overpass-api.de/api/interpreter";
+/* =========================
+   OVERPASS SERVERS
+========================= */
 
+const OVERPASS_SERVERS = [
+
+  "https://overpass-api.de/api/interpreter",
+
+  "https://overpass.kumi.systems/api/interpreter",
+
+  "https://overpass.private.coffee/api/interpreter"
+
+];
 
 
 /* =========================
@@ -1297,7 +1309,6 @@ function escapeHTML(text) {
     .replace(/'/g, "&#039;");
 
 }
-
 
 
 /* =========================
@@ -1328,7 +1339,6 @@ function openAuth(mode) {
 }
 
 
-
 function closeAuth() {
 
   document.getElementById(
@@ -1336,7 +1346,6 @@ function closeAuth() {
   ).style.display = "none";
 
 }
-
 
 
 async function submitAuth() {
@@ -1434,7 +1443,6 @@ async function submitAuth() {
 }
 
 
-
 async function logout() {
 
   await supabaseClient.auth.signOut();
@@ -1443,8 +1451,11 @@ async function logout() {
 
   updateAuthUI();
 
-}
+  await updateDashboard();
 
+  await displaySavedLeads();
+
+}
 
 
 async function loadUser() {
@@ -1464,6 +1475,9 @@ async function loadUser() {
 }
 
 
+/* =========================
+   AUTH UI
+========================= */
 
 function updateAuthUI() {
 
@@ -1549,7 +1563,6 @@ function updateAuthUI() {
 }
 
 
-
 /* =========================
    CREDITS
 ========================= */
@@ -1609,17 +1622,25 @@ async function loadCredits() {
 }
 
 
-
 /* =========================
    RAZORPAY PAYMENT
 ========================= */
 
-async function buyPackage(searches, price) {
+async function buyPackage(
+  searches,
+  price
+) {
 
   if (!currentUser) {
-    alert("Please login first.");
+
+    alert(
+      "Please login first."
+    );
+
     openAuth("login");
+
     return;
+
   }
 
   try {
@@ -1627,20 +1648,31 @@ async function buyPackage(searches, price) {
     const {
       data: sessionData,
       error: sessionError
-    } = await supabaseClient.auth.getSession();
+    } =
+      await supabaseClient.auth.getSession();
+
 
     if (sessionError) {
       throw sessionError;
     }
 
+
     const session =
       sessionData.session;
 
+
     if (!session) {
-      alert("Your login session has expired. Please login again.");
+
+      alert(
+        "Your login session has expired. Please login again."
+      );
+
       openAuth("login");
+
       return;
+
     }
+
 
     const response =
       await fetch(
@@ -1651,17 +1683,21 @@ async function buyPackage(searches, price) {
           headers: {
             "Content-Type": "application/json",
             "Authorization":
-              "Bearer " + session.access_token
+              "Bearer " +
+              session.access_token
           },
 
           body: JSON.stringify({
+            searches: searches,
             price: price
           })
         }
       );
 
+
     const result =
       await response.json();
+
 
     if (!response.ok) {
 
@@ -1674,13 +1710,18 @@ async function buyPackage(searches, price) {
         result.error ||
         "Could not create payment order."
       );
+
     }
 
+
     if (!result.order_id) {
+
       throw new Error(
         "Razorpay order was not created."
       );
+
     }
+
 
     const options = {
 
@@ -1713,168 +1754,9 @@ async function buyPackage(searches, price) {
       },
 
       handler:
-        function (paymentResponse) {
-
-          console.log(
-            "Razorpay payment response:",
-            paymentResponse
-          );
-
-          alert(
-            "✅ Payment completed!\n\n" +
-            "Payment ID: " +
-            paymentResponse.razorpay_payment_id +
-            "\n\n" +
-            "Your payment is being verified."
-          );
-
-        },
-
-      modal: {
-        ondismiss:
-          function () {
-            console.log(
-              "Payment window closed."
-            );
-          }
-      }
-
-    };
-
-    const razorpay =
-      new Razorpay(options);
-
-    razorpay.on(
-      "payment.failed",
-      function (response) {
-
-        console.error(
-          "Razorpay payment failed:",
-          response.error
-        );
-
-        alert(
-          "❌ Payment failed.\n\n" +
-          (
-            response.error.description ||
-            "Please try again."
-          )
-        );
-
-      }
-    );
-
-    razorpay.open();
-
-  } catch (error) {
-
-    console.error(
-      "buyPackage error:",
-      error
-    );
-
-    alert(
-      "❌ Could not start payment.\n\n" +
-      (
-        error.message ||
-        "Please try again."
-      )
-    );
-
-  }
-
-
-
-  if (!currentUser) {
-
-  alert(
-    "Please login first."
-  );
-
-  openAuth("login");
-
-  return;
-
-}
-
-
-  try {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient.functions.invoke(
-        "create-payment",
-        {
-          body: {
-            searches: searches,
-            price: price
-          }
-        }
-      );
-
-
-    if (error) {
-
-      console.error(
-        "Create payment error:",
-        error
-      );
-
-      alert(
-        "Could not start payment.\n\n" +
-        error.message
-      );
-
-      return;
-
-    }
-
-
-    if (
-      !data ||
-      !data.order_id
-    ) {
-
-      console.error(
-        "Invalid payment response:",
-        data
-      );
-
-      alert(
-        "Could not create payment order."
-      );
-
-      return;
-
-    }
-
-
-    const options = {
-
-      key:
-        data.key_id,
-
-      amount:
-        data.amount,
-
-      currency:
-        data.currency || "INR",
-
-      name:
-        "BusinessRadar India",
-
-      description:
-        searches +
-        " Business Searches",
-
-      order_id:
-        data.order_id,
-
-
-      handler:
-        async function(response) {
+        async function (
+          paymentResponse
+        ) {
 
           try {
 
@@ -1890,13 +1772,13 @@ async function buyPackage(searches, price) {
                     body: {
 
                       razorpay_order_id:
-                        response.razorpay_order_id,
+                        paymentResponse.razorpay_order_id,
 
                       razorpay_payment_id:
-                        response.razorpay_payment_id,
+                        paymentResponse.razorpay_payment_id,
 
                       razorpay_signature:
-                        response.razorpay_signature
+                        paymentResponse.razorpay_signature
 
                     }
                   }
@@ -1959,7 +1841,6 @@ async function buyPackage(searches, price) {
 
         },
 
-
       modal: {
 
         ondismiss:
@@ -1973,14 +1854,12 @@ async function buyPackage(searches, price) {
 
       },
 
-
       prefill: {
 
         email:
           currentUser.email || ""
 
       },
-
 
       theme: {
 
@@ -2021,7 +1900,6 @@ async function buyPackage(searches, price) {
           response.error
         );
 
-
         alert(
           "Payment failed.\n\n" +
           (
@@ -2045,7 +1923,6 @@ async function buyPackage(searches, price) {
       error
     );
 
-
     alert(
       "Could not start payment.\n\n" +
       error.message
@@ -2056,12 +1933,13 @@ async function buyPackage(searches, price) {
 }
 
 
-
 /* =========================
    LOCATION
 ========================= */
 
-async function getCityLocation(city) {
+async function getCityLocation(
+  city
+) {
 
   const params =
     new URLSearchParams({
@@ -2114,7 +1992,6 @@ async function getCityLocation(city) {
   return data[0];
 
 }
-
 
 
 /* =========================
@@ -2187,7 +2064,6 @@ const categoryQueries = {
     '["shop"="beauty"]'
 
 };
-
 
 
 function buildOverpassQuery(
@@ -2274,49 +2150,140 @@ function buildOverpassQuery(
 }
 
 
+/* =========================
+   OVERPASS SEARCH
+   WITH FALLBACK SERVERS
+========================= */
 
 async function searchOverpass(
   query
 ) {
 
-  const response =
-    await fetch(
-      OVERPASS_URL,
-      {
+  let lastError = null;
 
-        method:
-          "POST",
 
-        headers: {
+  for (
+    let i = 0;
+    i < OVERPASS_SERVERS.length;
+    i++
+  ) {
 
-          "Content-Type":
-            "application/x-www-form-urlencoded"
+    const server =
+      OVERPASS_SERVERS[i];
 
-        },
 
-        body:
-          "data=" +
-          encodeURIComponent(
-            query
-          )
+    try {
+
+      console.log(
+        "Trying Overpass server:",
+        server
+      );
+
+
+      const controller =
+        new AbortController();
+
+
+      const timeout =
+        setTimeout(
+          () => controller.abort(),
+          45000
+        );
+
+
+      const response =
+        await fetch(
+          server,
+          {
+
+            method:
+              "POST",
+
+            headers: {
+
+              "Content-Type":
+                "application/x-www-form-urlencoded"
+
+            },
+
+            body:
+              "data=" +
+              encodeURIComponent(
+                query
+              ),
+
+            signal:
+              controller.signal
+
+          }
+        );
+
+
+      clearTimeout(timeout);
+
+
+      if (
+        !response.ok
+      ) {
+
+        throw new Error(
+          "Server returned HTTP " +
+          response.status
+        );
 
       }
-    );
 
 
-  if (!response.ok) {
+      const data =
+        await response.json();
 
-    throw new Error(
-      "Business data server is busy. Try again."
-    );
+
+      if (
+        !data ||
+        !Array.isArray(
+          data.elements
+        )
+      ) {
+
+        throw new Error(
+          "Invalid Overpass response."
+        );
+
+      }
+
+
+      console.log(
+        "Overpass server worked:",
+        server
+      );
+
+
+      return data;
+
+    }
+
+    catch (error) {
+
+      console.warn(
+        "Overpass server failed:",
+        server,
+        error
+      );
+
+
+      lastError =
+        error;
+
+    }
 
   }
 
 
-  return await response.json();
+  throw new Error(
+    "All business data servers are busy right now. Please try again in a moment."
+  );
 
 }
-
 
 
 /* =========================
@@ -2334,11 +2301,13 @@ function getCoordinates(
   ) {
 
     return {
+
       lat:
         element.lat,
 
       lon:
         element.lon
+
     };
 
   }
@@ -2351,11 +2320,13 @@ function getCoordinates(
   ) {
 
     return {
+
       lat:
         element.center.lat,
 
       lon:
         element.center.lon
+
     };
 
   }
@@ -2366,8 +2337,9 @@ function getCoordinates(
 }
 
 
-
-function getPhone(tags) {
+function getPhone(
+  tags
+) {
 
   return (
     tags.phone ||
@@ -2379,8 +2351,9 @@ function getPhone(tags) {
 }
 
 
-
-function getWebsite(tags) {
+function getWebsite(
+  tags
+) {
 
   return (
     tags.website ||
@@ -2391,8 +2364,9 @@ function getWebsite(tags) {
 }
 
 
-
-function getAddress(tags) {
+function getAddress(
+  tags
+) {
 
   const parts = [];
 
@@ -2400,45 +2374,55 @@ function getAddress(tags) {
   if (
     tags["addr:housenumber"]
   ) {
+
     parts.push(
       tags["addr:housenumber"]
     );
+
   }
 
 
   if (
     tags["addr:street"]
   ) {
+
     parts.push(
       tags["addr:street"]
     );
+
   }
 
 
   if (
     tags["addr:suburb"]
   ) {
+
     parts.push(
       tags["addr:suburb"]
     );
+
   }
 
 
   if (
     tags["addr:city"]
   ) {
+
     parts.push(
       tags["addr:city"]
     );
+
   }
 
 
   if (
     tags["addr:postcode"]
   ) {
+
     parts.push(
       tags["addr:postcode"]
     );
+
   }
 
 
@@ -2449,12 +2433,13 @@ function getAddress(tags) {
 }
 
 
-
 function getCategoryLabel(
   tags
 ) {
 
-  if (tags.amenity) {
+  if (
+    tags.amenity
+  ) {
 
     const map = {
 
@@ -2513,7 +2498,9 @@ function getCategoryLabel(
   }
 
 
-  if (tags.shop) {
+  if (
+    tags.shop
+  ) {
 
     const map = {
 
@@ -2558,7 +2545,8 @@ function getCategoryLabel(
 
 
   if (
-    tags.tourism === "hotel"
+    tags.tourism ===
+    "hotel"
   ) {
 
     return "Hotel";
@@ -2581,7 +2569,6 @@ function getCategoryLabel(
 }
 
 
-
 function getMapURL(
   lat,
   lon
@@ -2602,7 +2589,6 @@ function getMapURL(
 }
 
 
-
 function getDirectionsURL(
   lat,
   lon
@@ -2617,7 +2603,6 @@ function getDirectionsURL(
   );
 
 }
-
 
 
 /* =========================
@@ -2935,6 +2920,32 @@ async function findLeads() {
             );
 
 
+          const leadData = {
+
+            name:
+              name,
+
+            category:
+              categoryLabel,
+
+            area:
+              address,
+
+            phone:
+              phone,
+
+            website:
+              website,
+
+            lat:
+              coords.lat,
+
+            lon:
+              coords.lon
+
+          };
+
+
           const card =
             document.createElement(
               "div"
@@ -3034,51 +3045,32 @@ async function findLeads() {
             .querySelector(
               ".details-btn"
             )
-            .onclick =
-              () => {
+            .addEventListener(
+              "click",
+              function() {
 
-              showBusinessDetails({
-  name: name,
-  category: categoryLabel,
-  address: address,
-  phone: phone,
-  website: website,
-  lat: coords.lat,
-  lon: coords.lon
-});
-              };
+                showBusinessDetails(
+                  leadData
+                );
+
+              }
+            );
 
 
           card
             .querySelector(
               ".save-btn"
             )
-            .onclick =
-              () => {
+            .addEventListener(
+              "click",
+              function() {
 
-                saveRealLead({
+                saveRealLead(
+                  leadData
+                );
 
-                  name,
-
-                  area:
-                    address,
-
-                  phone,
-
-                  website,
-
-                  category:
-                    categoryLabel,
-
-                  lat:
-                    coords.lat,
-
-                  lon:
-                    coords.lon
-
-                });
-
-              };
+              }
+            );
 
 
           list.appendChild(
@@ -3093,21 +3085,25 @@ async function findLeads() {
   catch (error) {
 
     console.error(
+      "Find leads error:",
       error
     );
 
 
     title.innerText =
-      "⚠️ Search problem";
+      "❌ Search failed";
 
 
     list.innerHTML = `
 
       <div class="empty-message">
 
-        ${escapeHTML(
-          error.message
-        )}
+        ❌ ${
+          escapeHTML(
+            error.message ||
+            "Something went wrong. Please try again."
+          )
+        }
 
       </div>
 
@@ -3118,45 +3114,48 @@ async function findLeads() {
 }
 
 
-
 /* =========================
-   SAVED LEADS
+   BUSINESS DETAILS
 ========================= */
-function showBusinessDetails(business) {
 
-  const websiteHTML =
-    business.website
-      ? `
-        <p>
-          🌐
-          <a
-            href="${escapeHTML(business.website)}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Visit Website
-          </a>
-        </p>
-      `
-      : "";
+function showBusinessDetails(
+  lead
+) {
+
+  const existing =
+    document.querySelector(
+      ".business-details-overlay"
+    );
+
+
+  if (existing) {
+    existing.remove();
+  }
+
 
   const mapURL =
     getMapURL(
-      business.lat,
-      business.lon
+      lead.lat,
+      lead.lon
     );
+
 
   const directionsURL =
     getDirectionsURL(
-      business.lat,
-      business.lon
+      lead.lat,
+      lead.lon
     );
 
+
   const details =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   details.className =
     "business-details-overlay";
+
 
   details.innerHTML = `
 
@@ -3170,50 +3169,86 @@ function showBusinessDetails(business) {
       </button>
 
       <h2>
-        🏪 ${escapeHTML(business.name)}
+        ${escapeHTML(
+          lead.name
+        )}
       </h2>
 
       <span class="category-label">
-        ${escapeHTML(business.category)}
+        ${escapeHTML(
+          lead.category || "Business"
+        )}
       </span>
 
       <div class="business-details-info">
 
         <p>
-          📍 ${escapeHTML(business.address)}
+          📍 <strong>Address:</strong><br>
+          ${escapeHTML(
+            lead.area || "Not available"
+          )}
         </p>
 
         <p>
-          📞 ${
-            business.phone
-              ? escapeHTML(business.phone)
+          📞 <strong>Phone:</strong><br>
+          ${
+            lead.phone
+              ? escapeHTML(
+                  lead.phone
+                )
               : "Not available"
           }
         </p>
 
-        ${websiteHTML}
+        ${
+          lead.website
+            ? `
 
-      </div>
+              <p>
+                🌐 <strong>Website:</strong><br>
 
-      <div class="lead-actions">
+                <a
+                  href="${escapeHTML(
+                    lead.website
+                  )}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Visit Website
+                </a>
 
-        <a
-          class="map-btn secondary-btn"
-          href="${mapURL}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          🗺️ Open Map
-        </a>
+              </p>
 
-        <a
-          class="map-btn direction-btn"
-          href="${directionsURL}"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          🧭 Directions
-        </a>
+            `
+            : ""
+        }
+
+        <p>
+          📌 <strong>Status:</strong><br>
+          Not contacted
+        </p>
+
+        <div class="lead-actions">
+
+          <a
+            class="map-btn secondary-btn"
+            href="${mapURL}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            🗺️ Open Map
+          </a>
+
+          <a
+            class="map-btn direction-btn"
+            href="${directionsURL}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            🧭 Directions
+          </a>
+
+        </div>
 
       </div>
 
@@ -3221,73 +3256,149 @@ function showBusinessDetails(business) {
 
   `;
 
-  document.body.appendChild(details);
+
+  document.body.appendChild(
+    details
+  );
 
 }
-async function saveRealLead(lead) {
+
+
+async function saveRealLead(
+  lead
+) {
 
   if (!currentUser) {
-    alert("Please login first.");
+
+    alert(
+      "Please login first."
+    );
+
     openAuth("login");
+
     return;
+
   }
+
 
   try {
 
     const {
       data: existingLead,
       error: existingError
-    } = await supabaseClient
-      .from("saved_leads")
-      .select("id")
-      .eq("user_id", currentUser.id)
-      .eq("business_name", lead.name)
-      .eq("latitude", lead.lat)
-      .eq("longitude", lead.lon)
-      .maybeSingle();
+    } =
+      await supabaseClient
+        .from("saved_leads")
+        .select("id")
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .eq(
+          "business_name",
+          lead.name
+        )
+        .eq(
+          "latitude",
+          lead.lat
+        )
+        .eq(
+          "longitude",
+          lead.lon
+        )
+        .maybeSingle();
+
 
     if (existingError) {
       throw existingError;
     }
 
+
     if (existingLead) {
-      alert("⭐ This lead is already saved!");
+
+      alert(
+        "⭐ This lead is already saved!"
+      );
+
       return;
+
     }
+
 
     const {
       error
-    } = await supabaseClient
-      .from("saved_leads")
-      .insert({
-        user_id: currentUser.id,
-        business_name: lead.name,
-        category: lead.category || "Business",
-        address: lead.area || "",
-        phone: lead.phone || null,
-        website: lead.website || null,
-        latitude: lead.lat,
-        longitude: lead.lon,
-        status: "New",
-        note: ""
-      });
+    } =
+      await supabaseClient
+        .from("saved_leads")
+        .insert({
+
+          user_id:
+            currentUser.id,
+
+          business_name:
+            lead.name,
+
+          category:
+            lead.category ||
+            "Business",
+
+          address:
+            lead.area ||
+            "",
+
+          phone:
+            lead.phone ||
+            null,
+
+          website:
+            lead.website ||
+            null,
+
+          latitude:
+            lead.lat,
+
+          longitude:
+            lead.lon,
+
+          status:
+            "New",
+
+          note:
+            ""
+
+        });
+
 
     if (error) {
       throw error;
     }
 
-    alert("⭐ Lead Saved!");
 
-  } catch (error) {
+    alert(
+      "⭐ Lead Saved!"
+    );
+
+
+    await updateDashboard();
+
+    await displaySavedLeads();
+
+  }
+
+  catch (error) {
 
     console.error(
       "Save lead error:",
       error
     );
 
+
     alert(
       "Could not save this lead.\n\n" +
-      (error.message || "Please try again.")
+      (
+        error.message ||
+        "Please try again."
+      )
     );
 
   }
@@ -3295,11 +3406,9 @@ async function saveRealLead(lead) {
 }
 
 
-  
-
- 
-
-
+/* =========================
+   SAVED LEADS
+========================= */
 
 async function changeLeadStatus(
   leadId,
@@ -3307,93 +3416,148 @@ async function changeLeadStatus(
 ) {
 
   if (!currentUser) {
-    alert("Please login first.");
+
+    alert(
+      "Please login first."
+    );
+
     return;
+
   }
+
 
   try {
 
     const {
       error
-    } = await supabaseClient
-      .from("saved_leads")
-      .update({
-        status: status,
-        updated_at: new Date().toISOString()
-      })
-      .eq("id", leadId)
-      .eq("user_id", currentUser.id);
+    } =
+      await supabaseClient
+        .from("saved_leads")
+        .update({
+
+          status:
+            status,
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+        .eq(
+          "id",
+          leadId
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        );
+
 
     if (error) {
       throw error;
     }
 
+
     await displaySavedLeads();
 
-  } catch (error) {
+    await updateDashboard();
+
+  }
+
+  catch (error) {
 
     console.error(
       "Update status error:",
       error
     );
 
+
     alert(
       "Could not update status.\n\n" +
-      (error.message || "Please try again.")
+      (
+        error.message ||
+        "Please try again."
+      )
     );
 
   }
 
 }
 
-  
 
-
-
-async function saveNote(leadId) {
+async function saveNote(
+  leadId
+) {
 
   if (!currentUser) {
-    alert("Please login first.");
+
+    alert(
+      "Please login first."
+    );
+
     return;
+
   }
+
 
   const textarea =
     document.getElementById(
-      "note-" + leadId
+      "note-" +
+      leadId
     );
+
 
   if (!textarea) {
     return;
   }
 
+
   try {
 
     const {
       error
-    } = await supabaseClient
-      .from("saved_leads")
-      .update({
-        note: textarea.value,
-        updated_at:
-          new Date().toISOString()
-      })
-      .eq("id", leadId)
-      .eq("user_id", currentUser.id);
+    } =
+      await supabaseClient
+        .from("saved_leads")
+        .update({
+
+          note:
+            textarea.value,
+
+          updated_at:
+            new Date().toISOString()
+
+        })
+        .eq(
+          "id",
+          leadId
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        );
+
 
     if (error) {
       throw error;
     }
 
-    alert("💾 Note Saved!");
+
+    alert(
+      "💾 Note Saved!"
+    );
+
 
     await displaySavedLeads();
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
       "Save note error:",
       error
     );
+
 
     alert(
       "Could not save note.\n\n" +
@@ -3408,48 +3572,68 @@ async function saveNote(leadId) {
 }
 
 
- 
-
-
-async function deleteLead(leadId) {
+async function deleteLead(
+  leadId
+) {
 
   if (!currentUser) {
-    alert("Please login first.");
+
+    alert(
+      "Please login first."
+    );
+
     return;
+
   }
+
 
   const confirmed =
     confirm(
       "Are you sure you want to remove this lead?"
     );
 
+
   if (!confirmed) {
     return;
   }
+
 
   try {
 
     const {
       error
-    } = await supabaseClient
-      .from("saved_leads")
-      .delete()
-      .eq("id", leadId)
-      .eq("user_id", currentUser.id);
+    } =
+      await supabaseClient
+        .from("saved_leads")
+        .delete()
+        .eq(
+          "id",
+          leadId
+        )
+        .eq(
+          "user_id",
+          currentUser.id
+        );
+
 
     if (error) {
       throw error;
     }
 
+
     await updateDashboard();
+
     await displaySavedLeads();
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
       "Delete lead error:",
       error
     );
+
 
     alert(
       "Could not delete lead.\n\n" +
@@ -3464,300 +3648,426 @@ async function deleteLead(leadId) {
 }
 
 
-
 async function displaySavedLeads() {
 
   const list =
-    document.getElementById("savedList");
+    document.getElementById(
+      "savedList"
+    );
+
+
+  if (!list) {
+    return;
+  }
+
+
+  const searchInput =
+    document.getElementById(
+      "savedSearch"
+    );
+
+
+  const statusInput =
+    document.getElementById(
+      "savedStatus"
+    );
+
 
   const search =
-    document.getElementById("savedSearch")
-      .value
-      .toLowerCase();
+    searchInput
+      ? searchInput.value
+          .toLowerCase()
+      : "";
+
 
   const status =
-    document.getElementById("savedStatus")
-      .value;
+    statusInput
+      ? statusInput.value
+      : "All";
+
 
   if (!currentUser) {
 
     list.innerHTML = `
+
       <div class="empty-message">
         Please login to view saved leads 🔐
       </div>
+
     `;
 
     return;
+
   }
+
 
   try {
 
     const {
       data: saved,
       error
-    } = await supabaseClient
-      .from("saved_leads")
-      .select("*")
-      .eq("user_id", currentUser.id)
-      .order("created_at", {
-        ascending: false
-      });
+    } =
+      await supabaseClient
+        .from("saved_leads")
+        .select("*")
+        .eq(
+          "user_id",
+          currentUser.id
+        )
+        .order(
+          "created_at",
+          {
+            ascending:
+              false
+          }
+        );
+
 
     if (error) {
       throw error;
     }
 
+
     const filtered =
       (saved || [])
-        .map(
-          (lead, index) => ({
-            lead,
-            index
-          })
-        )
-        .filter(item => {
+        .filter(
+          lead => {
 
-          const lead =
-            item.lead;
+            const text =
+              (
+                lead.business_name ||
+                ""
+              ).toLowerCase() +
+              " " +
+              (
+                lead.address ||
+                ""
+              ).toLowerCase();
 
-          const text =
-            (
-              lead.business_name ||
-              ""
-            ).toLowerCase() +
-            " " +
-            (
-              lead.address ||
-              ""
-            ).toLowerCase();
 
-          return (
-            text.includes(search) &&
-            (
-              status === "All" ||
-              (lead.status || "New") === status
-            )
-          );
+            return (
 
-        });
+              text.includes(
+                search
+              )
 
-    list.innerHTML = "";
+              &&
 
-    if (!filtered.length) {
+              (
+                status === "All" ||
+                (
+                  lead.status ||
+                  "New"
+                ) === status
+              )
+
+            );
+
+          }
+        );
+
+
+    list.innerHTML =
+      "";
+
+
+    if (
+      !filtered.length
+    ) {
 
       list.innerHTML = `
+
         <div class="empty-message">
           No saved leads ⭐
         </div>
+
       `;
 
       return;
+
     }
 
-    filtered.forEach(item => {
 
-      const lead =
-        item.lead;
+    filtered.forEach(
+      lead => {
 
-      const index =
-        item.index;
+        list.innerHTML += `
 
-      list.innerHTML += `
-        <div class="lead">
+          <div class="lead">
 
-          <h3>
-            ${escapeHTML(
-              lead.business_name || ""
-            )}
-          </h3>
+            <h3>
+              ${escapeHTML(
+                lead.business_name ||
+                ""
+              )}
+            </h3>
 
-          <span class="category-label">
-            ${escapeHTML(
-              lead.category || "Business"
-            )}
-          </span>
+            <span class="category-label">
+              ${escapeHTML(
+                lead.category ||
+                "Business"
+              )}
+            </span>
 
-          <p>
-            📍 ${escapeHTML(
-              lead.address || ""
-            )}
-          </p>
+            <p>
+              📍 ${escapeHTML(
+                lead.address ||
+                ""
+              )}
+            </p>
 
-          <p>
-            📞 ${
-              lead.phone
-                ? escapeHTML(lead.phone)
-                : "Not available"
-            }
-          </p>
-
-          <select
-            onchange="
-              changeLeadStatus(
-                '${lead.id}',
-                this.value
-              )
-            "
-          >
-
-            <option
-              value="New"
-              ${
-                lead.status === "New"
-                  ? "selected"
-                  : ""
+            <p>
+              📞 ${
+                lead.phone
+                  ? escapeHTML(
+                      lead.phone
+                    )
+                  : "Not available"
               }
-            >
-              🆕 New
-            </option>
+            </p>
 
-            <option
-              value="Contacted"
-              ${
-                lead.status === "Contacted"
-                  ? "selected"
-                  : ""
-              }
-            >
-              📞 Contacted
-            </option>
 
-            <option
-              value="Follow-up"
-              ${
-                lead.status === "Follow-up"
-                  ? "selected"
-                  : ""
-              }
-            >
-              🔔 Follow-up
-            </option>
-
-            <option
-              value="Converted"
-              ${
-                lead.status === "Converted"
-                  ? "selected"
-                  : ""
-              }
-            >
-              💰 Converted
-            </option>
-
-          </select>
-
-          <textarea
-            class="note-box"
-            id="note-${lead.id}"
-            placeholder="Write a note..."
-          >${escapeHTML(
-            lead.note || ""
-          )}</textarea>
-
-          <div class="lead-actions">
-
-            <button
-              onclick="
-                saveNote('${lead.id}')
+            <select
+              onchange="
+                changeLeadStatus(
+                  '${lead.id}',
+                  this.value
+                )
               "
             >
-              💾 Save Note
-            </button>
 
-            <button
-              class="danger-btn"
-              onclick="
-                deleteLead('${lead.id}')
-              "
-            >
-              🗑️ Remove
-            </button>
+              <option
+                value="New"
+                ${
+                  (
+                    lead.status ||
+                    "New"
+                  ) === "New"
+                    ? "selected"
+                    : ""
+                }
+              >
+                🆕 New
+              </option>
+
+
+              <option
+                value="Contacted"
+                ${
+                  lead.status ===
+                  "Contacted"
+                    ? "selected"
+                    : ""
+                }
+              >
+                📞 Contacted
+              </option>
+
+
+              <option
+                value="Follow-up"
+                ${
+                  lead.status ===
+                  "Follow-up"
+                    ? "selected"
+                    : ""
+                }
+              >
+                🔔 Follow-up
+              </option>
+
+
+              <option
+                value="Converted"
+                ${
+                  lead.status ===
+                  "Converted"
+                    ? "selected"
+                    : ""
+                }
+              >
+                💰 Converted
+              </option>
+
+            </select>
+
+
+            <textarea
+              class="note-box"
+              id="note-${lead.id}"
+              placeholder="Write a note..."
+            >${escapeHTML(
+              lead.note ||
+              ""
+            )}</textarea>
+
+
+            <div class="lead-actions">
+
+              <button
+                onclick="
+                  saveNote(
+                    '${lead.id}'
+                  )
+                "
+              >
+                💾 Save Note
+              </button>
+
+
+              <button
+                class="danger-btn"
+                onclick="
+                  deleteLead(
+                    '${lead.id}'
+                  )
+                "
+              >
+                🗑️ Remove
+              </button>
+
+            </div>
+
+
+            <p class="updated">
+              🕐 ${
+                escapeHTML(
+                  lead.updated_at ||
+                  ""
+                )
+              }
+            </p>
 
           </div>
 
-          <p class="updated">
-            🕐 ${
-              escapeHTML(
-                lead.updated_at || ""
-              )
-            }
-          </p>
+        `;
 
-        </div>
-      `;
+      }
+    );
 
-    });
+  }
 
-  } catch (error) {
+  catch (error) {
 
     console.error(
       "Display saved leads error:",
       error
     );
 
+
     list.innerHTML = `
+
       <div class="empty-message">
         Could not load saved leads.
       </div>
+
     `;
 
   }
+
 }
 
+
+/* =========================
+   DASHBOARD
+========================= */
 
 async function updateDashboard() {
 
   if (!currentUser) {
+
+    document.getElementById(
+      "totalLeads"
+    ).innerText = "0";
+
+    document.getElementById(
+      "newLeads"
+    ).innerText = "0";
+
+    document.getElementById(
+      "contactedLeads"
+    ).innerText = "0";
+
+    document.getElementById(
+      "followupLeads"
+    ).innerText = "0";
+
+    document.getElementById(
+      "convertedLeads"
+    ).innerText = "0";
+
     return;
+
   }
+
 
   try {
 
     const {
       data: saved,
       error
-    } = await supabaseClient
-      .from("saved_leads")
-      .select("status")
-      .eq("user_id", currentUser.id);
+    } =
+      await supabaseClient
+        .from("saved_leads")
+        .select("status")
+        .eq(
+          "user_id",
+          currentUser.id
+        );
+
 
     if (error) {
       throw error;
     }
 
-    const leads = saved || [];
 
-    const count = status =>
-      leads.filter(
-        lead =>
-          (lead.status || "New") === status
-      ).length;
+    const leads =
+      saved || [];
+
+
+    const count =
+      status =>
+        leads.filter(
+          lead =>
+            (
+              lead.status ||
+              "New"
+            ) === status
+        ).length;
+
 
     document.getElementById(
       "totalLeads"
-    ).innerText = leads.length;
+    ).innerText =
+      leads.length;
+
 
     document.getElementById(
       "newLeads"
     ).innerText =
       count("New");
 
+
     document.getElementById(
       "contactedLeads"
     ).innerText =
       count("Contacted");
+
 
     document.getElementById(
       "followupLeads"
     ).innerText =
       count("Follow-up");
 
+
     document.getElementById(
       "convertedLeads"
     ).innerText =
       count("Converted");
 
-  } catch (error) {
+  }
+
+  catch (error) {
 
     console.error(
       "Dashboard error:",
@@ -3767,7 +4077,6 @@ async function updateDashboard() {
   }
 
 }
-
 
 
 function filterDashboard(
@@ -3795,7 +4104,6 @@ function filterDashboard(
 }
 
 
-
 /* =========================
    AUTH STATE
 ========================= */
@@ -3814,23 +4122,36 @@ supabaseClient.auth.onAuthStateChange(
 
     updateAuthUI();
 
-  }
-);
-  supabaseClient.auth.getSession().then(
-  ({ data: { session } }) => {
-
-    currentUser =
-      session
-        ? session.user
-        : null;
-
-    updateAuthUI();
     updateDashboard();
+
     displaySavedLeads();
 
   }
 );
 
+
+supabaseClient.auth.getSession()
+  .then(
+    ({
+      data: {
+        session
+      }
+    }) => {
+
+      currentUser =
+        session
+          ? session.user
+          : null;
+
+
+      updateAuthUI();
+
+      updateDashboard();
+
+      displaySavedLeads();
+
+    }
+  );
 
 
 /* =========================
@@ -3838,11 +4159,6 @@ supabaseClient.auth.onAuthStateChange(
 ========================= */
 
 loadUser();
-
-updateDashboard();
-
-displaySavedLeads();
-
 
 </script>
 
